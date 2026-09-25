@@ -58,6 +58,12 @@ stylesheet (Bricolage Grotesque + Inter).
   key in all four `I18N` blocks.
 - **Company details** — the `COMPANY` object (used by the quote), plus the
   contact section and footer in the markup.
+- **Hover and press** — all of it lives in one `INTERACTION` block in the
+  stylesheet. Hover changes colour and depth only, never position, and sits
+  inside `@media (hover:hover) and (pointer:fine)` so a tap on a phone cannot
+  leave a control stuck in its hover state. Movement belongs to `:active`
+  (`scale(.98)`). Keep new controls in that block rather than adding `:hover`
+  rules beside the component.
 
 ## Running it locally
 

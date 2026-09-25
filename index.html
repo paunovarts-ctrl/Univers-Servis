@@ -13,6 +13,7 @@
     --ink:#141615;--ink-soft:#5c635e;--white:#ffffff;--paper:#f6f8f6;--line:#e3e8e3;
     --ft:'Bricolage Grotesque','Hanken Grotesk',sans-serif;--fb:'Inter','Hanken Grotesk',sans-serif;
     --gutter:max(1.4rem, (100% - 1280px) / 2);
+    --ease-out:cubic-bezier(.23,1,.32,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -65,23 +66,18 @@
   
   .nav-right{display:flex;align-items:center;gap:.4rem}
   .navlinks{display:flex;gap:2rem;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
-  .navlinks a{color:var(--ink);text-decoration:none;position:relative;padding-bottom:3px;opacity:.85}
-  .navlinks a:hover{opacity:1}
-  .navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1.5px;background:var(--green);transition:width .35s ease}
-  .navlinks a:hover::after{width:100%}
+  .navlinks a{color:var(--ink);text-decoration:none;position:relative;padding-bottom:3px;opacity:.85;transition:color 160ms ease,opacity 160ms ease}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1.5px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform 200ms var(--ease-out)}
   .nav-right{display:flex;align-items:center;gap:1.4rem}
   .lang{position:relative;z-index:240}
-  .lang-trigger{display:flex;align-items:center;gap:.45rem;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid var(--line);color:var(--ink);font-family:var(--fb);font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .85rem;border-radius:30px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(20,40,28,.5);transition:border-color .25s,box-shadow .25s}
-  .lang-trigger:hover{border-color:var(--green)}
+  .lang-trigger{display:flex;align-items:center;gap:.45rem;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid var(--line);color:var(--ink);font-family:var(--fb);font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .85rem;border-radius:30px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(20,40,28,.5);transition:border-color 180ms ease,box-shadow 180ms ease,transform 140ms var(--ease-out)}
   .lang-trigger svg{width:11px;height:11px;fill:var(--green);transition:transform .3s ease}
   .lang.open .lang-trigger svg{transform:rotate(180deg)}
   .lang-menu{position:absolute;top:calc(100% + .5rem);right:0;background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:0 22px 48px -20px rgba(20,40,28,.5);padding:.4rem;display:flex;flex-direction:column;min-width:150px;opacity:0;transform:translateY(-10px) scale(.96);transform-origin:top right;pointer-events:none;transition:opacity .3s ease,transform .3s cubic-bezier(.2,.7,.2,1)}
   .lang.open .lang-menu{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
-  .lang-menu button{display:flex;align-items:center;gap:.6rem;background:none;border:none;color:var(--ink);font-family:var(--fb);font-weight:600;font-size:.82rem;text-align:left;padding:.55rem .7rem;border-radius:9px;cursor:pointer;transition:.2s}
+  .lang-menu button{display:flex;align-items:center;gap:.6rem;background:none;border:none;color:var(--ink);font-family:var(--fb);font-weight:600;font-size:.82rem;text-align:left;padding:.55rem .7rem;border-radius:9px;cursor:pointer;transition:background 150ms ease,color 150ms ease}
   .lang-menu button b{font-weight:700;letter-spacing:.06em;min-width:24px}
   .lang-menu button span{color:var(--ink-soft);font-weight:500}
-  .lang-menu button:hover{background:var(--green-soft);color:var(--green)}
-  .lang-menu button:hover span{color:var(--green)}
   .lang-menu button.active{background:var(--green);color:#fff}
   .lang-menu button.active span{color:rgba(255,255,255,.85)}
   @media(max-width:900px){.navlinks{display:none}nav{padding:1rem 1.2rem}}
@@ -101,20 +97,15 @@
   .est-disclaimer{display:flex;align-items:flex-start;gap:.65rem;margin-top:1.2rem;padding:.85rem 1.1rem;background:var(--green-soft);border:1px solid rgba(46,125,80,.22);border-radius:12px;max-width:54ch}
   .est-disclaimer svg{width:18px;height:18px;flex:none;margin-top:.1rem;color:var(--green)}
   .est-disclaimer span{font-size:.86rem;line-height:1.55;color:var(--ink-soft)}
-  .link-arrow{display:inline-flex;align-items:center;gap:.5rem;color:var(--green);font-family:var(--fb);font-weight:600;font-size:.88rem;letter-spacing:.03em;text-decoration:none;background:none;border:none;padding:.5rem .25rem;cursor:pointer;position:relative;transition:transform .3s ease,color .3s ease}
-  .link-arrow::after{content:"";position:absolute;left:.25rem;right:.25rem;bottom:.18rem;height:1.5px;background:var(--green-deep);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
-  .link-arrow:hover{transform:translateY(-3px);color:var(--green-deep)}
-  .link-arrow:hover::after{transform:scaleX(1)}
+  .link-arrow{display:inline-flex;align-items:center;gap:.5rem;color:var(--green);font-family:var(--fb);font-weight:600;font-size:.88rem;letter-spacing:.03em;text-decoration:none;background:none;border:none;padding:.5rem .25rem;cursor:pointer;position:relative;transition:color 160ms ease}
+  .link-arrow::after{content:"";position:absolute;left:.25rem;right:.25rem;bottom:.18rem;height:1.5px;background:var(--green-deep);transform:scaleX(0);transform-origin:left;transition:transform 200ms var(--ease-out)}
   .reveal{opacity:0;transform:translateY(26px);animation:rise 1s cubic-bezier(.2,.7,.2,1) forwards}
   @keyframes rise{to{opacity:1;transform:translateY(0)}}
   .d1{animation-delay:.1s}.d2{animation-delay:.28s}.d3{animation-delay:.46s}.d4{animation-delay:.6s}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;background:var(--green);color:#fff;padding:1rem 1.7rem;border-radius:40px;font-size:.86rem;letter-spacing:.03em;text-decoration:none;border:none;cursor:pointer;font-family:var(--fb);font-weight:600;transition:transform .3s ease,background .3s ease}
-  .btn:hover{transform:translateY(-3px);background:var(--green-deep)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;background:var(--green);color:#fff;padding:1rem 1.7rem;border-radius:40px;font-size:.86rem;letter-spacing:.03em;text-decoration:none;border:none;cursor:pointer;font-family:var(--fb);font-weight:600;transition:background 180ms ease,color 180ms ease,border-color 180ms ease,box-shadow 180ms ease,transform 140ms var(--ease-out)}
   .btn .dot{width:7px;height:7px;border-radius:50%;background:var(--green-bright)}
   .btn.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.45);color:#fff}
-  .btn.ghost:hover{background:rgba(255,255,255,.12);border-color:#fff;transform:translateY(-3px)}
   .btn.outline{background:transparent;border:1.5px solid var(--green);color:var(--green)}
-  .btn.outline:hover{background:var(--green);color:#fff}
 
   /* BEFORE/AFTER */
   .ba{position:relative;width:100%;aspect-ratio:1200/896;max-height:70vh;margin-left:auto;border-radius:16px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.7);cursor:ew-resize;user-select:none;touch-action:none;border:1px solid rgba(255,255,255,.12)}
@@ -156,15 +147,13 @@
   .calc-sec{background:transparent}
   .calc{display:grid;grid-template-columns:1.55fr .85fr;gap:1.6rem;align-items:start;transform-origin:top center;transition:opacity .4s ease,transform .45s cubic-bezier(.4,0,.2,1)}
   .calc.collapsed{opacity:0;transform:scale(.8) translateY(-40px)}
-  .calc-toggle{display:inline-flex;align-items:center;gap:.55rem;background:var(--green-soft);color:var(--green);border:1px solid var(--green);border-radius:30px;padding:.6rem 1.15rem;font-family:var(--fb);font-weight:600;font-size:.82rem;letter-spacing:.02em;cursor:pointer;transition:background .25s,color .25s;margin-bottom:1.8rem}
-  .calc-toggle:hover{background:var(--green);color:#fff}
+  .calc-toggle{display:inline-flex;align-items:center;gap:.55rem;background:var(--green-soft);color:var(--green);border:1px solid var(--green);border-radius:30px;padding:.6rem 1.15rem;font-family:var(--fb);font-weight:600;font-size:.82rem;letter-spacing:.02em;cursor:pointer;transition:background 180ms ease,color 180ms ease,transform 140ms var(--ease-out);margin-bottom:1.8rem}
   .calc-toggle svg{width:15px;height:15px;fill:currentColor;transition:transform .35s ease}
   .calc-toggle.closed svg{transform:rotate(-90deg)}
   @media(max-width:920px){.calc{grid-template-columns:1fr}}
   .calc-list{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
-  .calc-row{display:grid;grid-template-columns:1.5fr .9fr .9fr 1fr;gap:1rem;align-items:center;padding:1rem 1.4rem;border-bottom:1px solid var(--line);transition:background .25s}
+  .calc-row{display:grid;grid-template-columns:1.5fr .9fr .9fr 1fr;gap:1rem;align-items:center;padding:1rem 1.4rem;border-bottom:1px solid var(--line);transition:background 160ms ease}
   .calc-row:last-child{border-bottom:none}
-  .calc-row:hover{background:var(--green-soft)}
   .calc-row.header{background:var(--ink)}
   .calc-row.header span{color:rgba(255,255,255,.7);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
   .svc-name .sn{font-weight:600;font-size:.96rem;display:inline-block}
@@ -234,8 +223,6 @@
   .ci-item b{display:block;font-weight:500;font-size:1.1rem;margin-top:.3rem;color:var(--ink)}
   .copy-num{cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;transition:color .2s ease}
   .copy-num svg{width:14px;height:14px;flex:none;opacity:.55;transition:opacity .2s ease}
-  .copy-num:hover{color:var(--green)}
-  .copy-num:hover svg{opacity:1}
   .copy-num.copied{color:var(--green)}
   .copy-toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:.7rem 1.2rem;border-radius:30px;font-family:var(--fb);font-size:.85rem;font-weight:600;letter-spacing:.01em;box-shadow:0 14px 34px -10px rgba(0,0,0,.5);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s cubic-bezier(.2,.7,.2,1);display:flex;align-items:center;gap:.5rem}
   .copy-toast svg{width:14px;height:14px;fill:var(--green-bright)}
@@ -260,8 +247,8 @@
   .cf-note.ok{color:var(--green);font-weight:600;font-size:.82rem}
 
   /* PHOTO ATTACHMENTS */
-  .ph-drop{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center;border:1.5px dashed var(--line);background:var(--paper);border-radius:12px;padding:1.1rem 1rem;cursor:pointer;transition:border-color .25s,background .25s}
-  .ph-drop:hover,.ph-drop:focus-visible,.ph-drop.over{border-color:var(--green);background:var(--green-soft);outline:none}
+  .ph-drop{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center;border:1.5px dashed var(--line);background:var(--paper);border-radius:12px;padding:1.1rem 1rem;cursor:pointer;transition:border-color 180ms ease,background 180ms ease,transform 140ms var(--ease-out)}
+  .ph-drop:focus-visible,.ph-drop.over{border-color:var(--green);background:var(--green-soft);outline:none}
   .ph-drop svg{width:22px;height:22px;fill:var(--green)}
   .ph-cta{font-weight:600;font-size:.9rem;color:var(--green)}
   .ph-drop small{font-size:.76rem;color:var(--ink-soft);line-height:1.45;max-width:34ch}
@@ -269,9 +256,37 @@
   .ph-thumb{position:relative;width:70px;height:70px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
   .ph-thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .ph-x{position:absolute;top:2px;right:2px;width:19px;height:19px;border:none;border-radius:50%;background:rgba(20,22,21,.72);color:#fff;font-size:.8rem;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
-  .ph-x:hover{background:var(--ink)}
   .ph-meta{font-size:.76rem;color:var(--ink-soft);margin-top:.5rem;min-height:1.1em}
   .ph-meta.warn{color:#b3341f;font-weight:600}
+
+  /* INTERACTION
+     Hover is seen dozens of times in a visit, so it stays quiet: colour and depth,
+     never movement. Everything is gated to devices that actually hover — on a
+     phone, a tap would otherwise leave the state stuck on. Movement is kept for
+     :active, where it is feedback rather than decoration. */
+  .btn:active,.calc-toggle:active,.lang-trigger:active,.ph-drop:active{transform:scale(.98)}
+  .ph-x:active{transform:scale(.9)}
+  @media (hover:hover) and (pointer:fine){
+    .btn:hover{background:var(--green-deep);box-shadow:0 8px 20px -10px rgba(28,81,52,.55)}
+    .btn.ghost:hover{background:rgba(255,255,255,.14);border-color:#fff}
+    .btn.outline:hover{background:var(--green);color:#fff;box-shadow:none}
+    /* the quote button sits on the deep-green card, so it lifts in tone instead */
+    .summary .btn:hover{background:var(--green-bright);color:var(--green-deep);box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
+    .summary .btn:hover .dot{background:var(--green-deep)}
+    .navlinks a:hover{opacity:1;color:var(--green)}
+    .navlinks a:hover::after{transform:scaleX(1)}
+    .link-arrow:hover{color:var(--green-deep)}
+    .link-arrow:hover::after{transform:scaleX(1)}
+    .lang-trigger:hover{border-color:var(--green)}
+    .lang-menu button:hover{background:var(--green-soft);color:var(--green)}
+    .lang-menu button:hover span{color:var(--green)}
+    .calc-toggle:hover{background:var(--green);color:#fff}
+    .calc-row:hover{background:var(--green-soft)}
+    .copy-num:hover{color:var(--green)}
+    .copy-num:hover svg{opacity:1}
+    .ph-drop:hover{border-color:var(--green);background:var(--green-soft)}
+    .ph-x:hover{background:var(--ink)}
+  }
 
   footer{background:var(--green-deep);color:rgba(255,255,255,.72);padding:2.4rem var(--gutter);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.84rem;position:relative;z-index:2}
 
