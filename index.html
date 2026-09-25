@@ -53,7 +53,7 @@
   @media(prefers-reduced-motion:reduce){.static-bg{animation:none}.grain{animation:none}}
 
   /* language crossfade */
-  [data-i18n],.calc-row .sn,.calc-row .sd,#track{transition:opacity .32s ease,filter .32s ease,transform .32s ease}
+  [data-i18n],.calc-row .sn,.calc-row .sd,.branch-list li{transition:opacity .32s ease,filter .32s ease,transform .32s ease}
   .lang-out{opacity:0!important;filter:blur(3px);transform:translateY(5px)}
 
   /* NAV */
@@ -118,13 +118,6 @@
   .ba-label{position:absolute;top:1rem;z-index:6;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#fff;background:rgba(20,22,21,.55);backdrop-filter:blur(4px);padding:.4rem .8rem;border-radius:30px}
   .ba-label.b{left:1rem}.ba-label.a{right:1rem;background:rgba(46,125,80,.85)}
 
-  /* MARQUEE */
-  .marquee{background:transparent;overflow:hidden;white-space:nowrap;padding:1.1rem 0;position:relative;z-index:2;border-top:1px solid rgba(46,125,80,.16);border-bottom:1px solid rgba(46,125,80,.16);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%)}
-  .track{display:inline-block;animation:scroll 60s linear infinite}
-  .track span{font-family:var(--fb);font-size:1.1rem;font-style:normal;font-weight:500;color:var(--ink-soft);margin:0 1.4rem}
-  .track span.alt{color:var(--green);font-style:normal}
-  @keyframes scroll{to{transform:translateX(-50%)}}
-
   /* SECTIONS */
   section{padding:6.5rem var(--gutter);position:relative;z-index:2}
   @media(max-width:760px){section{padding:4rem var(--gutter)}}
@@ -141,6 +134,25 @@
   .card .ic svg{width:24px;height:24px;fill:var(--green)}
   .card h3{font-size:1.45rem;margin-bottom:.7rem}
   .card p{color:var(--ink-soft);line-height:1.6;font-size:.95rem}
+
+  /* BRANCHES */
+  .branches{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+  @media(max-width:900px){.branches{grid-template-columns:1fr}}
+  .branch{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:0 30px 60px -48px rgba(20,40,28,.55);transition:border-color 180ms ease,box-shadow 180ms ease}
+  /* photo slot — drop an <img> in and it covers this area; until then the icon holds it */
+  .branch-media{position:relative;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;
+    background:linear-gradient(142deg,var(--green-soft) 0%,#fff 72%);border-bottom:1px solid var(--line)}
+  .branch-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .branch-ic{width:78px;height:78px;fill:none;stroke:var(--green);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+  .branch-body{padding:1.9rem;display:flex;flex-direction:column;gap:.75rem;flex:1}
+  @media(max-width:520px){.branch-body{padding:1.4rem}}
+  .branch-n{font-size:.72rem;letter-spacing:.22em;color:var(--green);font-weight:600}
+  .branch h3{font-size:1.55rem}
+  .branch-body>p{color:var(--ink-soft);line-height:1.7;font-size:.94rem}
+  .branch-list{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;padding-top:.7rem}
+  .branch-list li{font-size:.77rem;color:var(--green);background:var(--green-soft);border:1px solid rgba(46,125,80,.2);
+    border-radius:30px;padding:.34rem .72rem;line-height:1.3}
 
   /* CALCULATOR */
   .calc-sec{background:transparent}
@@ -289,6 +301,7 @@
     .copy-num:hover svg{opacity:1}
     .ph-drop:hover{border-color:var(--green);background:var(--green-soft)}
     .ph-x:hover{background:var(--ink)}
+    .branch:hover{border-color:rgba(46,125,80,.42);box-shadow:0 34px 64px -44px rgba(20,40,28,.62)}
   }
 
   footer{background:var(--green-deep);color:rgba(255,255,255,.72);padding:2.4rem var(--gutter);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.84rem;position:relative;z-index:2}
@@ -339,8 +352,6 @@
   </div>
 </header>
 
-<div class="marquee"><div class="track" id="track"></div></div>
-
 <!-- SERVICES -->
 <section id="services">
   <div class="head obs">
@@ -364,6 +375,41 @@
       <h3 data-i18n="card3_h">Zaštita i Njega</h3>
       <p data-i18n="card3_p">Unutarnja i vanjska zaštita te planirano održavanje.</p>
     </div>
+  </div>
+</section>
+
+<!-- BRANCHES -->
+<section id="branches">
+  <div class="head obs">
+    <p class="eyebrow" data-i18n="br_eyebrow">Područja rada</p>
+    <h2 data-i18n="br_h2">Iznutra i izvana.</h2>
+    <p data-i18n="br_p">Isti tim i ista priprema, bilo da je riječ o jednoj sobi ili o cijelom pročelju.</p>
+  </div>
+  <div class="branches">
+    <article class="branch obs">
+      <div class="branch-media">
+        <svg class="branch-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="5" rx="1.2"/><path d="M13.5 6h5A1.5 1.5 0 0120 7.5v2A1.5 1.5 0 0118.5 11H12v2.5"/><rect x="10" y="13.5" width="4" height="7" rx="1.2"/></svg>
+        <!-- photo slot: replace this comment with  <img src="assets/interior.jpg" alt="">  -->
+      </div>
+      <div class="branch-body">
+        <span class="branch-n">{ 01 }</span>
+        <h3 data-i18n="br1_h">Unutarnji radovi</h3>
+        <p data-i18n="br1_p">Od praznog stana do useljenja.</p>
+        <ul class="branch-list" id="br1Tags"></ul>
+      </div>
+    </article>
+    <article class="branch obs">
+      <div class="branch-media">
+        <svg class="branch-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 10.5L12 2.8l9.5 7.7"/><path d="M4.8 9.6V21h14.4V9.6"/><path d="M9.5 21v-5.2h5V21"/><path d="M8 12.4h1.6M14.4 12.4H16"/></svg>
+        <!-- photo slot: replace this comment with  <img src="assets/exterior.jpg" alt="">  -->
+      </div>
+      <div class="branch-body">
+        <span class="branch-n">{ 02 }</span>
+        <h3 data-i18n="br2_h">Vanjski radovi</h3>
+        <p data-i18n="br2_p">Fasade, žbuka i zaštita.</p>
+        <ul class="branch-list" id="br2Tags"></ul>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -488,6 +534,14 @@ const I18N={
   card1_h:`Ličenje i Obrade`,card1_p:`Bijelo i ličenje u boji, temeljni premazi i dekorativne obrade koje izvode stručnjaci koji znaju kako svjetlo pada u prostoru i gdje se javlja trošenje.`,
   card2_h:`Površine i Popravci`,card2_p:`Žbukanje, Knauf pregrade, brtvljenje i popravak oštećenja zidova za savršeno glatku podlogu.`,
   card3_h:`Zaštita i Njega`,card3_p:`Unutarnji i vanjski zaštitni sustavi te planirano održavanje koje obrade održava svježima kao prvog dana, iz godine u godinu.`,
+  br_eyebrow:`Područja rada`,br_h2:`Iznutra i izvana.`,
+  br_p:`Isti tim i ista priprema, bilo da je riječ o jednoj sobi ili o cijelom pročelju.`,
+  br1_h:`Unutarnji radovi`,
+  br1_p:`Od praznog stana do useljenja: pripremamo podlogu, zatvaramo pukotine, gletamo i ličimo. Podovi i namještaj ostaju pokriveni, a prašina ne izlazi iz prostorije u kojoj radimo.`,
+  br1_tags:[`Bijelo ličenje`,`Ličenje u boji`,`Žbukanje i glet`,`Knauf pregrade`,`Popravak oštećenja`,`Bojanje stolarije`,`Brtvljenje`,`Zaštita podova i namještaja`],
+  br2_h:`Vanjski radovi`,
+  br2_p:`Fasade, žbuka i zaštita koje izdrže buru, sol i sunce. Postavljamo vlastite skele i radimo po fazama, tako da objekt cijelo vrijeme ostaje u funkciji.`,
+  br2_tags:[`Fasade`,`Vanjska žbuka`,`Zaštita od vremenskih uvjeta`,`Skele`,`Temeljenje vanjskih površina`,`Popravak fasade`],
   est_eyebrow:`Trenutna procjena`,est_h2:`Izračunajte projekt po četvornom metru.`,
   est_p:`Unesite površinu za svaku uslugu koja vam treba.`,
   est_disclaimer:`Napomena: m² ovdje znači obrađena površina zidova i stropova, ne tlocrtna površina stana. Primjer: stan od 50 m² obično ima oko 150 m² površine za obradu (zidovi + strop), jer se mjeri svaka obrađena ploha, ne pod.`,
@@ -541,6 +595,14 @@ const I18N={
   card1_h:`Painting and Finishes`,card1_p:`White and in-colour painting, primers and decorative finishes applied by specialists who understand how light falls in a room and where the wear shows.`,
   card2_h:`Surfaces and Repair`,card2_p:`Plastering, Knauf partitions, caulking and wall-damage repair that leave a perfectly smooth base for finishing.`,
   card3_h:`Protection and Care`,card3_p:`Interior and exterior protection systems plus planned maintenance that keep finishes opening-day fresh, year after year.`,
+  br_eyebrow:`Where we work`,br_h2:`Inside and out.`,
+  br_p:`The same team and the same preparation, whether it is one room or an entire facade.`,
+  br1_h:`Interior work`,
+  br1_p:`From an empty flat to moving-in day: we prepare the surface, close the cracks, skim and paint. Floors and furniture stay covered, and the dust stays in the room we are working in.`,
+  br1_tags:[`White painting`,`Painting in colour`,`Plastering and skim`,`Knauf partitions`,`Damage repair`,`Joinery painting`,`Caulking`,`Floor and furniture protection`],
+  br2_h:`Exterior work`,
+  br2_p:`Facades, render and protection built for the bura, the salt and the sun. We put up our own scaffolding and work in phases, so the building stays in use throughout.`,
+  br2_tags:[`Facades`,`Exterior render`,`Weather protection`,`Scaffolding`,`Exterior priming`,`Facade repair`],
   est_eyebrow:`Instant estimate`,est_h2:`Price your project by the square metre.`,
   est_p:`Enter the area for each service you need.`,
   est_disclaimer:`Note: m² here means the actual wall and ceiling surface to be treated, not your apartment's floor area. Example: a 50 m² apartment usually has around 150 m² of surface to paint, since every wall and the ceiling are measured, not just the floor.`,
@@ -594,6 +656,14 @@ const I18N={
   card1_h:`Malerei und Finish`,card1_p:`Weiße und farbige Anstriche, Grundierungen und dekorative Oberflächen von Spezialisten, die wissen, wie Licht in einen Raum fällt und wo sich Abnutzung zeigt.`,
   card2_h:`Oberflächen und Reparatur`,card2_p:`Verputz, Knauf-Trennwände, Verfugung und Reparatur von Wandschäden für einen perfekt glatten Untergrund.`,
   card3_h:`Schutz und Pflege`,card3_p:`Innen- und Außenschutzsysteme sowie geplante Wartung, die Oberflächen Jahr für Jahr wie am Eröffnungstag frisch halten.`,
+  br_eyebrow:`Arbeitsbereiche`,br_h2:`Innen und außen.`,
+  br_p:`Dasselbe Team und dieselbe Vorbereitung, ob ein einzelner Raum oder eine ganze Fassade.`,
+  br1_h:`Innenarbeiten`,
+  br1_p:`Von der leeren Wohnung bis zum Einzugstag: Wir bereiten den Untergrund vor, schließen Risse, spachteln und streichen. Böden und Möbel bleiben abgedeckt, und der Staub bleibt im Raum, in dem wir arbeiten.`,
+  br1_tags:[`Weißanstrich`,`Farbanstrich`,`Verputz und Spachtelung`,`Knauf-Trennwände`,`Schadensreparatur`,`Anstrich der Schreinerarbeiten`,`Verfugung`,`Boden- und Möbelschutz`],
+  br2_h:`Außenarbeiten`,
+  br2_p:`Fassaden, Putz und Schutz, gemacht für Bura, Salz und Sonne. Wir stellen unser eigenes Gerüst und arbeiten in Phasen, sodass das Gebäude durchgehend nutzbar bleibt.`,
+  br2_tags:[`Fassaden`,`Außenputz`,`Wetterschutz`,`Gerüst`,`Grundierung außen`,`Fassadenreparatur`],
   est_eyebrow:`Sofortschätzung`,est_h2:`Kalkulieren Sie Ihr Projekt pro Quadratmeter.`,
   est_p:`Geben Sie die Fläche für jede benötigte Leistung ein.`,
   est_disclaimer:`Hinweis: m² bezieht sich hier auf die tatsächlich zu bearbeitende Wand- und Deckenfläche, nicht auf die Wohnfläche. Beispiel: Eine 50 m² große Wohnung hat meist rund 150 m² zu bearbeitende Fläche, da jede Wand und die Decke gemessen werden, nicht nur der Boden.`,
@@ -647,6 +717,14 @@ const I18N={
   card1_h:`Pittura e Finiture`,card1_p:`Pittura bianca e colorata, primer e finiture decorative applicate da specialisti che sanno come cade la luce in una stanza e dove si vede l'usura.`,
   card2_h:`Superfici e Riparazioni`,card2_p:`Intonacatura, pareti Knauf, sigillature e riparazione dei danni murali per una base perfettamente liscia.`,
   card3_h:`Protezione e Cura`,card3_p:`Sistemi di protezione interni ed esterni e manutenzione programmata che mantengono le finiture come nel giorno dell'inaugurazione, anno dopo anno.`,
+  br_eyebrow:`Ambiti di lavoro`,br_h2:`Dentro e fuori.`,
+  br_p:`Lo stesso team e la stessa preparazione, che si tratti di una stanza o di un'intera facciata.`,
+  br1_h:`Lavori interni`,
+  br1_p:`Dall'appartamento vuoto al giorno del trasloco: prepariamo il supporto, chiudiamo le crepe, rasiamo e dipingiamo. Pavimenti e mobili restano coperti e la polvere resta nella stanza in cui lavoriamo.`,
+  br1_tags:[`Pittura bianca`,`Pittura colorata`,`Intonaco e rasatura`,`Pareti Knauf`,`Riparazione danni`,`Pittura serramenti`,`Sigillatura`,`Protezione pavimenti e mobili`],
+  br2_h:`Lavori esterni`,
+  br2_p:`Facciate, intonaco e protezioni pensati per la bora, il sale e il sole. Montiamo i nostri ponteggi e lavoriamo per fasi, così la struttura resta sempre utilizzabile.`,
+  br2_tags:[`Facciate`,`Intonaco esterno`,`Protezione dalle intemperie`,`Ponteggi`,`Primer per esterni`,`Riparazione facciate`],
   est_eyebrow:`Preventivo immediato`,est_h2:`Calcola il tuo progetto al metro quadro.`,
   est_p:`Inserisci la superficie per ogni servizio richiesto.`,
   est_disclaimer:`Nota: qui i m² indicano la superficie effettiva di pareti e soffitto da trattare, non la superficie dell'appartamento. Esempio: un appartamento di 50 m² ha solitamente circa 150 m² di superficie da trattare, poiché si misurano tutte le pareti e il soffitto, non solo il pavimento.`,
@@ -969,16 +1047,20 @@ document.getElementById('printBtn').addEventListener('click',()=>{
 });
 
 /* ---- language switching with crossfade ---- */
-function buildMarquee(names){
-  const sep='<span>·</span>';let base='';
-  names.forEach((n,i)=>{base+='<span'+(i%2?' class="alt"':'')+'>'+n+'</span>'+sep;});
-  const group=base+base;document.getElementById('track').innerHTML=group+group;
+/* branch chips: built once, then relabelled in place so the language
+   crossfade has stable nodes to fade, the way the calculator rows do */
+function buildTags(t){
+  [['br1Tags',t.br1_tags],['br2Tags',t.br2_tags]].forEach(([id,arr])=>{
+    const ul=document.getElementById(id);
+    if(ul.children.length!==arr.length)ul.innerHTML=arr.map(()=>'<li></li>').join('');
+    [...ul.children].forEach((li,i)=>{li.textContent=arr[i];});
+  });
 }
 function applyLang(t){
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!=null)el.innerHTML=t[k];});
   document.querySelectorAll('.calc-row .sn').forEach((el,i)=>{if(t.svc[i])el.textContent=t.svc[i].n;});
   document.querySelectorAll('.calc-row .sd').forEach((el,i)=>{if(t.svc[i])el.textContent=t.svc[i].d;});
-  buildMarquee(t.svc.map(s=>s.n));
+  buildTags(t);
   recalc();
   updateToggleLabel();
   phRender();
@@ -990,8 +1072,7 @@ function setLang(lang,instant){
   document.querySelectorAll('.lang-menu button').forEach(b=>b.classList.toggle('active',b.dataset.l===lang));
   document.getElementById('langCode').textContent=lang.toUpperCase();
   if(instant){applyLang(t);return;}
-  const track=document.getElementById('track');
-  const all=[...document.querySelectorAll('[data-i18n]'),...document.querySelectorAll('.calc-row .sn'),...document.querySelectorAll('.calc-row .sd'),track];
+  const all=[...document.querySelectorAll('[data-i18n]'),...document.querySelectorAll('.calc-row .sn'),...document.querySelectorAll('.calc-row .sd'),...document.querySelectorAll('.branch-list li')];
   all.forEach((el,i)=>{el.style.transitionDelay=((i%16)*18)+'ms';el.classList.add('lang-out');});
   setTimeout(()=>{
     applyLang(t);

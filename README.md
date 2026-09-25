@@ -11,6 +11,8 @@ One static page. No build step, no dependencies, no backend.
 - **Hero** with a draggable before/after slider (the slider sweeps once on load,
   then hands control to the visitor).
 - **Services** — painting and finishes, surfaces and repair, protection and care.
+- **Branches** — two cards, interior and exterior, each with a photo frame, an
+  icon, a paragraph of context and the trades that belong to it as chips.
 - **Instant estimate** — 11 services at fixed €/m² rates; the visitor enters the
   area for each one and gets a live subtotal, VAT (25%, toggleable) and total.
   The calculator starts collapsed behind a toggle.
@@ -39,6 +41,7 @@ One static page. No build step, no dependencies, no backend.
 ```
 index.html      the entire site — markup, styles, translations, logic,
                 and the logo and photographs as embedded data URIs
+assets/         the two branch photographs (see assets/README.md)
 vercel.json     cache and security headers
 ```
 
@@ -54,6 +57,12 @@ stylesheet (Bricolage Grotesque + Inter).
 - **Service names and descriptions** — the `svc` array inside each language
   block in `I18N`. Keep all four languages the same length and order as
   `RATES`.
+- **Branch chips** — the `br1_tags` and `br2_tags` arrays in each language
+  block. They are rendered by `buildTags()`, which relabels existing `<li>`
+  nodes rather than rebuilding them, so the language crossfade has something
+  stable to fade. Keep the arrays the same length in all four languages or the
+  list is rebuilt and the crossfade skips.
+- **Branch photographs** — see `assets/README.md`.
 - **Any other text** — find its `data-i18n` key in the markup, then edit that
   key in all four `I18N` blocks.
 - **Company details** — the `COMPANY` object (used by the quote), plus the
