@@ -17,6 +17,9 @@ One static page. No build step, no dependencies, no backend.
 - **Quote request** — the estimate is carried into the contact form. *Send*
   posts the itemised quote to the company inbox (falling back to the visitor's
   own mail client); *Print / save* opens a formatted, printable quote.
+- **Photo attachments** — up to 8 photos of the walls, picked or dragged in
+  (a phone offers the camera), shown as removable thumbnails with a running
+  size total, and sent with the quote.
 - **Four languages** — Croatian, English, German, Italian, switched in place
   with a crossfade. The page loads in English.
 - Tap-to-copy phone number, scroll reveals, and a grain/static texture over the
@@ -71,6 +74,22 @@ Then open http://localhost:8145.
   deployment has to be confirmed by clicking a link FormSubmit emails to that
   address. If the request fails, the page falls back to opening the visitor's
   mail client with the quote pre-filled.
+- Because that relay sends from its own domain rather than the company's, the
+  notifications tend to land in Gmail's spam folder. A filter on
+  `from: formsubmit.co` set to *never send to spam* fixes it; sending from an
+  owned domain with SPF/DKIM/DMARC is the real cure.
+- **Photos.** FormSubmit caps a submission at 10 MB across all files, and a
+  phone photo is 3–8 MB, so each one is drawn to a canvas, capped at 1600px
+  on its long edge and re-encoded as JPEG at quality 0.82 before it is
+  queued — roughly 250–400 KB each. Anything the canvas cannot decode (HEIC,
+  usually) is passed through untouched at its original size. The form refuses
+  to send over 8 MB total and says so.
+- Attachments go out as `multipart/form-data`. FormSubmit documents file
+  uploads on its plain endpoint rather than the AJAX one, so if the AJAX POST
+  is refused the page reposts the identical submission as a real form and
+  returns via `_next`. Submissions without photos still go as JSON over AJAX,
+  exactly as before. **Worth testing once on the live site** — the AJAX
+  attachment behaviour could not be verified from the build environment.
 - Estimate totals are indicative; the page says so twice, and every quote it
   produces repeats it. Final prices are confirmed after a site visit.
 
