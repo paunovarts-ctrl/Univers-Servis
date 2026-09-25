@@ -1,8 +1,8 @@
 # Univers Servis Poreč
 
 Website for **Univers Servis Poreč** — painting, plastering and year-round
-maintenance for hotels, resorts, restaurants and private properties in Poreč
-(Parenzo), Istria, Croatia.
+maintenance for hotels, apartments and private homes in Poreč (Parenzo),
+Istria, Croatia.
 
 One static page. No build step, no dependencies, no backend.
 
