@@ -66,8 +66,7 @@
   
   .nav-right{display:flex;align-items:center;gap:.4rem}
   .navlinks{display:flex;gap:2rem;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
-  .navlinks a{color:var(--ink);text-decoration:none;position:relative;padding-bottom:3px;opacity:.85;transition:color 160ms ease,opacity 160ms ease}
-  .navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1.5px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform 200ms var(--ease-out)}
+  .navlinks a{color:var(--ink);text-decoration:none;opacity:.85;transition:color 160ms ease,opacity 160ms ease}
   .nav-right{display:flex;align-items:center;gap:1.4rem}
   .lang{position:relative;z-index:240}
   .lang-trigger{display:flex;align-items:center;gap:.45rem;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid var(--line);color:var(--ink);font-family:var(--fb);font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .85rem;border-radius:30px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(20,40,28,.5);transition:border-color 180ms ease,box-shadow 180ms ease,transform 140ms var(--ease-out)}
@@ -273,8 +272,12 @@
     /* the quote button sits on the deep-green card, so it lifts in tone instead */
     .summary .btn:hover{background:var(--green-bright);color:var(--green-deep);box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
     .summary .btn:hover .dot{background:var(--green-deep)}
+    /* hovering one link recedes the others, so the pointer reads as focus
+       rather than decoration. The plain rule first is the fallback for
+       browsers without :has() — they get the colour shift and no dimming. */
     .navlinks a:hover{opacity:1;color:var(--green)}
-    .navlinks a:hover::after{transform:scaleX(1)}
+    .navlinks:has(a:hover) a{opacity:.3}
+    .navlinks:has(a:hover) a:hover{opacity:1;color:var(--green)}
     .link-arrow:hover{color:var(--green-deep)}
     .link-arrow:hover::after{transform:scaleX(1)}
     .lang-trigger:hover{border-color:var(--green)}
