@@ -257,6 +257,7 @@
   .cf-actions{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.4rem}
   @media(max-width:480px){.cf-actions{grid-template-columns:1fr}}
   .cf-note{font-size:.74rem;color:var(--ink-soft);margin-top:.8rem;line-height:1.5}
+  .cf-note.ok{color:var(--green);font-weight:600;font-size:.82rem}
 
   /* PHOTO ATTACHMENTS */
   .ph-drop{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center;border:1.5px dashed var(--line);background:var(--paper);border-radius:12px;padding:1.1rem 1rem;cursor:pointer;transition:border-color .25s,background .25s}
@@ -870,15 +871,17 @@ phDrop.addEventListener('drop',e=>{if(e.dataTransfer&&e.dataTransfer.files)phAdd
 
 /* ---- send invoice / quote ---- */
 const sendBtn=document.getElementById('sendBtn'),sendSpan=sendBtn.querySelector('span'),cfNote=document.querySelector('.cf-note');
-/* FormSubmit documents attachments on the plain multipart endpoint, not the ajax one.
-   If ajax refuses the files we repost the same thing as a real form and come back via _next. */
+/* FormSubmit's ajax endpoint accepts a multipart body, replies 200, and silently
+   drops the files. Attachments only survive the plain endpoint as a real form post,
+   with the first file field named 'attachment' per its convention. That navigates
+   away, so _next brings the visitor back here. */
 function phPostForm(fields){
   const f=document.createElement('form');
   f.method='POST';f.action='https://formsubmit.co/'+COMPANY.email;
   f.enctype='multipart/form-data';f.style.display='none';
   Object.keys(fields).forEach(k=>{const i=document.createElement('input');i.type='hidden';i.name=k;i.value=fields[k];f.appendChild(i);});
   photos.forEach((p,i)=>{
-    const inp=document.createElement('input');inp.type='file';inp.name='photo'+(i+1);
+    const inp=document.createElement('input');inp.type='file';inp.name=i?'attachment'+(i+1):'attachment';
     const dt=new DataTransfer();
     dt.items.add(new File([p.blob],p.name,{type:p.blob.type||'image/jpeg'}));
     inp.files=dt.files;f.appendChild(inp);
@@ -893,27 +896,25 @@ sendBtn.addEventListener('click',async()=>{
   const subject=t.inv_subject+' — '+name+' ('+fmt(d.grand)+')';
   const body=t.inv_quote+' — '+COMPANY.name+'\n'+t.inv_date+': '+new Date().toLocaleDateString(current)+'\n\n'+t.inv_for+': '+name+'\n'+t.ci_email+': '+email+'\n'+t.ci_phone+': '+phone+'\n\n──────────────\n'+text+'\n──────────────\n'+(msg?('\n'+t.form_msg_l+': '+msg+'\n'):'')+(photos.length?('\n'+t.photos_count+': '+photos.length+'\n'):'');
   const fields={name:name,email:email,phone:phone,message:msg,estimate:text,total:fmt(d.grand),_subject:subject,_template:'table',_captcha:'false'};
-  if(photos.length)fields.photos=String(photos.length);
   sendBtn.disabled=true;sendSpan.textContent=t.sending;
-  try{
-    let r;
-    if(photos.length){
-      const fd=new FormData();
-      Object.keys(fields).forEach(k=>fd.append(k,fields[k]));
-      photos.forEach((p,i)=>fd.append('photo'+(i+1),p.blob,p.name));
-      r=await fetch('https://formsubmit.co/ajax/'+COMPANY.email,{method:'POST',headers:{Accept:'application/json'},body:fd});
-    }else{
-      r=await fetch('https://formsubmit.co/ajax/'+COMPANY.email,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
-        body:JSON.stringify(fields)});
+  if(photos.length){
+    fields.photos=String(photos.length);
+    fields._next=location.origin+location.pathname+'?sent=1';
+    try{phPostForm(fields);return;}
+    catch(e){
+      cfNote.textContent=t.send_err_photos;
+      location.href='mailto:'+COMPANY.email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+      sendBtn.disabled=false;sendSpan.textContent=t.btn_send;return;
     }
+  }
+  try{
+    const r=await fetch('https://formsubmit.co/ajax/'+COMPANY.email,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+      body:JSON.stringify(fields)});
     if(!r.ok)throw 0;
     await r.json();
     sendSpan.textContent='✓';cfNote.textContent=t.sent_ok;
   }catch(err){
-    if(photos.length){
-      try{fields._next=location.origin+location.pathname;phPostForm(fields);return;}
-      catch(e2){cfNote.textContent=t.send_err_photos;}
-    }else{cfNote.textContent=t.send_err;}
+    cfNote.textContent=t.send_err;
     location.href='mailto:'+COMPANY.email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
     sendBtn.disabled=false;sendSpan.textContent=t.btn_send;
   }
@@ -1012,6 +1013,14 @@ document.querySelectorAll('.copy-num').forEach(el=>{
   el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();copyNumber(el);}});
 });
 setLang('en',true);
+
+/* back from a multipart submission: say so, and drop the marker so a refresh does not repeat it */
+if(/[?&]sent=1(?:&|$)/.test(location.search)){
+  history.replaceState(null,'',location.pathname);
+  cfNote.textContent=I18N[current].sent_ok;
+  cfNote.classList.add('ok');
+  setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),450);
+}
 </script>
 </body>
 </html>

@@ -84,12 +84,15 @@ Then open http://localhost:8145.
   queued — roughly 250–400 KB each. Anything the canvas cannot decode (HEIC,
   usually) is passed through untouched at its original size. The form refuses
   to send over 8 MB total and says so.
-- Attachments go out as `multipart/form-data`. FormSubmit documents file
-  uploads on its plain endpoint rather than the AJAX one, so if the AJAX POST
-  is refused the page reposts the identical submission as a real form and
-  returns via `_next`. Submissions without photos still go as JSON over AJAX,
-  exactly as before. **Worth testing once on the live site** — the AJAX
-  attachment behaviour could not be verified from the build environment.
+- **Attachments never go over AJAX.** FormSubmit's AJAX endpoint accepts a
+  multipart body, answers `200`, and silently discards the files — the email
+  arrives with every text field intact and nothing attached. So a submission
+  carrying photos is posted as a real `multipart/form-data` form to the plain
+  endpoint, with the first file field named `attachment` per FormSubmit's
+  convention and the rest `attachment2`…`attachment8`. That navigates away, so
+  `_next` returns the visitor to `?sent=1`, where the page confirms the send
+  and strips the marker from the URL. Submissions without photos still go as
+  JSON over AJAX, which works fine for text.
 - Estimate totals are indicative; the page says so twice, and every quote it
   produces repeats it. Final prices are confirmed after a site visit.
 
