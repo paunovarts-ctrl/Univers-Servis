@@ -35,59 +35,50 @@ to it. Keep those attributes, and update the numbers if the dimensions change.
 cache, so a changed photo needs a changed filename to reach anyone who has
 already visited — or accept that they keep the old one until the cache lapses.
 
-## intro.webm / intro.mp4
+## intro.mp4 / intro-bg.jpg
 
-The loading screen: the logo drawing itself, on the page's own backdrop.
+The loading screen: the clip as supplied, 1280x720 H.264, 5.1 s, 1.0 MB, played
+full-screen. Nothing has been done to the picture.
 
-The clip as supplied was 1280x720 H.264, 1035 KB, and the logo sat on a grey
-studio vignette — 143 at the corners, 236 in the middle — with a floor shadow
-under it. On a near-white page that read as a grey slab. What ships now is the
-same animation, untouched, with that backdrop removed.
+The sequence, in `index.html`'s first inline script: play it through, hold 600 ms
+on the last frame, run it backwards in 520 ms, dissolve the overlay over 700 ms.
 
-### How the backdrop came off
+### Filling the screen without cutting the logo
 
-No colour key could do it: the wordmark is grey, the same family as the
-backdrop behind it. So it was subtracted instead.
+The wordmark runs nearly the full width of the frame — 88 px of margin inside
+1280. So `cover` can only crop so far before it starts eating letters.
 
-1. The backdrop is static — away from the shadow it drifts by at most 7 across
-   the whole clip — so one plate serves every frame.
-2. Frame 0 is 98.5% clean (the logo has barely started). Mask the few coloured
-   pixels, fill them by normalised convolution from their surroundings, and
-   that is the plate.
-3. Per frame and per pixel, alpha ramps over the distance from the plate
-   (22 to 62 — above the compression noise, which tops out near 7), and the
-   colour is un-premultiplied against the plate, which recovers the true logo
-   colour rather than leaving a grey fringe on the soft edges.
-4. The studio floor shadow survives that, being absent from the plate. There is
-   a clean gap at y=560 between the logo and the shadow, so alpha is cut there.
-5. Crop to the logo's bounds across all frames: 1024x386, from 1280x720.
+Above **8:5** the crop stays inside that margin and the clip is `cover`, edge to
+edge with no bars: at 16:9 nothing is cropped at all, at 16:10 it takes 64 px a
+side against 88 px of room. Below 8:5 it switches to `contain`, and the clip
+fills the width with bars above and below.
 
-`scripts/key-intro.py` does all of it, and reruns from `scripts/intro-source.mp4`.
+`intro-bg.jpg` is what fills those bars. It is the clip's own backdrop —
+reconstructed from frame 0, whose logo is masked out and filled in from its
+surroundings — with its top and bottom rows carried outward to 640x1800. The
+overlay draws it at `center/100% auto`, so in `contain` (where the clip fills
+the width) its columns line up with the clip's own and the clamped rows continue
+the studio vignette off-screen. The join measures a mean step of 1.3 to 2.1,
+which is JPEG noise. A flat fill was about 15 out, plainly visible as two lines.
 
-### Two files
+### The rewind
 
-| | | |
-|---|---|---|
-| `intro.webm` | VP9, `yuva420p`, real transparency | 304 KB |
-| `intro.mp4` | H.264, logo baked on `#F4F9F5` | 236 KB |
+No seeking: seeking backwards only lands on keyframes, so it stutters, and some
+files report an empty seekable range and every seek lands at zero. Instead 14
+frames are kept on the way forward, drawn into canvases sized to roughly what
+the clip is displayed at — `max(640, min(1100, innerWidth))` — and flipped
+through in reverse. About 36 MB on a desktop, 12 MB on a phone, freed with the
+overlay. Capturing at a fixed 600 px was fine when the clip sat in a 540 px box
+and soft once it went full-screen.
 
-The WebM comes first in the markup. Safari plays VP9 but ignores alpha in
-WebM, so the transparent areas of the WebM are filled with that same
-`#F4F9F5` — if the alpha is dropped it looks like the fallback rather than a
-grey slab.
+### It always ends
 
-CRF 52 on the WebM: between CRF 40 and 52 the visible error barely moves
-(0.66 to 0.72 mean, against the source composited over the page tone) while
-the file halves, so the codec is not what limits quality here.
+Click or Escape to skip, a missing or blocked video finishes immediately,
+`prefers-reduced-motion` removes it before it starts, and a nine-second timer
+catches anything else. A loading screen that can strand someone on a blank page
+is worse than no loading screen.
 
-One more thing matters for size: where alpha is zero, un-premultiplying divides
-by nearly nothing and fills the invisible area with amplified noise. Encoded
-straight, that came to 5.9 MB. Flattening those pixels to a single colour first
-brought it to 304 KB for the same picture.
-
-### The overlay
-
-Full-viewport, wearing the same background stack as `body`, fixed the same way,
-so the intro's field and the page's field line up exactly and the dissolve
-crosses nothing. The logo runs to `min(92vw, 1100px)` — 92% of a phone, capped
-just above the source's own 1024px so it is never softened by upscaling.
+Replacing the clip: same filename works, but `assets/` carries a one-year
+immutable cache, so returning visitors keep the old one until it lapses — use a
+new filename if that matters. If the new clip's backdrop differs, `intro-bg.jpg`
+needs rebuilding from it too, or the bars below 8:5 will not match.

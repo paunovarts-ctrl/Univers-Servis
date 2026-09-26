@@ -29,18 +29,17 @@
   .eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--green);font-weight:600}
 
   /* INTRO */
-  /* the overlay wears the page's own backdrop, fixed exactly as the body's is, so
-     the two line up pixel for pixel and the dissolve crosses nothing */
-  .intro{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;
-    background:
-     radial-gradient(50% 40% at 85% 5%, rgba(46,125,80,.11), transparent 60%),
-     radial-gradient(55% 42% at 8% 28%, rgba(92,193,133,.10), transparent 60%),
-     radial-gradient(58% 42% at 93% 64%, rgba(46,125,80,.09), transparent 62%),
-     radial-gradient(50% 40% at 10% 92%, rgba(92,193,133,.09), transparent 60%),
-     linear-gradient(180deg,#eef5f0 0%,#ffffff 26%,#f4f9f5 52%,#ffffff 78%,#edf4ef 100%);
-    background-attachment:fixed;background-repeat:no-repeat;background-color:#fbfdfb;
+  .intro{position:fixed;inset:0;z-index:10000;
+    /* width 100%, so in contain the backdrop's columns line up with the clip's
+       own, and its clamped top and bottom rows carry the vignette off-screen */
+    background:#b3b3b3 url(assets/intro-bg.jpg) center/100% auto no-repeat;
     transition:opacity 700ms ease,transform 700ms cubic-bezier(.4,0,.2,1)}
-  .intro video,.intro canvas{width:min(92vw,1100px);max-height:68vh;height:auto;object-fit:contain;display:block}
+  /* The wordmark leaves only 88px of margin inside a 1280px frame, so cover can
+     only crop so far before it bites. Above 8:5 the crop stays under that and the
+     clip fills the screen edge to edge; below it, contain, and the field behind
+     is the clip's own backdrop so the join is grey meeting grey. */
+  .intro video,.intro canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+  @media (min-aspect-ratio:8/5){.intro video,.intro canvas{object-fit:cover}}
   .intro.gone{opacity:0;transform:scale(1.05);pointer-events:none}
   body.intro-on{overflow:hidden}
 
@@ -345,17 +344,14 @@
 <body>
 
 <div class="intro" id="intro" aria-hidden="true">
-  <video id="introVid" muted playsinline preload="auto" disablepictureinpicture>
-    <source src="assets/intro.webm" type="video/webm">
-    <source src="assets/intro.mp4" type="video/mp4">
-  </video>
+  <video id="introVid" src="assets/intro.mp4" muted playsinline preload="auto" disablepictureinpicture></video>
 </div>
 <script>
 /* Intro: play it, hold on the last frame, run it backwards, then dissolve.
    Inline and first, so the overlay is up before the rest of the page parses. */
 (function(){
   const intro=document.getElementById('intro'),vid=document.getElementById('introVid'),body=document.body;
-  const MAX=18;              /* frames kept for the rewind */
+  const MAX=14;              /* frames kept for the rewind */
   let shots=[],cv=null,ctx=null,lastAt=-1,done=false,bail=0;
 
   function finish(){
@@ -379,7 +375,11 @@
   function grab(){
     if(!vid.videoWidth)return;
     if(!cv){
-      const k=Math.min(1,600/vid.videoWidth);
+      /* the clip is fullscreen now, so capture near the size it is shown at: a
+         600px store was fine inside a 540px box but upscales 2.4x across a
+         desktop and turns the rewind soft. Capped so the store stays tens of
+         megabytes rather than hundreds, and freed with the overlay. */
+      const k=Math.min(1,Math.max(640,Math.min(1100,innerWidth))/vid.videoWidth);
       cv=document.createElement('canvas');
       cv.width=Math.round(vid.videoWidth*k);cv.height=Math.round(vid.videoHeight*k);
       ctx=cv.getContext('2d');
@@ -398,15 +398,12 @@
   function rewind(){
     grab();                                   /* the final frame */
     if(shots.length<2||!cv){finish();return;}
-    const r=vid.getBoundingClientRect();
-    cv.style.width=r.width+'px';cv.style.height=r.height+'px';cv.style.maxHeight='none';
     vid.replaceWith(cv);
     const ms=520,t0=performance.now(),n=shots.length-1;
     (function step(now){
       /* clamp: a rAF timestamp can predate t0, and a negative k would index past
          the end of the store */
       const k=Math.max(0,Math.min(1,(now-t0)/ms));
-      ctx.clearRect(0,0,cv.width,cv.height);
       ctx.drawImage(shots[Math.round((1-k)*n)],0,0);
       if(k<1)requestAnimationFrame(step);else finish();
     })(performance.now());
