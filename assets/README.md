@@ -46,20 +46,27 @@ on the last frame, run it backwards in 520 ms, dissolve the overlay over 700 ms.
 ### Filling the screen without cutting the logo
 
 The wordmark runs nearly the full width of the frame — 88 px of margin inside
-1280. So `cover` can only crop so far before it starts eating letters.
+1280 — so `cover` can only crop so far before it eats letters. Above **8:5** the
+crop stays inside that margin and the clip covers, edge to edge: nothing cropped
+at 16:9, 64 px a side at 16:10.
 
-Above **8:5** the crop stays inside that margin and the clip is `cover`, edge to
-edge with no bars: at 16:9 nothing is cropped at all, at 16:10 it takes 64 px a
-side against 88 px of room. Below 8:5 it switches to `contain`, and the clip
-fills the width with bars above and below.
+Below 8:5 it fills the width instead, which would leave bars. There are none,
+because two things happen. `intro-bg.jpg` — the clip's own backdrop,
+reconstructed from frame 0 with its sliver of logo masked out and filled from
+its surroundings, then forced grey and blurred to lift out the floor shadow and
+what the inpainting left behind — is stretched to the viewport with
+`center/100% 100%`, so the vignette runs edge to edge as one field. And the
+clip's top and bottom edges are feathered into it over the outer 17% with a
+mask. The logo is clear of that: it occupies rows 168 to 560 of 720, leaving
+22% of margin.
 
-`intro-bg.jpg` is what fills those bars. It is the clip's own backdrop —
-reconstructed from frame 0, whose logo is masked out and filled in from its
-surroundings — with its top and bottom rows carried outward to 640x1800. The
-overlay draws it at `center/100% auto`, so in `contain` (where the clip fills
-the width) its columns line up with the clip's own and the clamped rows continue
-the studio vignette off-screen. The join measures a mean step of 1.3 to 2.1,
-which is JPEG noise. A flat fill was about 15 out, plainly visible as two lines.
+The mask needs the element box to be the picture, not the viewport, or it fades
+empty space — hence `width:100%; height:auto` rather than `inset:0` in that
+branch.
+
+The join measures a maximum step of about 1 grey level per row, against roughly
+15 in a single row for a flat fill, which read as two hard lines across the
+screen.
 
 ### The rewind
 

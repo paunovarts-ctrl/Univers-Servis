@@ -30,16 +30,26 @@
 
   /* INTRO */
   .intro{position:fixed;inset:0;z-index:10000;
-    /* width 100%, so in contain the backdrop's columns line up with the clip's
-       own, and its clamped top and bottom rows carry the vignette off-screen */
-    background:#b3b3b3 url(assets/intro-bg.jpg) center/100% auto no-repeat;
+    /* the clip's own backdrop, stretched to the viewport so the vignette runs
+       edge to edge as one field rather than a band with something else around it */
+    background:#b3b3b3 url(assets/intro-bg.jpg) center/100% 100% no-repeat;
     transition:opacity 700ms ease,transform 700ms cubic-bezier(.4,0,.2,1)}
   /* The wordmark leaves only 88px of margin inside a 1280px frame, so cover can
      only crop so far before it bites. Above 8:5 the crop stays under that and the
      clip fills the screen edge to edge; below it, contain, and the field behind
      is the clip's own backdrop so the join is grey meeting grey. */
-  .intro video,.intro canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
-  @media (min-aspect-ratio:8/5){.intro video,.intro canvas{object-fit:cover}}
+  .intro video,.intro canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  /* Below 8:5 cover would start cutting letters, so the clip fills the width
+     instead and its top and bottom edges are feathered into the backdrop — the
+     box is sized to the picture here, not the viewport, or the mask would be
+     fading empty space. The logo sits clear of the feather: it occupies rows
+     168 to 560 of 720, and the fade covers the outer 17%. */
+  @media (max-aspect-ratio:8/5){
+    .intro video,.intro canvas{inset:auto;left:0;top:50%;transform:translateY(-50%);
+      width:100%;height:auto;object-fit:fill;
+      -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 17%,#000 83%,transparent 100%);
+      mask-image:linear-gradient(to bottom,transparent 0,#000 17%,#000 83%,transparent 100%)}
+  }
   .intro.gone{opacity:0;transform:scale(1.05);pointer-events:none}
   body.intro-on{overflow:hidden}
 
