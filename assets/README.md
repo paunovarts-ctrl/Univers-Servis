@@ -37,11 +37,40 @@ already visited — or accept that they keep the old one until the cache lapses.
 
 ## intro.mp4 / intro-bg.jpg
 
-The loading screen: the clip as supplied, 1280x720 H.264, 5.1 s, 1.0 MB, played
-full-screen. Nothing has been done to the picture.
+The loading screen. The animation is the one that was supplied; the grey wall
+behind it is not.
 
-The sequence, in `index.html`'s first inline script: play it through, hold 600 ms
-on the last frame, run it backwards in 520 ms, dissolve the overlay over 700 ms.
+### Why the wall was rebuilt
+
+The clip was filmed against a grey studio vignette, and that wall came through
+the encoder carrying 8x8 block artefacts: its block boundaries varied about 1.5x
+as much as the pixels inside the blocks. Inside a 540px box nobody would see it.
+Run full-screen on a desktop, each of those blocks is a centimetre across, and
+the wall reads as mottled and banded. The wall is also completely static —
+0.04 of change frame to frame — so the blocks do not shimmer away, they sit
+there like stains.
+
+So it is replaced. `scripts/clean-intro.py` lifts the logo off the wall, builds
+a smooth vignette in its place, and puts the logo back:
+
+1. Frame 0 is 98.5% clean, the logo having barely started. Mask that sliver and
+   fill it from its surroundings — that is the wall as filmed.
+2. Force it grey and blur it 30px. No 8x8 block survives that, and the vignette's
+   shape is unchanged: centre 239, edge 191, corner 155.
+3. For every frame, alpha ramps on distance from the wall (22 to 62, clear of the
+   source's own noise near 7) and the colour is un-premultiplied against it, which
+   recovers the logo rather than leaving grey through its soft edges.
+4. The floor shadow gets its own layer. Run through the same alpha threshold it
+   loses its faint half and breaks into dashes, so instead it travels as a
+   blurred difference from the wall, ramped in below row 548 where there is no
+   logo to confuse it.
+
+Local roughness of the wall falls from 0.212 to 0.084, and the file from 1012 KB
+to 295 KB — smaller despite encoding at CRF 18, because a smooth field costs a
+codec almost nothing.
+
+`intro-bg.jpg` is that same smooth vignette, 640x360, used by the overlay behind
+the clip so the two are literally the same field.
 
 ### Filling the screen without cutting the logo
 
