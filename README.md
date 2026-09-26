@@ -22,6 +22,9 @@ One static page. No build step, no dependencies, no backend.
 - **Photo attachments** — up to 8 photos of the walls, picked or dragged in
   (a phone offers the camera), shown as removable thumbnails with a running
   size total, and sent with the quote.
+- **Careers** — a nav tab and a section listing the four roles, with an
+  application form that takes an optional CV and lands in the same inbox as
+  the quotes.
 - **Four languages** — Croatian, English, German, Italian, switched in place
   with a crossfade. The page loads in English.
 - Tap-to-copy phone number, scroll reveals, and a grain/static texture over the
@@ -57,6 +60,10 @@ stylesheet (Bricolage Grotesque + Inter).
 - **Service names and descriptions** — the `svc` array inside each language
   block in `I18N`. Keep all four languages the same length and order as
   `RATES`.
+- **Job roles** — the `job_roles` array in each language block, each entry
+  `{n, d}`. It fills both the list and the position dropdown, so adding a role
+  to all four languages is all it takes. Same rule as the chips: keep the
+  arrays the same length across languages.
 - **Branch chips** — the `br1_tags` and `br2_tags` arrays in each language
   block. They are rendered by `buildTags()`, which relabels existing `<li>`
   nodes rather than rebuilding them, so the language crossfade has something
@@ -108,6 +115,10 @@ Then open http://localhost:8145.
   `_next` returns the visitor to `?sent=1`, where the page confirms the send
   and strips the marker from the URL. Submissions without photos still go as
   JSON over AJAX, which works fine for text.
+- **Both forms share one path.** `fsPostForm(fields, files)` posts the
+  multipart form; the quote passes its photos, the job application passes the
+  CV. They come back on separate markers — `?sent=1` for a quote, `?applied=1`
+  for an application — so each confirms in its own form and scrolls there.
 - Estimate totals are indicative; the page says so twice, and every quote it
   produces repeats it. Final prices are confirmed after a site visit.
 
