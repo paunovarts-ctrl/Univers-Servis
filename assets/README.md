@@ -37,40 +37,35 @@ already visited — or accept that they keep the old one until the cache lapses.
 
 ## intro.mp4 / intro-bg.jpg
 
-The loading screen. The animation is the one that was supplied; the grey wall
-behind it is not.
+The loading screen, built by `scripts/build-intro.py` from
+`scripts/intro-source.mp4`.
 
-### Why the wall was rebuilt
+The source is 2560x1440 at 120fps, 5.6 MB — a master, not something to put in
+front of a visitor before the site loads. Nothing is done to the picture; it is
+only trimmed to a size a loading screen can justify.
 
-The clip was filmed against a grey studio vignette, and that wall came through
-the encoder carrying 8x8 block artefacts: its block boundaries varied about 1.5x
-as much as the pixels inside the blocks. Inside a 540px box nobody would see it.
-Run full-screen on a desktop, each of those blocks is a centimetre across, and
-the wall reads as mottled and banded. The wall is also completely static —
-0.04 of change frame to frame — so the blocks do not shimmer away, they sit
-there like stains.
+| | |
+|---|---|
+| Source | 2560x1440, 120 fps, 5.6 MB |
+| Shipped | 1920x1080, 60 fps, **330 KB** |
 
-So it is replaced. `scripts/clean-intro.py` lifts the logo off the wall, builds
-a smooth vignette in its place, and puts the logo back:
+1920 is past any screen the clip is shown on, and 60fps keeps the neon draw-on
+smooth. The setting that did the work is **`-tune animation`**: on flat cel-like
+material it gave a smaller file *and* a better picture than the same CRF without
+it — 450 KB at 42.9 dB against 708 KB at 42.8. CRF 26 then trades 0.5 dB for
+another 120 KB, worth taking on a five-second intro. Error measured on the neon
+itself barely moves across that range: 4.07 at CRF 24, 4.19 at 26.
 
-1. Frame 0 is 98.5% clean, the logo having barely started. Mask that sliver and
-   fill it from its surroundings — that is the wall as filmed.
-2. Force it grey and blur it 30px. No 8x8 block survives that, and the vignette's
-   shape is unchanged: centre 239, edge 191, corner 155.
-3. For every frame, alpha ramps on distance from the wall (22 to 62, clear of the
-   source's own noise near 7) and the colour is un-premultiplied against it, which
-   recovers the logo rather than leaving grey through its soft edges.
-4. The floor shadow gets its own layer. Run through the same alpha threshold it
-   loses its faint half and breaks into dashes, so instead it travels as a
-   blurred difference from the wall, ramped in below row 548 where there is no
-   logo to confuse it.
+This source needed no repair. Its wall measures 0.071 roughness where the first
+clip measured 0.216 — the earlier one had 8x8 blocking baked into the backdrop,
+which is why it had to be rebuilt. This one is clean as shot.
 
-Local roughness of the wall falls from 0.212 to 0.084, and the file from 1012 KB
-to 295 KB — smaller despite encoding at CRF 18, because a smooth field costs a
-codec almost nothing.
+`intro-bg.jpg` is the backdrop the overlay wears, derived from the clip's own
+frame 0: the logo has barely started there, so masking that sliver, filling it
+from its surroundings, forcing grey and blurring gives the wall on its own.
 
-`intro-bg.jpg` is that same smooth vignette, 640x360, used by the overlay behind
-the clip so the two are literally the same field.
+**If the clip is ever replaced, rebuild `intro-bg.jpg` with it** — the overlay
+and the clip have to be the same field or the join below 8:5 will show.
 
 ### Filling the screen without cutting the logo
 
