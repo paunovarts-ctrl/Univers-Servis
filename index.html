@@ -40,7 +40,7 @@
      is the clip's own backdrop so the join is grey meeting grey. */
   .intro video,.intro canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   /* Below 8:5 cover would start cutting letters, so the clip fills the width
-     instead and its top and bottom edges are feathered into the backdrop — the
+     instead and its top and bottom edges are feathered into the backdrop. The
      box is sized to the picture here, not the viewport, or the mask would be
      fading empty space. The logo sits clear of the feather: it occupies rows
      168 to 560 of 720, and the fade covers the outer 17%. */
@@ -107,13 +107,13 @@
   @media(max-width:900px){.navlinks{display:none}nav{padding:1rem 1.2rem}}
 
   /* HERO */
-  /* no overflow:hidden here — it cut the photo's shadow off at the hero's bottom
+  /* no overflow:hidden here; it cut the photo's shadow off at the hero's bottom
      edge. the decorative blob below is what needed containing, so it is clipped
      to its own box instead. */
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;background:transparent}
   /* sits flush to the right edge rather than past it: overflowing sideways is what
      forced overflow:hidden onto the hero, and that clipped the photo's shadow.
-     Bleeding upward is free — nothing scrolls above the top of the page. */
+     Bleeding upward is free; nothing scrolls above the top of the page. */
   .hero::before{content:"";position:absolute;top:-12%;right:0;width:46vmax;height:46vmax;border-radius:50%;
     background:radial-gradient(circle at center, rgba(46,125,80,.07), transparent 70%);z-index:0;pointer-events:none}
   .hero-inner{position:relative;z-index:3;width:100%;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:3rem;padding:7rem var(--gutter) 4rem}
@@ -168,7 +168,7 @@
   @media(max-width:900px){.branches{grid-template-columns:1fr}}
   .branch{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
     box-shadow:0 30px 60px -48px rgba(20,40,28,.55);transition:border-color 180ms ease,box-shadow 180ms ease}
-  /* photo slot — drop an <img> in and it covers this area; until then the icon holds it */
+  /* photo slot: drop an <img> in and it covers this area; until then the icon holds it */
   .branch-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--green-soft);border-bottom:1px solid var(--line)}
   .branch-media img{width:100%;height:100%;object-fit:cover;display:block}
   .branch-body{padding:1.9rem;display:flex;flex-direction:column;gap:.75rem;flex:1}
@@ -297,7 +297,7 @@
 
   /* INTERACTION
      Hover is seen dozens of times in a visit, so it stays quiet: colour and depth,
-     never movement. Everything is gated to devices that actually hover — on a
+     never movement. Everything is gated to devices that actually hover; on a
      phone, a tap would otherwise leave the state stuck on. Movement is kept for
      :active, where it is feedback rather than decoration. */
   .btn:active,.calc-toggle:active,.lang-trigger:active,.ph-drop:active{transform:scale(.98)}
@@ -311,7 +311,7 @@
     .summary .btn:hover .dot{background:var(--green-deep)}
     /* hovering one link recedes the others, so the pointer reads as focus
        rather than decoration. The plain rule first is the fallback for
-       browsers without :has() — they get the colour shift and no dimming. */
+       browsers without :has(), which get the colour shift and no dimming. */
     .navlinks a:hover{opacity:1;color:var(--green)}
     .navlinks:has(a:hover) a{opacity:.3}
     .navlinks:has(a:hover) a:hover{opacity:1;color:var(--green)}
@@ -379,8 +379,8 @@
   addEventListener('keydown',function(e){if(e.key==='Escape')finish();});
   vid.addEventListener('error',finish);
 
-  /* Rather than seek backwards — which is keyframe-limited, choppy, and on some
-     files not possible at all — keep a handful of frames on the way forward and
+  /* Rather than seek backwards, which is keyframe-limited, choppy, and on some
+     files not possible at all, keep a handful of frames on the way forward and
      play those back. Costs a few MB and always runs at the speed we ask for. */
   function grab(){
     if(!vid.videoWidth)return;
@@ -651,7 +651,7 @@ const I18N={
  hr:{
   nav_services:`Usluge`,nav_estimate:`Procjena`,nav_work:`Radovi`,nav_process:`Proces`,nav_contact:`Kontakt`,
   hero_h1:`Površine koje <em>dočekuju</em> svakog gosta.`,
-  hero_p:`Dekorativno ličenje, žbukanje i cjelogodišnje održavanje za hotele, stanove i privatne kuće — izvedeno bez ometanja vašeg života i poslovanja.`,
+  hero_p:`Dekorativno ličenje, žbukanje i cjelogodišnje održavanje za hotele, stanove i privatne kuće, izvedeno bez ometanja vašeg života i poslovanja.`,
   btn_estimate:`Zatražite trenutnu procjenu`,btn_work:`Pogledajte naše radove`,
   lbl_before:`Prije`,lbl_after:`Poslije`,
   br_eyebrow:`Područja rada`,br_h2:`Iznutra i izvana.`,
@@ -672,7 +672,7 @@ const I18N={
   sum_vat_toggle:`Uključi PDV (25%)`,sum_vat:`PDV 25%`,sum_grand:`Procijenjeni iznos`,sum_btn:`Zatražite ovu ponudu`,
   sum_note:`Okvirni iznos samo za planiranje proračuna. Obilazak lokacije potvrđuje konačnu cijenu.`,
   sp_eyebrow:`Stvoreno za hotele i domove`,sp_h2:`Radimo dok vi nastavljate normalno.`,
-  sp_p:`Hoteli ostaju otvoreni, obitelji ostaju u svom domu. Ekipe rade zonu po zonu, noću ili izvan vršnih sati kada to pomaže, metodama bez prašine i s malo mirisa — tako da obnovljeni zid izgleda kao da je oduvijek bio tamo.`,
+  sp_p:`Hoteli ostaju otvoreni, obitelji ostaju u svom domu. Ekipe rade zonu po zonu, noću ili izvan vršnih sati kada to pomaže, metodama bez prašine i s malo mirisa, tako da obnovljeni zid izgleda kao da je oduvijek bio tamo.`,
   stat1:`Objekata pod brigom`,stat2:`Dana zatvaranja`,stat3:`Iskustva`,stat3_num:`30 god`,
   pr_eyebrow:`Kako funkcionira`,pr_h2:`Jednostavan, predvidljiv ritam.`,
   step1_h:`Obilazak`,step1_p:`Pregledavamo površine, rasvjetu i kretanje, zatim izrađujemo fazni plan prema vašem kalendaru.`,
@@ -680,30 +680,30 @@ const I18N={
   step3_h:`Izvedba`,step3_p:`Tihe ekipe bez prašine rade po zonama noću ili izvan vršnih sati.`,
   step4_h:`Održavanje`,step4_p:`Trajni program dorada održava sve svježim kao prvog dana.`,
   cta_eyebrow:`Razgovarajmo o obradama`,cta_h2:`Učinite svaki zid <em>vrijednim</em> fotografije.`,cta_btn:`Rezervirajte besplatan obilazak`,
-  contact_eyebrow:`Kontakt`,contact_h2:`Zatražite ponudu.`,contact_p:`Ispunite podatke i pošaljite svoju procjenu — javljamo se s konačnom ponudom.`,
+  contact_eyebrow:`Kontakt`,contact_h2:`Zatražite ponudu.`,contact_p:`Ispunite podatke i pošaljite svoju procjenu. Javljamo se s konačnom ponudom.`,
   ci_addr:`Adresa`,ci_phone:`Telefon`,ci_email:`E-pošta`,ci_hours:`Radno vrijeme`,hours_val:`Pon–Pet 08:00–17:00`,
   form_name_l:`Ime i prezime`,form_email_l:`E-pošta`,form_phone_l:`Telefon`,form_msg_l:`Poruka`,
-  form_photos_l:`Fotografije (nije obavezno)`,photos_add:`Dodajte fotografije`,photos_hint:`Fotografije zidova pomažu nam da procjena bude točnija.`,photos_selected:`Fotografije:`,photos_preparing:`Pripremam fotografije…`,photos_too_big:`Fotografije su prevelike — uklonite koju i pokušajte ponovno.`,photos_too_many:`Najviše 8 fotografija.`,photos_remove:`Ukloni`,photos_count:`Fotografije`,send_err_photos:`Slanje nije uspjelo — otvaram vašu e-poštu. Fotografije priložite ručno.`,
+  form_photos_l:`Fotografije (nije obavezno)`,photos_add:`Dodajte fotografije`,photos_hint:`Fotografije zidova pomažu nam da procjena bude točnija.`,photos_selected:`Fotografije:`,photos_preparing:`Pripremam fotografije…`,photos_too_big:`Fotografije su prevelike. Uklonite koju i pokušajte ponovno.`,photos_too_many:`Najviše 8 fotografija.`,photos_remove:`Ukloni`,photos_count:`Fotografije`,send_err_photos:`Slanje nije uspjelo. Otvaram vašu e-poštu, fotografije priložite ručno.`,
   btn_send:`Pošalji procjenu`,btn_print:`Ispiši / spremi ponudu`,
   sent_note:`Šalje vašu procjenu izravno našem timu.`,
   nav_careers:`Posao`,
   job_eyebrow:`Posao`,job_h2:`Tražimo majstore koji rade uredno.`,
-  job_p:`Radimo cijelu godinu na području Poreča i Istre — stanovi, kuće, hoteli i fasade. Ako ste dobri u svom poslu i za sobom ostavljate uredno gradilište, javite se.`,
+  job_p:`Radimo cijelu godinu na području Poreča i Istre: stanovi, kuće, hoteli i fasade. Ako ste dobri u svom poslu i za sobom ostavljate uredno gradilište, javite se.`,
   job_roles:[
    {n:`Soboslikar – ličilac`,d:`Priprema podloge, glet i završni premazi u stanovima, kućama i hotelima.`},
    {n:`Fasader`,d:`Vanjska žbuka, termofasade i završni slojevi, rad na skelama.`},
    {n:`Žbukar / gipsar`,d:`Strojna i ručna žbuka, Knauf pregrade i stropovi.`},
    {n:`Pomoćni radnik`,d:`Priprema i zaštita prostora, skele, transport materijala i čišćenje.`}],
   job_other:`Nešto drugo`,
-  job_open:`Nemate iskustva, ali želite naučiti zanat? Svejedno se javite — napišite to u poruci.`,
+  job_open:`Nemate iskustva, ali želite naučiti zanat? Svejedno se javite, napišite to u poruci.`,
   job_role_l:`Pozicija`,job_msg_l:`Nekoliko riječi o sebi`,
   job_cv_l:`Životopis (nije obavezno)`,job_cv_add:`Priložite životopis`,job_cv_hint:`PDF, Word ili fotografija, do 6 MB.`,
-  job_cv_big:`Datoteka je prevelika — najviše 6 MB.`,
+  job_cv_big:`Datoteka je prevelika. Najviše 6 MB.`,
   job_send:`Pošalji prijavu`,job_note:`Prijavu šaljemo izravno na našu e-poštu. Javljamo se svima.`,
-  job_need:`Upišite ime i barem jedan kontakt — telefon ili e-poštu.`,
+  job_need:`Upišite ime i barem jedan kontakt: telefon ili e-poštu.`,
   job_subject:`Prijava za posao`,job_sent_ok:`Prijava poslana. Javljamo se uskoro.`,
   copied_toast:`Broj kopiran`,
-  sending:`Šaljem…`,sent_ok:`Poslano! Javljamo se uskoro.`,send_err:`Slanje nije uspjelo — otvaram vašu e-poštu.`,
+  sending:`Šaljem…`,sent_ok:`Poslano! Javljamo se uskoro.`,send_err:`Slanje nije uspjelo. Otvaram vašu e-poštu.`,
   inv_quote:`PONUDA`,inv_for:`Za`,inv_date:`Datum`,inv_subject:`Ponuda`,
   no_items_alert:`Unesite površinu za barem jednu uslugu.`,ep_empty:`Još nema odabranih usluga.`,
   svc:[
@@ -723,7 +723,7 @@ const I18N={
  en:{
   nav_services:`Services`,nav_estimate:`Estimate`,nav_work:`Our Work`,nav_process:`Process`,nav_contact:`Contact`,
   hero_h1:`Surfaces that <em>welcome</em> every guest.`,
-  hero_p:`Decorative painting, plastering and year-round maintenance for hotels, apartments and private homes — delivered without disrupting how you live or work.`,
+  hero_p:`Decorative painting, plastering and year-round maintenance for hotels, apartments and private homes, delivered without disrupting how you live or work.`,
   btn_estimate:`Get an instant estimate`,btn_work:`See our work`,
   lbl_before:`Before`,lbl_after:`After`,
   br_eyebrow:`Where we work`,br_h2:`Inside and out.`,
@@ -744,7 +744,7 @@ const I18N={
   sum_vat_toggle:`Include VAT (25%)`,sum_vat:`VAT 25%`,sum_grand:`Estimated total`,sum_btn:`Request this quote`,
   sum_note:`Indicative figure for budgeting only. A site walkthrough confirms the final price.`,
   sp_eyebrow:`Built for hotels and homes`,sp_h2:`We work while you carry on.`,
-  sp_p:`Hotels stay open, families stay in. Crews phase work zone-by-zone, overnight or off-peak where it helps, with dust-controlled, low-odour methods — so a refreshed wall feels like it was always there.`,
+  sp_p:`Hotels stay open, families stay in. Crews phase work zone-by-zone, overnight or off-peak where it helps, with dust-controlled, low-odour methods, so a refreshed wall feels like it was always there.`,
   stat1:`Properties cared for`,stat2:`Closure days`,stat3:`Experience`,stat3_num:`30 yr`,
   pr_eyebrow:`How it works`,pr_h2:`A simple, predictable rhythm.`,
   step1_h:`Walkthrough`,step1_p:`We survey surfaces, lighting and traffic, then map a phased plan around your calendar.`,
@@ -752,30 +752,30 @@ const I18N={
   step3_h:`Execution`,step3_p:`Quiet, dust-controlled crews working zones overnight or off-peak.`,
   step4_h:`Upkeep`,step4_p:`An ongoing touch-up program keeps everything looking opening-day fresh.`,
   cta_eyebrow:`Let's talk finishes`,cta_h2:`Make every wall <em>worth</em> a photo.`,cta_btn:`Book a free walkthrough`,
-  contact_eyebrow:`Contact`,contact_h2:`Request your quote.`,contact_p:`Fill in your details and send your estimate — we'll reply with a final quote.`,
+  contact_eyebrow:`Contact`,contact_h2:`Request your quote.`,contact_p:`Fill in your details and send your estimate. We'll reply with a final quote.`,
   ci_addr:`Address`,ci_phone:`Phone`,ci_email:`Email`,ci_hours:`Opening hours`,hours_val:`Mon–Fri 08:00–17:00`,
   form_name_l:`Full name`,form_email_l:`Email`,form_phone_l:`Phone`,form_msg_l:`Message`,
-  form_photos_l:`Photos (optional)`,photos_add:`Add photos`,photos_hint:`Photos of the walls help us make the estimate far more accurate.`,photos_selected:`Photos:`,photos_preparing:`Preparing photos…`,photos_too_big:`The photos are too large — remove one or two and try again.`,photos_too_many:`Up to 8 photos.`,photos_remove:`Remove`,photos_count:`Photos`,send_err_photos:`Couldn't send automatically — opening your email app. Please attach the photos there.`,
+  form_photos_l:`Photos (optional)`,photos_add:`Add photos`,photos_hint:`Photos of the walls help us make the estimate far more accurate.`,photos_selected:`Photos:`,photos_preparing:`Preparing photos…`,photos_too_big:`The photos are too large. Remove one or two and try again.`,photos_too_many:`Up to 8 photos.`,photos_remove:`Remove`,photos_count:`Photos`,send_err_photos:`Couldn't send automatically. Opening your email app, please attach the photos there.`,
   btn_send:`Send my estimate`,btn_print:`Print / save quote`,
   sent_note:`Sends your estimate straight to our team.`,
   nav_careers:`Careers`,
   job_eyebrow:`Careers`,job_h2:`We are looking for tradespeople who work tidily.`,
-  job_p:`We work year-round across Poreč and Istria — flats, houses, hotels and facades. If you are good at your trade and you leave a site clean, get in touch.`,
+  job_p:`We work year-round across Poreč and Istria: flats, houses, hotels and facades. If you are good at your trade and you leave a site clean, get in touch.`,
   job_roles:[
    {n:`Painter and decorator`,d:`Surface preparation, skim and finishing coats in flats, houses and hotels.`},
    {n:`Facade worker`,d:`External render, insulated facades and finishing coats, working from scaffolding.`},
    {n:`Plasterer / drywaller`,d:`Machine and hand render, Knauf partitions and ceilings.`},
    {n:`General labourer`,d:`Preparing and protecting the site, scaffolding, moving materials and clearing up.`}],
   job_other:`Something else`,
-  job_open:`No experience but want to learn the trade? Write to us anyway — say so in your message.`,
+  job_open:`No experience but want to learn the trade? Write to us anyway, and say so in your message.`,
   job_role_l:`Position`,job_msg_l:`A few words about yourself`,
   job_cv_l:`CV (optional)`,job_cv_add:`Attach your CV`,job_cv_hint:`PDF, Word or a photo, up to 6 MB.`,
-  job_cv_big:`That file is too large — 6 MB maximum.`,
+  job_cv_big:`That file is too large. 6 MB maximum.`,
   job_send:`Send application`,job_note:`Your application goes straight to our inbox. We reply to everyone.`,
-  job_need:`Please give your name and at least one contact — phone or email.`,
+  job_need:`Please give your name and at least one contact: phone or email.`,
   job_subject:`Job application`,job_sent_ok:`Application sent. We will be in touch shortly.`,
   copied_toast:`Number copied`,
-  sending:`Sending…`,sent_ok:`Sent! We'll get back to you shortly.`,send_err:`Couldn't send automatically — opening your email app instead.`,
+  sending:`Sending…`,sent_ok:`Sent! We'll get back to you shortly.`,send_err:`Couldn't send automatically. Opening your email app instead.`,
   inv_quote:`QUOTE`,inv_for:`For`,inv_date:`Date`,inv_subject:`Quote`,
   no_items_alert:`Enter an area for at least one service.`,ep_empty:`No services selected yet.`,
   svc:[
@@ -795,7 +795,7 @@ const I18N={
  de:{
   nav_services:`Leistungen`,nav_estimate:`Kostenschätzung`,nav_work:`Referenzen`,nav_process:`Ablauf`,nav_contact:`Kontakt`,
   hero_h1:`Oberflächen, die jeden Gast <em>willkommen</em> heißen.`,
-  hero_p:`Dekorative Malerarbeiten, Verputz und ganzjährige Wartung für Hotels, Wohnungen und Privathäuser — ausgeführt, ohne Ihren Alltag oder Betrieb zu stören.`,
+  hero_p:`Dekorative Malerarbeiten, Verputz und ganzjährige Wartung für Hotels, Wohnungen und Privathäuser, ausgeführt ohne Ihren Alltag oder Betrieb zu stören.`,
   btn_estimate:`Sofortige Kostenschätzung`,btn_work:`Unsere Arbeiten ansehen`,
   lbl_before:`Vorher`,lbl_after:`Nachher`,
   br_eyebrow:`Arbeitsbereiche`,br_h2:`Innen und außen.`,
@@ -816,7 +816,7 @@ const I18N={
   sum_vat_toggle:`MwSt. (25%) einbeziehen`,sum_vat:`MwSt. 25%`,sum_grand:`Geschätzte Gesamtsumme`,sum_btn:`Dieses Angebot anfordern`,
   sum_note:`Richtwert nur zur Budgetplanung. Eine Vor-Ort-Begehung bestätigt den Endpreis.`,
   sp_eyebrow:`Für Hotels und Zuhause gemacht`,sp_h2:`Wir arbeiten, Sie machen weiter.`,
-  sp_p:`Hotels bleiben geöffnet, Familien bleiben wohnen. Teams arbeiten Zone für Zone, bei Bedarf nachts oder außerhalb der Stoßzeiten, mit staubarmen und geruchsarmen Methoden — sodass eine erneuerte Wand wirkt, als wäre sie schon immer da gewesen.`,
+  sp_p:`Hotels bleiben geöffnet, Familien bleiben wohnen. Teams arbeiten Zone für Zone, bei Bedarf nachts oder außerhalb der Stoßzeiten, mit staubarmen und geruchsarmen Methoden, sodass eine erneuerte Wand wirkt, als wäre sie schon immer da gewesen.`,
   stat1:`Betreute Objekte`,stat2:`Schließtage`,stat3:`Erfahrung`,stat3_num:`30 J.`,
   pr_eyebrow:`So funktioniert es`,pr_h2:`Ein einfacher, planbarer Rhythmus.`,
   step1_h:`Begehung`,step1_p:`Wir prüfen Oberflächen, Beleuchtung und Wege und erstellen einen Phasenplan nach Ihrem Kalender.`,
@@ -824,30 +824,30 @@ const I18N={
   step3_h:`Ausführung`,step3_p:`Leise, staubarme Teams arbeiten zonenweise nachts oder außerhalb der Stoßzeiten.`,
   step4_h:`Instandhaltung`,step4_p:`Ein laufendes Ausbesserungsprogramm hält alles frisch wie am Eröffnungstag.`,
   cta_eyebrow:`Sprechen wir über Oberflächen`,cta_h2:`Machen Sie jede Wand <em>fotowürdig</em>.`,cta_btn:`Kostenlose Begehung buchen`,
-  contact_eyebrow:`Kontakt`,contact_h2:`Fordern Sie Ihr Angebot an.`,contact_p:`Geben Sie Ihre Daten ein und senden Sie Ihre Schätzung — wir antworten mit einem finalen Angebot.`,
+  contact_eyebrow:`Kontakt`,contact_h2:`Fordern Sie Ihr Angebot an.`,contact_p:`Geben Sie Ihre Daten ein und senden Sie Ihre Schätzung. Wir antworten mit einem finalen Angebot.`,
   ci_addr:`Adresse`,ci_phone:`Telefon`,ci_email:`E-Mail`,ci_hours:`Öffnungszeiten`,hours_val:`Mo–Fr 08:00–17:00`,
   form_name_l:`Vollständiger Name`,form_email_l:`E-Mail`,form_phone_l:`Telefon`,form_msg_l:`Nachricht`,
-  form_photos_l:`Fotos (optional)`,photos_add:`Fotos hinzufügen`,photos_hint:`Fotos der Wände helfen uns, die Schätzung deutlich genauer zu machen.`,photos_selected:`Fotos:`,photos_preparing:`Fotos werden vorbereitet…`,photos_too_big:`Die Fotos sind zu groß — entfernen Sie ein oder zwei und versuchen Sie es erneut.`,photos_too_many:`Maximal 8 Fotos.`,photos_remove:`Entfernen`,photos_count:`Fotos`,send_err_photos:`Automatisches Senden fehlgeschlagen — E-Mail-Programm wird geöffnet. Bitte hängen Sie die Fotos dort an.`,
+  form_photos_l:`Fotos (optional)`,photos_add:`Fotos hinzufügen`,photos_hint:`Fotos der Wände helfen uns, die Schätzung deutlich genauer zu machen.`,photos_selected:`Fotos:`,photos_preparing:`Fotos werden vorbereitet…`,photos_too_big:`Die Fotos sind zu groß. Entfernen Sie ein oder zwei und versuchen Sie es erneut.`,photos_too_many:`Maximal 8 Fotos.`,photos_remove:`Entfernen`,photos_count:`Fotos`,send_err_photos:`Automatisches Senden fehlgeschlagen. E-Mail-Programm wird geöffnet, bitte hängen Sie die Fotos dort an.`,
   btn_send:`Schätzung senden`,btn_print:`Angebot drucken / speichern`,
   sent_note:`Sendet Ihre Schätzung direkt an unser Team.`,
   nav_careers:`Karriere`,
   job_eyebrow:`Karriere`,job_h2:`Wir suchen Handwerker, die sauber arbeiten.`,
-  job_p:`Wir arbeiten das ganze Jahr in Poreč und Istrien — Wohnungen, Häuser, Hotels und Fassaden. Wenn Sie Ihr Handwerk beherrschen und die Baustelle sauber hinterlassen, melden Sie sich.`,
+  job_p:`Wir arbeiten das ganze Jahr in Poreč und Istrien: Wohnungen, Häuser, Hotels und Fassaden. Wenn Sie Ihr Handwerk beherrschen und die Baustelle sauber hinterlassen, melden Sie sich.`,
   job_roles:[
    {n:`Maler und Lackierer`,d:`Untergrundvorbereitung, Spachtelung und Endanstriche in Wohnungen, Häusern und Hotels.`},
    {n:`Fassadenbauer`,d:`Außenputz, Wärmedämmfassaden und Endschichten, Arbeit vom Gerüst.`},
    {n:`Verputzer / Trockenbauer`,d:`Maschinen- und Handputz, Knauf-Trennwände und Decken.`},
    {n:`Hilfsarbeiter`,d:`Vorbereiten und Abdecken der Baustelle, Gerüst, Materialtransport und Aufräumen.`}],
   job_other:`Etwas anderes`,
-  job_open:`Keine Erfahrung, aber Lust, das Handwerk zu lernen? Melden Sie sich trotzdem — schreiben Sie es in die Nachricht.`,
+  job_open:`Keine Erfahrung, aber Lust, das Handwerk zu lernen? Melden Sie sich trotzdem und schreiben Sie es in die Nachricht.`,
   job_role_l:`Position`,job_msg_l:`Ein paar Worte über Sie`,
   job_cv_l:`Lebenslauf (optional)`,job_cv_add:`Lebenslauf anhängen`,job_cv_hint:`PDF, Word oder ein Foto, bis 6 MB.`,
-  job_cv_big:`Die Datei ist zu groß — maximal 6 MB.`,
+  job_cv_big:`Die Datei ist zu groß. Maximal 6 MB.`,
   job_send:`Bewerbung senden`,job_note:`Ihre Bewerbung geht direkt in unser Postfach. Wir antworten allen.`,
-  job_need:`Bitte geben Sie Ihren Namen und mindestens einen Kontakt an — Telefon oder E-Mail.`,
+  job_need:`Bitte geben Sie Ihren Namen und mindestens einen Kontakt an: Telefon oder E-Mail.`,
   job_subject:`Bewerbung`,job_sent_ok:`Bewerbung gesendet. Wir melden uns in Kürze.`,
   copied_toast:`Nummer kopiert`,
-  sending:`Senden…`,sent_ok:`Gesendet! Wir melden uns in Kürze.`,send_err:`Automatisches Senden fehlgeschlagen — E-Mail-Programm wird geöffnet.`,
+  sending:`Senden…`,sent_ok:`Gesendet! Wir melden uns in Kürze.`,send_err:`Automatisches Senden fehlgeschlagen. E-Mail-Programm wird geöffnet.`,
   inv_quote:`ANGEBOT`,inv_for:`Für`,inv_date:`Datum`,inv_subject:`Angebot`,
   no_items_alert:`Geben Sie für mindestens eine Leistung eine Fläche ein.`,ep_empty:`Noch keine Leistungen gewählt.`,
   svc:[
@@ -867,7 +867,7 @@ const I18N={
  it:{
   nav_services:`Servizi`,nav_estimate:`Preventivo`,nav_work:`Lavori`,nav_process:`Processo`,nav_contact:`Contatti`,
   hero_h1:`Superfici che <em>accolgono</em> ogni ospite.`,
-  hero_p:`Pittura decorativa, intonacatura e manutenzione tutto l'anno per hotel, appartamenti e case private — senza interferire con la tua vita o la tua attività.`,
+  hero_p:`Pittura decorativa, intonacatura e manutenzione tutto l'anno per hotel, appartamenti e case private, senza interferire con la tua vita o la tua attività.`,
   btn_estimate:`Ottieni un preventivo immediato`,btn_work:`Guarda i nostri lavori`,
   lbl_before:`Prima`,lbl_after:`Dopo`,
   br_eyebrow:`Ambiti di lavoro`,br_h2:`Dentro e fuori.`,
@@ -888,7 +888,7 @@ const I18N={
   sum_vat_toggle:`Includi IVA (25%)`,sum_vat:`IVA 25%`,sum_grand:`Totale stimato`,sum_btn:`Richiedi questo preventivo`,
   sum_note:`Importo indicativo solo a scopo di budget. Un sopralluogo conferma il prezzo finale.`,
   sp_eyebrow:`Pensato per hotel e case`,sp_h2:`Lavoriamo mentre tu continui.`,
-  sp_p:`Gli hotel restano aperti, le famiglie restano in casa. Le squadre lavorano zona per zona, di notte o fuori dagli orari di punta quando serve, con metodi a bassa polvere e basso odore — così una parete rinnovata sembra esserci sempre stata.`,
+  sp_p:`Gli hotel restano aperti, le famiglie restano in casa. Le squadre lavorano zona per zona, di notte o fuori dagli orari di punta quando serve, con metodi a bassa polvere e basso odore, così una parete rinnovata sembra esserci sempre stata.`,
   stat1:`Strutture curate`,stat2:`Giorni di chiusura`,stat3:`Esperienza`,stat3_num:`30 anni`,
   pr_eyebrow:`Come funziona`,pr_h2:`Un ritmo semplice e prevedibile.`,
   step1_h:`Sopralluogo`,step1_p:`Esaminiamo superfici, illuminazione e flussi, poi pianifichiamo le fasi in base al tuo calendario.`,
@@ -896,30 +896,30 @@ const I18N={
   step3_h:`Esecuzione`,step3_p:`Squadre silenziose e a bassa polvere che lavorano per zone di notte o fuori dagli orari di punta.`,
   step4_h:`Manutenzione`,step4_p:`Un programma di ritocchi continuo mantiene tutto fresco come il primo giorno.`,
   cta_eyebrow:`Parliamo di finiture`,cta_h2:`Rendi ogni parete <em>degna</em> di una foto.`,cta_btn:`Prenota un sopralluogo gratuito`,
-  contact_eyebrow:`Contatti`,contact_h2:`Richiedi il tuo preventivo.`,contact_p:`Inserisci i tuoi dati e invia la tua stima — ti risponderemo con un preventivo finale.`,
+  contact_eyebrow:`Contatti`,contact_h2:`Richiedi il tuo preventivo.`,contact_p:`Inserisci i tuoi dati e invia la tua stima. Ti risponderemo con un preventivo finale.`,
   ci_addr:`Indirizzo`,ci_phone:`Telefono`,ci_email:`Email`,ci_hours:`Orari`,hours_val:`Lun–Ven 08:00–17:00`,
   form_name_l:`Nome e cognome`,form_email_l:`Email`,form_phone_l:`Telefono`,form_msg_l:`Messaggio`,
-  form_photos_l:`Foto (facoltativo)`,photos_add:`Aggiungi foto`,photos_hint:`Le foto delle pareti ci aiutano a rendere il preventivo molto più preciso.`,photos_selected:`Foto:`,photos_preparing:`Preparazione delle foto…`,photos_too_big:`Le foto sono troppo grandi — rimuovine una o due e riprova.`,photos_too_many:`Massimo 8 foto.`,photos_remove:`Rimuovi`,photos_count:`Foto`,send_err_photos:`Invio automatico non riuscito — apro la tua email. Allega lì le foto.`,
+  form_photos_l:`Foto (facoltativo)`,photos_add:`Aggiungi foto`,photos_hint:`Le foto delle pareti ci aiutano a rendere il preventivo molto più preciso.`,photos_selected:`Foto:`,photos_preparing:`Preparazione delle foto…`,photos_too_big:`Le foto sono troppo grandi. Rimuovine una o due e riprova.`,photos_too_many:`Massimo 8 foto.`,photos_remove:`Rimuovi`,photos_count:`Foto`,send_err_photos:`Invio automatico non riuscito. Apro la tua email, allega lì le foto.`,
   btn_send:`Invia la stima`,btn_print:`Stampa / salva preventivo`,
   sent_note:`Invia la tua stima direttamente al nostro team.`,
   nav_careers:`Lavora con noi`,
   job_eyebrow:`Lavora con noi`,job_h2:`Cerchiamo artigiani che lavorano con ordine.`,
-  job_p:`Lavoriamo tutto l'anno tra Parenzo e l'Istria — appartamenti, case, hotel e facciate. Se sei bravo nel tuo mestiere e lasci il cantiere pulito, scrivici.`,
+  job_p:`Lavoriamo tutto l'anno tra Parenzo e l'Istria: appartamenti, case, hotel e facciate. Se sei bravo nel tuo mestiere e lasci il cantiere pulito, scrivici.`,
   job_roles:[
    {n:`Imbianchino / decoratore`,d:`Preparazione del supporto, rasatura e mani di finitura in appartamenti, case e hotel.`},
    {n:`Facciatista`,d:`Intonaco esterno, cappotti e strati di finitura, lavoro dal ponteggio.`},
    {n:`Intonacatore / cartongessista`,d:`Intonaco a macchina e a mano, pareti e controsoffitti in cartongesso.`},
    {n:`Operaio generico`,d:`Preparazione e protezione del cantiere, ponteggi, trasporto materiali e pulizia.`}],
   job_other:`Altro`,
-  job_open:`Nessuna esperienza ma vuoi imparare il mestiere? Scrivici lo stesso — dillo nel messaggio.`,
+  job_open:`Nessuna esperienza ma vuoi imparare il mestiere? Scrivici lo stesso e dillo nel messaggio.`,
   job_role_l:`Posizione`,job_msg_l:`Due parole su di te`,
   job_cv_l:`Curriculum (facoltativo)`,job_cv_add:`Allega il curriculum`,job_cv_hint:`PDF, Word o una foto, fino a 6 MB.`,
-  job_cv_big:`Il file è troppo grande — massimo 6 MB.`,
+  job_cv_big:`Il file è troppo grande. Massimo 6 MB.`,
   job_send:`Invia candidatura`,job_note:`La candidatura arriva direttamente nella nostra casella. Rispondiamo a tutti.`,
-  job_need:`Inserisci il nome e almeno un contatto — telefono o email.`,
+  job_need:`Inserisci il nome e almeno un contatto: telefono o email.`,
   job_subject:`Candidatura`,job_sent_ok:`Candidatura inviata. Ti risponderemo a breve.`,
   copied_toast:`Numero copiato`,
-  sending:`Invio…`,sent_ok:`Inviato! Ti risponderemo a breve.`,send_err:`Invio automatico non riuscito — apro la tua email.`,
+  sending:`Invio…`,sent_ok:`Inviato! Ti risponderemo a breve.`,send_err:`Invio automatico non riuscito. Apro la tua email.`,
   inv_quote:`PREVENTIVO`,inv_for:`Per`,inv_date:`Data`,inv_subject:`Preventivo`,
   no_items_alert:`Inserisci una superficie per almeno un servizio.`,ep_empty:`Nessun servizio selezionato.`,
   svc:[
@@ -978,7 +978,7 @@ document.querySelectorAll('.obs').forEach(el=>io.observe(el));
   if(bimg.complete)init();else bimg.onload=init;
 })();
 
-/* estimate calculator — prices locked, only m² editable */
+/* estimate calculator: prices locked, only m² editable */
 const list=document.getElementById('calcList');
 const fmt=n=>'€'+Math.round(n).toLocaleString('de-DE');
 RATES.forEach((r,i)=>{
@@ -1150,8 +1150,8 @@ sendBtn.addEventListener('click',async()=>{
   if(d.items.length===0){alert(t.no_items_alert);document.getElementById('estimate').scrollIntoView({behavior:'smooth'});return;}
   if(phTotal()>PH_BUDGET){phRender();phDrop.scrollIntoView({behavior:'smooth',block:'center'});return;}
   const name=document.getElementById('fName').value||'-',email=document.getElementById('fEmail').value||'-',phone=document.getElementById('fPhone').value||'-',msg=document.getElementById('fMsg').value||'';
-  const subject=t.inv_subject+' — '+name+' ('+fmt(d.grand)+')';
-  const body=t.inv_quote+' — '+COMPANY.name+'\n'+t.inv_date+': '+new Date().toLocaleDateString(current)+'\n\n'+t.inv_for+': '+name+'\n'+t.ci_email+': '+email+'\n'+t.ci_phone+': '+phone+'\n\n──────────────\n'+text+'\n──────────────\n'+(msg?('\n'+t.form_msg_l+': '+msg+'\n'):'')+(photos.length?('\n'+t.photos_count+': '+photos.length+'\n'):'');
+  const subject=t.inv_subject + ' · ' + name+' ('+fmt(d.grand)+')';
+  const body=t.inv_quote + ' · ' + COMPANY.name+'\n'+t.inv_date+': '+new Date().toLocaleDateString(current)+'\n\n'+t.inv_for+': '+name+'\n'+t.ci_email+': '+email+'\n'+t.ci_phone+': '+phone+'\n\n──────────────\n'+text+'\n──────────────\n'+(msg?('\n'+t.form_msg_l+': '+msg+'\n'):'')+(photos.length?('\n'+t.photos_count+': '+photos.length+'\n'):'');
   const fields={name:name,email:email,phone:phone,message:msg,estimate:text,total:fmt(d.grand),_subject:subject,_template:'table',_captcha:'false'};
   sendBtn.disabled=true;sendSpan.textContent=t.sending;
   if(photos.length){
@@ -1249,7 +1249,7 @@ jobBtn.addEventListener('click',async()=>{
   const role=document.getElementById('jobRole').value;
   if(!name||(!phone&&!email)){alert(t.job_need);document.getElementById('jName').focus();return;}
   if(cvFile&&cvFile.size>CV_MAX){cvRender();cvDrop.scrollIntoView({behavior:'smooth',block:'center'});return;}
-  const subject=t.job_subject+' — '+role+' — '+name;
+  const subject=t.job_subject + ' · ' + role + ' · ' + name;
   const body=t.job_subject+'\n\n'+t.form_name_l+': '+name+'\n'+t.ci_phone+': '+(phone||'-')+'\n'+t.ci_email+': '+(email||'-')+'\n'+t.job_role_l+': '+role+'\n\n'+(msg||'');
   const fields={name:name,phone:phone||'-',email:email||'-',position:role,message:msg,
     _subject:subject,_template:'table',_captcha:'false'};

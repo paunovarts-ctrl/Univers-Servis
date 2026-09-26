@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build assets/intro.mp4 and assets/intro-bg.jpg from scripts/intro-source.mp4.
 
-The source is 2560x1440 at 120fps and 5.6 MB — right for a master, far too heavy
+The source is 2560x1440 at 120fps and 5.6 MB: right for a master, far too heavy
 for the first thing a visitor downloads. This trims it to something a loading
 screen can justify and derives the backdrop the overlay sits on.
 
@@ -9,7 +9,7 @@ screen can justify and derives the backdrop the overlay sits on.
     python3 scripts/build-intro.py
 
 On the settings: 1920 wide is past any screen the clip is shown on, 60fps keeps
-the neon draw-on smooth, and `-tune animation` is the one that matters — on flat
+the neon draw-on smooth, and `-tune animation` is the one that matters: on flat
 cel-like material it gave both a smaller file and a better picture than the same
 CRF without it (450 KB at 42.9 dB against 708 KB at 42.8). CRF 26 then costs
 0.5 dB for another 120 KB saved, which on a five-second intro is worth taking.
@@ -51,7 +51,7 @@ def main():
         '-movflags', '+faststart', '-an', '-y', os.path.join(OUT, 'intro.mp4')], check=True)
 
     # The backdrop the overlay wears, taken from the clip so the two are one field.
-    # Frame 0 is almost all wall — the logo has barely started — so mask that
+    # Frame 0 is almost all wall (the logo has barely started), so mask that
     # sliver, fill it from its surroundings, force grey and blur.
     tmp = os.path.join(OUT, '_f0.png')
     subprocess.run([ff, '-hide_banner', '-loglevel', 'error', '-i', SRC,
