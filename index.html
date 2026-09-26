@@ -29,9 +29,18 @@
   .eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--green);font-weight:600}
 
   /* INTRO */
-  .intro{position:fixed;inset:0;z-index:10000;background:#fff;display:grid;place-items:center;
+  /* the overlay wears the page's own backdrop, fixed exactly as the body's is, so
+     the two line up pixel for pixel and the dissolve crosses nothing */
+  .intro{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;
+    background:
+     radial-gradient(50% 40% at 85% 5%, rgba(46,125,80,.11), transparent 60%),
+     radial-gradient(55% 42% at 8% 28%, rgba(92,193,133,.10), transparent 60%),
+     radial-gradient(58% 42% at 93% 64%, rgba(46,125,80,.09), transparent 62%),
+     radial-gradient(50% 40% at 10% 92%, rgba(92,193,133,.09), transparent 60%),
+     linear-gradient(180deg,#eef5f0 0%,#ffffff 26%,#f4f9f5 52%,#ffffff 78%,#edf4ef 100%);
+    background-attachment:fixed;background-repeat:no-repeat;background-color:#fbfdfb;
     transition:opacity 700ms ease,transform 700ms cubic-bezier(.4,0,.2,1)}
-  .intro video,.intro canvas{width:min(78vw,540px);height:auto;display:block}
+  .intro video,.intro canvas{width:min(92vw,1100px);max-height:68vh;height:auto;object-fit:contain;display:block}
   .intro.gone{opacity:0;transform:scale(1.05);pointer-events:none}
   body.intro-on{overflow:hidden}
 
@@ -336,7 +345,10 @@
 <body>
 
 <div class="intro" id="intro" aria-hidden="true">
-  <video id="introVid" src="assets/intro.mp4" muted playsinline preload="auto" disablepictureinpicture></video>
+  <video id="introVid" muted playsinline preload="auto" disablepictureinpicture>
+    <source src="assets/intro.webm" type="video/webm">
+    <source src="assets/intro.mp4" type="video/mp4">
+  </video>
 </div>
 <script>
 /* Intro: play it, hold on the last frame, run it backwards, then dissolve.
@@ -374,21 +386,7 @@
     }
     const f=document.createElement('canvas');f.width=cv.width;f.height=cv.height;
     f.getContext('2d').drawImage(vid,0,0,f.width,f.height);
-    if(!shots.length)backdrop(f);
     shots.push(f);
-  }
-  /* take the overlay's colour from the clip, but only where it really is a flat
-     backdrop — a photographic corner would otherwise pick something arbitrary */
-  function backdrop(f){
-    try{
-      const w=f.width,h=f.height;
-      const s=document.createElement('canvas');s.width=w;s.height=h;
-      const x=s.getContext('2d',{willReadFrequently:true});x.drawImage(f,0,0);
-      const at=function(a,b){return [].slice.call(x.getImageData(a,b,1,1).data,0,3);};
-      const cs=[at(1,1),at(w-2,1),at(1,h-2),at(w-2,h-2)];
-      if(cs.every(function(c){return c.every(function(v,i){return Math.abs(v-cs[0][i])<10;});}))
-        intro.style.background='rgb('+cs[0].join(',')+')';
-    }catch(e){}
   }
   function watch(){
     if(done||vid.ended)return;
@@ -400,13 +398,15 @@
   function rewind(){
     grab();                                   /* the final frame */
     if(shots.length<2||!cv){finish();return;}
-    cv.style.width=vid.getBoundingClientRect().width+'px';
+    const r=vid.getBoundingClientRect();
+    cv.style.width=r.width+'px';cv.style.height=r.height+'px';cv.style.maxHeight='none';
     vid.replaceWith(cv);
     const ms=520,t0=performance.now(),n=shots.length-1;
     (function step(now){
       /* clamp: a rAF timestamp can predate t0, and a negative k would index past
          the end of the store */
       const k=Math.max(0,Math.min(1,(now-t0)/ms));
+      ctx.clearRect(0,0,cv.width,cv.height);
       ctx.drawImage(shots[Math.round((1-k)*n)],0,0);
       if(k<1)requestAnimationFrame(step);else finish();
     })(performance.now());
