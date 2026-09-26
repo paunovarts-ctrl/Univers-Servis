@@ -28,6 +28,13 @@
   h1,h2,h3,.display{font-family:var(--ft);font-weight:700;line-height:1.08;letter-spacing:-.02em}
   .eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--green);font-weight:600}
 
+  /* INTRO */
+  .intro{position:fixed;inset:0;z-index:10000;background:#fff;display:grid;place-items:center;
+    transition:opacity 700ms ease,transform 700ms cubic-bezier(.4,0,.2,1)}
+  .intro video,.intro canvas{width:min(78vw,540px);height:auto;display:block}
+  .intro.gone{opacity:0;transform:scale(1.05);pointer-events:none}
+  body.intro-on{overflow:hidden}
+
   /* ANIMATED GRAIN OVERLAY */
   .grain{position:fixed;top:-60%;left:-60%;width:220%;height:220%;z-index:9998;pointer-events:none;
     opacity:.09;mix-blend-mode:overlay;will-change:transform;
@@ -327,6 +334,91 @@
 </style>
 </head>
 <body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <video id="introVid" src="assets/intro.mp4" muted playsinline preload="auto" disablepictureinpicture></video>
+</div>
+<script>
+/* Intro: play it, hold on the last frame, run it backwards, then dissolve.
+   Inline and first, so the overlay is up before the rest of the page parses. */
+(function(){
+  const intro=document.getElementById('intro'),vid=document.getElementById('introVid'),body=document.body;
+  const MAX=18;              /* frames kept for the rewind */
+  let shots=[],cv=null,ctx=null,lastAt=-1,done=false,bail=0;
+
+  function finish(){
+    if(done)return;done=true;
+    clearTimeout(bail);
+    intro.classList.add('gone');
+    body.classList.remove('intro-on');
+    setTimeout(function(){if(intro.parentNode)intro.remove();shots=null;cv=null;ctx=null;},800);
+  }
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();return;}
+  body.classList.add('intro-on');
+  /* a stalled, blocked or missing video must never hold the site hostage */
+  bail=setTimeout(finish,9000);
+  intro.addEventListener('click',finish);
+  addEventListener('keydown',function(e){if(e.key==='Escape')finish();});
+  vid.addEventListener('error',finish);
+
+  /* Rather than seek backwards — which is keyframe-limited, choppy, and on some
+     files not possible at all — keep a handful of frames on the way forward and
+     play those back. Costs a few MB and always runs at the speed we ask for. */
+  function grab(){
+    if(!vid.videoWidth)return;
+    if(!cv){
+      const k=Math.min(1,600/vid.videoWidth);
+      cv=document.createElement('canvas');
+      cv.width=Math.round(vid.videoWidth*k);cv.height=Math.round(vid.videoHeight*k);
+      ctx=cv.getContext('2d');
+    }
+    const f=document.createElement('canvas');f.width=cv.width;f.height=cv.height;
+    f.getContext('2d').drawImage(vid,0,0,f.width,f.height);
+    if(!shots.length)backdrop(f);
+    shots.push(f);
+  }
+  /* take the overlay's colour from the clip, but only where it really is a flat
+     backdrop — a photographic corner would otherwise pick something arbitrary */
+  function backdrop(f){
+    try{
+      const w=f.width,h=f.height;
+      const s=document.createElement('canvas');s.width=w;s.height=h;
+      const x=s.getContext('2d',{willReadFrequently:true});x.drawImage(f,0,0);
+      const at=function(a,b){return [].slice.call(x.getImageData(a,b,1,1).data,0,3);};
+      const cs=[at(1,1),at(w-2,1),at(1,h-2),at(w-2,h-2)];
+      if(cs.every(function(c){return c.every(function(v,i){return Math.abs(v-cs[0][i])<10;});}))
+        intro.style.background='rgb('+cs[0].join(',')+')';
+    }catch(e){}
+  }
+  function watch(){
+    if(done||vid.ended)return;
+    const d=vid.duration;
+    if(d&&isFinite(d)&&vid.currentTime-lastAt>=d/MAX){lastAt=vid.currentTime;grab();}
+    requestAnimationFrame(watch);
+  }
+
+  function rewind(){
+    grab();                                   /* the final frame */
+    if(shots.length<2||!cv){finish();return;}
+    cv.style.width=vid.getBoundingClientRect().width+'px';
+    vid.replaceWith(cv);
+    const ms=520,t0=performance.now(),n=shots.length-1;
+    (function step(now){
+      /* clamp: a rAF timestamp can predate t0, and a negative k would index past
+         the end of the store */
+      const k=Math.max(0,Math.min(1,(now-t0)/ms));
+      ctx.drawImage(shots[Math.round((1-k)*n)],0,0);
+      if(k<1)requestAnimationFrame(step);else finish();
+    })(performance.now());
+  }
+
+  vid.addEventListener('playing',watch,{once:true});
+  vid.addEventListener('ended',function(){setTimeout(rewind,600);},{once:true});
+  const go=vid.play();
+  if(go&&go.catch)go.catch(finish);
+})();
+</script>
+
 <div class="grain"></div>
 <div class="static-bg"></div>
 
