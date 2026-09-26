@@ -69,7 +69,8 @@ stylesheet (Bricolage Grotesque + Inter).
   nodes rather than rebuilding them, so the language crossfade has something
   stable to fade. Keep the arrays the same length in all four languages or the
   list is rebuilt and the crossfade skips.
-- **Branch photographs** — see `assets/README.md`.
+- **Branch photographs** — `assets/interior.jpg` and `assets/exterior.jpg`;
+  see `assets/README.md` for the crop and encoding recipe.
 - **Any other text** — find its `data-i18n` key in the markup, then edit that
   key in all four `I18N` blocks.
 - **Company details** — the `COMPANY` object (used by the quote), plus the

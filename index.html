@@ -151,10 +151,8 @@
   .branch{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
     box-shadow:0 30px 60px -48px rgba(20,40,28,.55);transition:border-color 180ms ease,box-shadow 180ms ease}
   /* photo slot — drop an <img> in and it covers this area; until then the icon holds it */
-  .branch-media{position:relative;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;
-    background:linear-gradient(142deg,var(--green-soft) 0%,#fff 72%);border-bottom:1px solid var(--line)}
-  .branch-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-  .branch-ic{width:78px;height:78px;fill:none;stroke:var(--green);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+  .branch-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--green-soft);border-bottom:1px solid var(--line)}
+  .branch-media img{width:100%;height:100%;object-fit:cover;display:block}
   .branch-body{padding:1.9rem;display:flex;flex-direction:column;gap:.75rem;flex:1}
   @media(max-width:520px){.branch-body{padding:1.4rem}}
   .branch h3{font-size:1.55rem}
@@ -416,8 +414,8 @@
   <div class="branches">
     <article class="branch obs">
       <div class="branch-media">
-        <svg class="branch-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="5" rx="1.2"/><path d="M13.5 6h5A1.5 1.5 0 0120 7.5v2A1.5 1.5 0 0118.5 11H12v2.5"/><rect x="10" y="13.5" width="4" height="7" rx="1.2"/></svg>
-        <!-- photo slot: replace this comment with  <img src="assets/interior.jpg" alt="">  -->
+        <img src="assets/interior.jpg" width="1200" height="675" loading="lazy" decoding="async"
+             alt="A room masked off with tape, the furniture sheeted and the floor papered, ready for painting">
       </div>
       <div class="branch-body">
         <h3 data-i18n="br1_h">Unutarnji radovi</h3>
@@ -427,8 +425,8 @@
     </article>
     <article class="branch obs">
       <div class="branch-media">
-        <svg class="branch-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 10.5L12 2.8l9.5 7.7"/><path d="M4.8 9.6V21h14.4V9.6"/><path d="M9.5 21v-5.2h5V21"/><path d="M8 12.4h1.6M14.4 12.4H16"/></svg>
-        <!-- photo slot: replace this comment with  <img src="assets/exterior.jpg" alt="">  -->
+        <img src="assets/exterior.jpg" width="1200" height="675" loading="lazy" decoding="async"
+             alt="A house in fresh render with the scaffolding still standing, among cypress and olive trees">
       </div>
       <div class="branch-body">
         <h3 data-i18n="br2_h">Vanjski radovi</h3>
