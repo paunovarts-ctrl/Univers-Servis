@@ -7,41 +7,40 @@ behaviour. Nothing here is an invented number.
 
 ---
 
-## ⚠️ Read this first: the business identity does not agree with itself
+## The entity, settled
 
-Two separate research passes turned up the same problem in the public
-Croatian company register (companywall.hr, sourced from the court register):
+The website belongs to **UNIVERS SERVIS POREČ d.o.o.** — registered
+02.11.2012, director Hari Opatić, activity F43310 (fasadni i štukaturski
+radovi). Confirmed by the owner.
 
-| Field | This website says | Register says |
-|---|---|---|
-| Name | Univers Servis Poreč | UNIVERS SERVIS POREČ **d.o.o.** |
-| Address | Mate Vlašića 26/22 | **Bračka 37** |
-| Phone | +385 98 335 031 / +385 91 9360 031 | **052 452 067** |
-| Founded | "30 years" | **02.11.2012** |
-| Email | uservis@net.hr | uservis@net.hr ✓ |
+A second, related company exists: **UNIVERS - SERVIS d.o.o.**, Bračka 35,
+registered 30.05.1990, director Robi Opatić, listed for soboslikarski work.
+That 1990 date is where the family trading history comes from.
 
-A second, older entity also exists: **UNIVERS - SERVIS d.o.o.**, Bračka 35,
-registered 1990-05-30.
+**Two things follow, and one is still open.**
 
-**Nothing on the site was changed to match the register.** Earlier in this
-project the instruction was that the d.o.o. is a different firm — but the
-logo now in `brand/` reads "UNIVERS SERVIS POREČ d.o.o.", which points the
-other way. Only the owner can settle this.
+*Settled:* the site no longer says "30 years", which a customer checking
+companywall would read against a 2012 registration and take as a stretch.
+It now says **family business since 1990, d.o.o. since 2012** — checkable,
+and a stronger claim for being checkable. The legal name is in the footer
+and in the structured data (`legalName`, `foundingDate`).
 
-Why it matters more than any keyword: Google decides whether two listings
-are one business by matching name, address and phone. Right now a search
-engine sees two or three near-identical businesses and splits the trust
-between them instead of giving one of them full credit. Inconsistent NAP is
-reported to cost 2–3 positions in the local pack.
+*Still open — the address.* The owner has chosen to keep
+**Mate Vlašića 26/22** on the site. The public register lists the seat as
+**Bračka 37**. These must be reconciled before the Google Business Profile
+is created, because Google matches name/address/phone against public
+records to decide whether two listings are the same business — and where
+it can't tell, it splits the trust between them instead of giving one full
+credit. Inconsistent NAP is reported to cost 2–3 positions locally.
 
-**Settle it at <https://sudreg.pravosudje.hr/>**, write down the legal name,
-short name (*skraćeni naziv*), OIB and registered seat verbatim, then use
-that one string byte-for-byte on the site, the Google profile, every
-directory, invoices and the van. The 1990 date, if it belongs to a
-predecessor obrt, supports the "30 years" claim honestly:
-*"Obiteljski obrt od 1990., kao d.o.o. od 2012."*
+Either update the registered seat to Mate Vlašića 26/22, or accept Bračka
+37 as the official address on listings. Whichever you pick, **the Google
+verification video must be filmed at that address**, and the same string
+goes on the site, the profile, every directory, the invoices and the van.
 
----
+The phone is the other half of this: the register carries **052 452 067**,
+the site carries the two mobiles. Pick one primary and use it everywhere;
+keep the others as secondary numbers on the Google profile only.
 
 ## The honest priority order
 
