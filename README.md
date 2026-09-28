@@ -13,15 +13,15 @@ One static page. No build step, no dependencies, no backend.
 - **Services**: painting and finishes, surfaces and repair, protection and care.
 - **Branches**: two cards, interior and exterior, each with a photo frame, an
   icon, a paragraph of context and the trades that belong to it as chips.
-- **Instant estimate**: 11 services at fixed €/m² rates; the visitor enters the
-  area for each one and gets a live subtotal, VAT (25%, toggleable) and total.
-  The calculator starts collapsed behind a toggle.
-- **Quote request**: the estimate is carried into the contact form. *Send*
-  posts the itemised quote to the company inbox (falling back to the visitor's
-  own mail client); *Print / save* opens a formatted, printable quote.
+- **Service list**: the 11 services as a two-column menu, name and
+  description, with no prices: the quote follows a site visit, so the section
+  says so and points at the form.
+- **Quote request**: name, contacts, a message and optional photos. *Send*
+  posts them to the company inbox, falling back to the visitor's own mail
+  client. It asks for a name plus at least one contact before it will send.
 - **Photo attachments**: up to 8 photos of the walls, picked or dragged in
   (a phone offers the camera), shown as removable thumbnails with a running
-  size total, and sent with the quote.
+  size total, and sent with the request.
 - **Careers**: a nav tab and a section listing the four roles, with an
   application form that takes an optional CV and lands in the same inbox as
   the quotes.
@@ -36,7 +36,7 @@ One static page. No build step, no dependencies, no backend.
 |---|---|
 | Address | Mate Vlašića 26/22, 52440 Poreč (Parenzo) |
 | Phone | +385 98 335 031 · +385 91 9360 031 |
-| Email | universervisporec@gmail.com |
+| Email | uservis@net.hr |
 | Hours | Mon–Fri 08:00–17:00 |
 
 ## Structure
@@ -54,12 +54,10 @@ stylesheet (Bricolage Grotesque + Inter).
 
 ## Editing
 
-- **Prices**: `RATES` near the top of the script, in the same order as the
-  service list. One array, used by the calculator, the emailed quote and the
-  printed quote.
 - **Service names and descriptions**: the `svc` array inside each language
-  block in `I18N`. Keep all four languages the same length and order as
-  `RATES`.
+  block in `I18N`. `buildMenu()` renders it into `#menuList` and relabels the
+  same nodes on a language change, so keep all four arrays the same length and
+  order.
 - **Job roles**: the `job_roles` array in each language block, each entry
   `{n, d}`. It fills both the list and the position dropdown, so adding a role
   to all four languages is all it takes. Same rule as the chips: keep the
@@ -93,14 +91,15 @@ Then open http://localhost:8145.
 ## Notes
 
 - The quote form posts to FormSubmit, a third-party relay that forwards the
-  submission to the company's Gmail address. The first submission from a new
-  deployment has to be confirmed by clicking a link FormSubmit emails to that
-  address. If the request fails, the page falls back to opening the visitor's
-  mail client with the quote pre-filled.
+  submission to the company's inbox. The first submission to a new address has
+  to be confirmed by clicking a link FormSubmit emails there, so changing the
+  address in `COMPANY.email` means confirming again. If the request fails, the
+  page falls back to opening the visitor's mail client with the message
+  pre-filled.
 - Because that relay sends from its own domain rather than the company's, the
-  notifications tend to land in Gmail's spam folder. A filter on
-  `from: formsubmit.co` set to *never send to spam* fixes it; sending from an
-  owned domain with SPF/DKIM/DMARC is the real cure.
+  notifications tend to land in spam. A rule on `from: formsubmit.co` set to
+  never junk it fixes that; sending from an owned domain with SPF/DKIM/DMARC
+  is the real cure.
 - **Photos.** FormSubmit caps a submission at 10 MB across all files, and a
   phone photo is 3–8 MB, so each one is drawn to a canvas, capped at 1600px
   on its long edge and re-encoded as JPEG at quality 0.82 before it is
@@ -120,8 +119,9 @@ Then open http://localhost:8145.
   multipart form; the quote passes its photos, the job application passes the
   CV. They come back on separate markers: `?sent=1` for a quote and `?applied=1`
   for an application, so each confirms in its own form and scrolls there.
-- Estimate totals are indicative; the page says so twice, and every quote it
-  produces repeats it. Final prices are confirmed after a site visit.
+- **No prices on the page.** Every building is different, so the site lists
+  what the firm does and leaves the number to a site visit. The service
+  section says so, and the contact copy repeats it in all four languages.
 
 ## Deployment
 
