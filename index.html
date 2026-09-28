@@ -3,7 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Univers Servis Poreč</title>
+
+<!-- SEO. The title, description and og:locale are rewritten by setLang() for
+     the language actually being shown; these are the English defaults that a
+     crawler sees before scripting runs. -->
+<title>Painters &amp; Facade Contractors, Poreč | Univers Servis</title>
+<meta name="description" content="Painting, plastering and facades across Poreč and Istria — homes, holiday lets and hotels. 30 years in the trade, free site visit, written quote.">
+<link rel="canonical" href="https://www.universservisporec.com/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="theme-color" content="#2e7d50">
+
+<!-- One URL per language so each can be indexed on its own; setLang() keeps
+     the address bar, the canonical and the content in agreement. -->
+<link rel="alternate" hreflang="en" href="https://www.universservisporec.com/">
+<link rel="alternate" hreflang="hr" href="https://www.universservisporec.com/?lang=hr">
+<link rel="alternate" hreflang="de" href="https://www.universservisporec.com/?lang=de">
+<link rel="alternate" hreflang="it" href="https://www.universservisporec.com/?lang=it">
+<link rel="alternate" hreflang="x-default" href="https://www.universservisporec.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Univers Servis Poreč">
+<meta property="og:title" content="Painters &amp; Facade Contractors, Poreč">
+<meta property="og:description" content="Painting, plastering and facade work across Poreč and Istria for homes, holiday apartments and hotels. 30 years in the trade, free site visit, quote in writing.">
+<meta property="og:url" content="https://www.universservisporec.com/">
+<meta property="og:image" content="https://www.universservisporec.com/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="hr_HR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Painters &amp; Facade Contractors, Poreč">
+<meta name="twitter:description" content="Painting, plastering and facade work across Poreč and Istria for homes, holiday apartments and hotels.">
+<meta name="twitter:image" content="https://www.universservisporec.com/brand/og-image.png">
+
+<link rel="icon" href="/brand/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+
+<!-- Structured data. HousePainter is a real schema.org type under LocalBusiness,
+     which is what Google reads for a trade like this. `geo` is deliberately
+     absent: guessed coordinates are worse than none. Add it once the Google
+     Business Profile pin exists, and copy the exact coordinates from there. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["HousePainter", "GeneralContractor"],
+  "@id": "https://www.universservisporec.com/#business",
+  "name": "Univers Servis Poreč",
+  "url": "https://www.universservisporec.com/",
+  "logo": "https://www.universservisporec.com/brand/univers-servis-1x1-white.png",
+  "image": "https://www.universservisporec.com/brand/og-image.png",
+  "telephone": ["+385 98 335 031", "+385 91 9360 031"],
+  "email": "uservis@net.hr",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Mate Vlašića 26/22",
+    "addressLocality": "Poreč",
+    "postalCode": "52440",
+    "addressRegion": "Istarska županija",
+    "addressCountry": "HR"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Poreč" },
+    { "@type": "AdministrativeArea", "name": "Istria" }
+  ],
+  "knowsLanguage": ["hr", "en", "de", "it"],
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "08:00",
+    "closes": "17:00"
+  }],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Painting, plastering and facade services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Interior painting", "alternateName": "Soboslikarski radovi" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Painting in colour", "alternateName": "Ličenje u boji" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Plastering and skim coat", "alternateName": "Žbukanje i gletanje" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Facade work and exterior render", "alternateName": "Fasaderski radovi" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Drywall partitions", "alternateName": "Knauf gips-ploče" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Caulking and sealing", "alternateName": "Brtvljenje" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Priming", "alternateName": "Temeljenje" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Wall damage repair", "alternateName": "Popravak oštećenja zidova" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Door and window painting", "alternateName": "Bojanje stolarije" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Scaffolding", "alternateName": "Skele" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Floor and furniture protection", "alternateName": "Zaštita podova i namještaja" } }
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.universservisporec.com/#website",
+  "url": "https://www.universservisporec.com/",
+  "name": "Univers Servis Poreč",
+  "publisher": { "@id": "https://www.universservisporec.com/#business" },
+  "inLanguage": ["hr", "en", "de", "it"]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -192,6 +294,7 @@
   .menu-item .mi-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex:none;margin-top:.48rem}
   .menu-item b{display:block;font-weight:600;font-size:.97rem;letter-spacing:-.005em;color:var(--ink)}
   .menu-item small{display:block;color:var(--ink-soft);font-size:.79rem;line-height:1.5;margin-top:.18rem}
+  .menu-alias{margin-top:1rem;font-size:.84rem;line-height:1.6;color:var(--ink-soft);max-width:70ch}
   .menu-foot{display:flex;align-items:center;justify-content:space-between;gap:1.6rem;flex-wrap:wrap;
     background:var(--green-deep);color:#fff;border-radius:18px;padding:1.7rem 2rem;margin-top:1.1rem}
   @media(max-width:620px){.menu-foot{padding:1.4rem 1.35rem}.menu-foot .btn{width:100%}}
@@ -486,6 +589,7 @@
   </div>
   <div class="menu obs">
     <div class="menu-list" id="menuList"></div>
+    <p class="menu-alias" data-i18n="menu_alias">Neki nas zovu soboslikari, neki pituri, a neki majstori za farbanje i ličenje — posao je isti.</p>
     <div class="menu-foot">
       <div class="mf-copy">
         <b data-i18n="menu_cta_h">Ne znate što vam točno treba?</b>
@@ -603,6 +707,8 @@
 <script>
 const I18N={
  hr:{
+  seo_title:`Soboslikar i fasade Poreč | Univers Servis – 30 godina`,
+  seo_desc:`Ličenje, gletanje i fasade u Poreču i Istri. 30 godina iskustva, radimo i izvan sezone. Stanovi, apartmani i hoteli. Besplatna procjena – javite se.`,
   nav_services:`Usluge`,nav_list:`Popis usluga`,nav_work:`Radovi`,nav_process:`Proces`,nav_contact:`Kontakt`,
   hero_h1:`Površine koje <em>dočekuju</em> svakog gosta.`,
   hero_p:`Dekorativno ličenje, žbukanje i cjelogodišnje održavanje za hotele, stanove i privatne kuće, izvedeno bez ometanja vašeg života i poslovanja.`,
@@ -621,6 +727,7 @@ const I18N={
   menu_notice:`Svaki je objekt drugačiji, zato cijenu ne dajemo naslijepo. Obilazak je besplatan i bez obveze, a ponudu dobivate u pisanom obliku.`,
   menu_cta_h:`Ne znate što vam točno treba?`,
   menu_cta_p:`Opišite prostor ili pošaljite fotografije i predložit ćemo rješenje.`,
+  menu_alias:`Neki nas zovu soboslikari, neki pituri, a neki majstori za farbanje, ličenje ili krečenje — posao je isti.`,
   menu_btn:`Zatražite ponudu`,
   sp_eyebrow:`Stvoreno za hotele i domove`,sp_h2:`Radimo dok vi nastavljate normalno.`,
   sp_p:`Hoteli ostaju otvoreni, obitelji ostaju u svom domu. Ekipe rade zonu po zonu, noću ili izvan vršnih sati kada to pomaže, metodama bez prašine i s malo mirisa, tako da obnovljeni zid izgleda kao da je oduvijek bio tamo.`,
@@ -672,6 +779,8 @@ const I18N={
   ]
  },
  en:{
+  seo_title:`Painters & Facade Contractors, Poreč | Univers Servis`,
+  seo_desc:`Painting, plastering and facades across Poreč and Istria — homes, holiday lets and hotels. 30 years in the trade, free site visit, written quote.`,
   nav_services:`Services`,nav_list:`Service list`,nav_work:`Our Work`,nav_process:`Process`,nav_contact:`Contact`,
   hero_h1:`Surfaces that <em>welcome</em> every guest.`,
   hero_p:`Decorative painting, plastering and year-round maintenance for hotels, apartments and private homes, delivered without disrupting how you live or work.`,
@@ -690,6 +799,7 @@ const I18N={
   menu_notice:`Every building is different, so we don't quote blind. The site visit is free and without obligation, and you get the quote in writing.`,
   menu_cta_h:`Not sure what you need?`,
   menu_cta_p:`Describe the space or send a few photos and we'll suggest the right approach.`,
+  menu_alias:`Painter, decorator, plasterer, renderer — different words, same trade, and we do all of it.`,
   menu_btn:`Request a quote`,
   sp_eyebrow:`Built for hotels and homes`,sp_h2:`We work while you carry on.`,
   sp_p:`Hotels stay open, families stay in. Crews phase work zone-by-zone, overnight or off-peak where it helps, with dust-controlled, low-odour methods, so a refreshed wall feels like it was always there.`,
@@ -741,6 +851,8 @@ const I18N={
   ]
  },
  de:{
+  seo_title:`Maler & Fassaden in Istrien – auf Deutsch, aus Poreč`,
+  seo_desc:`Maler- und Fassadenarbeiten in Poreč und ganz Istrien. 30 Jahre Erfahrung, Beratung auf Deutsch. Wir arbeiten auch in Ihrer Abwesenheit.`,
   nav_services:`Leistungen`,nav_list:`Leistungsübersicht`,nav_work:`Referenzen`,nav_process:`Ablauf`,nav_contact:`Kontakt`,
   hero_h1:`Oberflächen, die jeden Gast <em>willkommen</em> heißen.`,
   hero_p:`Dekorative Malerarbeiten, Verputz und ganzjährige Wartung für Hotels, Wohnungen und Privathäuser, ausgeführt ohne Ihren Alltag oder Betrieb zu stören.`,
@@ -759,6 +871,7 @@ const I18N={
   menu_notice:`Jedes Objekt ist anders, deshalb kalkulieren wir nicht ins Blaue hinein. Die Besichtigung ist kostenlos und unverbindlich, das Angebot erhalten Sie schriftlich.`,
   menu_cta_h:`Sie wissen noch nicht genau, was Sie brauchen?`,
   menu_cta_p:`Beschreiben Sie den Raum oder senden Sie Fotos, wir schlagen die passende Lösung vor.`,
+  menu_alias:`Maler, Anstreicher, Verputzer, Trockenbauer — ob Sie es streichen oder ausmalen nennen, wir machen es.`,
   menu_btn:`Angebot anfordern`,
   sp_eyebrow:`Für Hotels und Zuhause gemacht`,sp_h2:`Wir arbeiten, Sie machen weiter.`,
   sp_p:`Hotels bleiben geöffnet, Familien bleiben wohnen. Teams arbeiten Zone für Zone, bei Bedarf nachts oder außerhalb der Stoßzeiten, mit staubarmen und geruchsarmen Methoden, sodass eine erneuerte Wand wirkt, als wäre sie schon immer da gewesen.`,
@@ -810,6 +923,8 @@ const I18N={
   ]
  },
  it:{
+  seo_title:`Imbianchino a Parenzo (Poreč) – Facciate e Pitture Istria`,
+  seo_desc:`Imbianchino e facciate a Parenzo (Poreč) e in tutta l'Istria. 30 anni di esperienza, sopralluogo e preventivo gratuiti. Si parla italiano.`,
   nav_services:`Servizi`,nav_list:`Elenco servizi`,nav_work:`Lavori`,nav_process:`Processo`,nav_contact:`Contatti`,
   hero_h1:`Superfici che <em>accolgono</em> ogni ospite.`,
   hero_p:`Pittura decorativa, intonacatura e manutenzione tutto l'anno per hotel, appartamenti e case private, senza interferire con la tua vita o la tua attività.`,
@@ -828,6 +943,7 @@ const I18N={
   menu_notice:`Ogni immobile è diverso, quindi non facciamo preventivi alla cieca. Il sopralluogo è gratuito e senza impegno, e il preventivo lo ricevi per iscritto.`,
   menu_cta_h:`Non sai esattamente cosa ti serve?`,
   menu_cta_p:`Descrivi lo spazio o inviaci delle foto e ti proporremo la soluzione giusta.`,
+  menu_alias:`Imbianchino, pittore edile, intonacatore — nomi diversi per lo stesso mestiere, e lo facciamo tutto noi.`,
   menu_btn:`Richiedi un preventivo`,
   sp_eyebrow:`Pensato per hotel e case`,sp_h2:`Lavoriamo mentre tu continui.`,
   sp_p:`Gli hotel restano aperti, le famiglie restano in casa. Le squadre lavorano zona per zona, di notte o fuori dagli orari di punta quando serve, con metodi a bassa polvere e basso odore, così una parete rinnovata sembra esserci sempre stata.`,
@@ -1024,7 +1140,7 @@ sendBtn.addEventListener('click',async()=>{
   sendBtn.disabled=true;sendSpan.textContent=t.sending;
   if(photos.length){
     fields.photos=String(photos.length);
-    fields._next=location.origin+location.pathname+'?sent=1';
+    fields._next=location.origin+location.pathname+'?sent=1'+(current==='en'?'':'&lang='+current);
     try{fsPostForm(fields,photos);return;}
     catch(e){
       cfNote.textContent=t.send_err_photos;
@@ -1094,7 +1210,7 @@ jobBtn.addEventListener('click',async()=>{
   jobBtn.disabled=true;jobSpan.textContent=t.sending;
   /* a CV is a file, so it takes the same plain multipart route the photos do */
   if(cvFile){
-    fields._next=location.origin+location.pathname+'?applied=1';
+    fields._next=location.origin+location.pathname+'?applied=1'+(current==='en'?'':'&lang='+current);
     try{fsPostForm(fields,[{blob:cvFile,name:cvFile.name}]);return;}catch(e){}
   }
   try{
@@ -1129,9 +1245,35 @@ function applyLang(t){
   phRender();
 }
 let current='en';
+/* Each language gets its own URL so each can be indexed separately: English
+   lives at the bare root (it is the x-default), the rest hang off ?lang=.
+   The address bar, the canonical and the visible content are kept in step,
+   otherwise Google sees a page claiming to be one language and reading as
+   another. */
+const SEO_URL='https://www.universservisporec.com/';
+const OG_LOCALE={hr:'hr_HR',en:'en_GB',de:'de_DE',it:'it_IT'};
+const langUrl=l=>SEO_URL+(l==='en'?'':'?lang='+l);
+function applySeo(lang){
+  const t=I18N[lang];
+  document.title=t.seo_title;
+  const set=(sel,attr,val)=>{const el=document.querySelector(sel);if(el)el.setAttribute(attr,val);};
+  set('meta[name="description"]','content',t.seo_desc);
+  set('link[rel="canonical"]','href',langUrl(lang));
+  set('meta[property="og:title"]','content',t.seo_title);
+  set('meta[property="og:description"]','content',t.seo_desc);
+  set('meta[property="og:url"]','content',langUrl(lang));
+  set('meta[property="og:locale"]','content',OG_LOCALE[lang]);
+  set('meta[name="twitter:title"]','content',t.seo_title);
+  set('meta[name="twitter:description"]','content',t.seo_desc);
+  /* keep the visible URL on the language being shown, without adding history */
+  const want=(lang==='en'?location.pathname:location.pathname+'?lang='+lang)+location.hash;
+  if(location.pathname+location.search+location.hash!==want&&!/[?&](sent|applied)=1/.test(location.search))
+    history.replaceState(null,'',want);
+}
 function setLang(lang,instant){
   const t=I18N[lang];if(!t||(lang===current&&!instant))return;current=lang;
   document.documentElement.lang=lang;
+  applySeo(lang);
   document.querySelectorAll('.lang-menu button').forEach(b=>b.classList.toggle('active',b.dataset.l===lang));
   document.getElementById('langCode').textContent=lang.toUpperCase();
   if(instant){applyLang(t);return;}
@@ -1174,7 +1316,17 @@ document.querySelectorAll('.copy-num').forEach(el=>{
   el.addEventListener('click',()=>copyNumber(el));
   el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();copyNumber(el);}});
 });
-setLang('en',true);
+/* ?lang= wins (it is what Google and any shared link carry), then the
+   browser's own preference, then English as the x-default */
+(function(){
+  const q=(location.search.match(/[?&]lang=([a-z]{2})/i)||[])[1];
+  let pick=q&&I18N[q.toLowerCase()]?q.toLowerCase():'';
+  if(!pick) for(const l of (navigator.languages||[navigator.language||''])){
+    const c=String(l).slice(0,2).toLowerCase();
+    if(I18N[c]){pick=c;break;}
+  }
+  setLang(pick||'en',true);
+})();
 
 /* back from a multipart submission: say so, and drop the marker so a refresh does not repeat it */
 const backFrom=/[?&]sent=1(?:&|$)/.test(location.search)?'quote':(/[?&]applied=1(?:&|$)/.test(location.search)?'job':'');
