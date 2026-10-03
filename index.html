@@ -209,7 +209,48 @@
   .lang-menu button span{color:var(--ink-soft);font-weight:500}
   .lang-menu button.active{background:var(--green);color:#fff}
   .lang-menu button.active span{color:rgba(255,255,255,.85)}
-  @media(max-width:900px){.navlinks{display:none}nav{padding:1rem 1.2rem}}
+  /* MOBILE NAV
+     The links are hidden under 900px, so without this the phone nav is a logo
+     and a language picker and nothing to navigate with. The panel matches the
+     language menu so the two read as one control, and it scales from the
+     burger rather than from its own centre. */
+  .nav-burger{display:none;align-items:center;justify-content:center;flex-direction:column;
+    width:40px;height:40px;flex:none;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+    border:1px solid var(--line);border-radius:30px;cursor:pointer;
+    transition:border-color 180ms ease,background 180ms ease,transform 140ms var(--ease-out)}
+  .nav-burger:active{transform:scale(.94)}
+  .nav-burger span{display:block;width:16px;height:2px;border-radius:2px;background:var(--ink);
+    transition:transform 220ms var(--ease-out),opacity 140ms ease}
+  .nav-burger span+span{margin-top:4px}
+  .nav-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  .nav-burger.open span:nth-child(2){opacity:0}
+  .nav-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+  .navmenu{display:none;position:absolute;top:calc(100% - .25rem);left:1.2rem;right:1.2rem;
+    flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 26px 56px -24px rgba(20,40,28,.5);padding:.45rem;z-index:230;
+    opacity:0;transform:translateY(-10px) scale(.97);transform-origin:top right;pointer-events:none;
+    transition:opacity 200ms ease,transform 200ms var(--ease-out)}
+  .navmenu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .navmenu a{display:block;padding:.85rem .9rem;border-radius:10px;text-decoration:none;
+    color:var(--ink);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    transition:background 160ms ease,color 160ms ease}
+  .navmenu a:active{background:var(--green-soft);color:var(--green)}
+
+  @media(max-width:900px){
+    .navlinks{display:none}
+    nav{padding:1rem 1.2rem}
+    .nav-burger{display:flex}
+    .navmenu{display:flex}
+    /* on a phone this bar is the only navigation there is, so it stays put
+       instead of sliding away on scroll-down the way the desktop nav does */
+    nav.nav-hidden{transform:none;opacity:1;pointer-events:auto}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .navmenu{transition:opacity 150ms ease;transform:none}
+    .navmenu.open{transform:none}
+    .nav-burger span{transition:opacity 140ms ease}
+  }
 
   /* HERO */
   /* no overflow:hidden here; it cut the photo's shadow off at the hero's bottom
@@ -413,6 +454,8 @@
     .lang-trigger:hover{border-color:var(--green)}
     .lang-menu button:hover{background:var(--green-soft);color:var(--green)}
     .lang-menu button:hover span{color:var(--green)}
+    .nav-burger:hover{border-color:var(--green)}
+    .navmenu a:hover{background:var(--green-soft);color:var(--green)}
     .menu-item:hover .mi-dot{background:var(--green-bright);box-shadow:0 0 0 4px var(--green-soft)}
     .copy-num:hover{color:var(--green)}
     .copy-num:hover svg{opacity:1}
@@ -539,6 +582,15 @@
         <button data-l="it"><b>IT</b><span>Italiano</span></button>
       </div>
     </div>
+    <button class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="navMenu" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="navmenu" id="navMenu">
+    <a href="#branches" data-i18n="nav_services">Usluge</a>
+    <a href="#services" data-i18n="nav_list">Popis usluga</a>
+    <a href="#contact" data-i18n="nav_contact">Kontakt</a>
+    <a href="#careers" data-i18n="nav_careers">Posao</a>
   </div>
 </nav>
 
@@ -1027,7 +1079,8 @@ let lastY=0,ticking=false;
 function onScroll(){
   const y=window.scrollY;
   nav.classList.toggle('scrolled',y>40);
-  if(y>140 && y>lastY) nav.classList.add('nav-hidden'); else nav.classList.remove('nav-hidden');
+  if(y>140 && y>lastY){nav.classList.add('nav-hidden');if(typeof setMenu==='function')setMenu(false);}
+  else nav.classList.remove('nav-hidden');
   lastY=y;
   ticking=false;
 }
@@ -1310,8 +1363,21 @@ function setLang(lang,instant){
   },300);
 }
 const langWrap=document.getElementById('lang'),langTrigger=document.getElementById('langTrigger');
-langTrigger.addEventListener('click',e=>{e.stopPropagation();langWrap.classList.toggle('open');});
-document.addEventListener('click',e=>{if(!langWrap.contains(e.target))langWrap.classList.remove('open');});
+const navBurger=document.getElementById('navBurger'),navMenu=document.getElementById('navMenu');
+function setMenu(open){
+  navMenu.classList.toggle('open',open);
+  navBurger.classList.toggle('open',open);
+  navBurger.setAttribute('aria-expanded',open?'true':'false');
+}
+langTrigger.addEventListener('click',e=>{e.stopPropagation();setMenu(false);langWrap.classList.toggle('open');});
+navBurger.addEventListener('click',e=>{e.stopPropagation();langWrap.classList.remove('open');setMenu(!navMenu.classList.contains('open'));});
+/* a tap on a link, outside the panel, or Escape all close it */
+navMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+document.addEventListener('click',e=>{
+  if(!langWrap.contains(e.target))langWrap.classList.remove('open');
+  if(!navMenu.contains(e.target)&&!navBurger.contains(e.target))setMenu(false);
+});
+addEventListener('keydown',e=>{if(e.key==='Escape'){setMenu(false);langWrap.classList.remove('open');}});
 document.querySelectorAll('.lang-menu button').forEach(b=>b.addEventListener('click',()=>{setLang(b.dataset.l);langWrap.classList.remove('open');}));
 
 /* ---- copy phone number to clipboard ---- */
