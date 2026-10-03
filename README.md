@@ -34,7 +34,7 @@ One static page. No build step, no dependencies, no backend.
 
 | | |
 |---|---|
-| Address | Mate Vlašića 26/22, 52440 Poreč (Parenzo) |
+| Address | Tarska ul. 26-22, 52440 Poreč (Parenzo) |
 | Phone | +385 98 335 031 · +385 91 9360 031 |
 | Email | uservis@net.hr |
 | Hours | Mon–Fri 08:00–17:00 |

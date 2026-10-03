@@ -25,15 +25,15 @@ It now says **family business since 1990, d.o.o. since 2012** — checkable,
 and a stronger claim for being checkable. The legal name is in the footer
 and in the structured data (`legalName`, `foundingDate`).
 
-*Still open — the address.* The owner has chosen to keep
-**Mate Vlašića 26/22** on the site. The public register lists the seat as
+*Still open — the address.* The site address is
+**Tarska ul. 26-22, 52440 Poreč**. The public register lists the seat as
 **Bračka 37**. These must be reconciled before the Google Business Profile
 is created, because Google matches name/address/phone against public
 records to decide whether two listings are the same business — and where
 it can't tell, it splits the trust between them instead of giving one full
 credit. Inconsistent NAP is reported to cost 2–3 positions locally.
 
-Either update the registered seat to Mate Vlašića 26/22, or accept Bračka
+Either update the registered seat to Tarska ul. 26-22, or accept Bračka
 37 as the official address on listings. Whichever you pick, **the Google
 verification video must be filmed at that address**, and the same string
 goes on the site, the profile, every directory, the invoices and the van.
