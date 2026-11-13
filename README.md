@@ -1,34 +1,38 @@
 # Univers Servis Poreč
 
-Website for **Univers Servis Poreč**: painting, plastering and year-round
-maintenance for hotels, apartments and private homes in Poreč (Parenzo),
-Istria, Croatia.
+Website for **Univers Servis Poreč** (UNIVERS SERVIS POREČ d.o.o.): painting,
+plastering and facade work for flats, houses, holiday apartments and hotels in
+Poreč (Parenzo), Istria, Croatia.
 
-One static page. No build step, no dependencies, no backend.
+One static page. The deployed file is the built `index.html`; Vercel serves it
+as is, with no build step and no backend.
 
 ## What's on the page
 
-- **Hero** with a draggable before/after slider (the slider sweeps once on load,
-  then hands control to the visitor).
-- **Services**: painting and finishes, surfaces and repair, protection and care.
-- **Branches**: two cards, interior and exterior, each with a photo frame, an
-  icon, a paragraph of context and the trades that belong to it as chips.
-- **Service list**: the 11 services as a two-column menu, name and
-  description, with no prices: the quote follows a site visit, so the section
-  says so and points at the form.
-- **Quote request**: name, contacts, a message and optional photos. *Send*
-  posts them to the company inbox, falling back to the visitor's own mail
-  client. It asks for a name plus at least one contact before it will send.
-- **Photo attachments**: up to 8 photos of the walls, picked or dragged in
-  (a phone offers the camera), shown as removable thumbnails with a running
-  size total, and sent with the request.
-- **Careers**: a nav tab and a section listing the four roles, with an
-  application form that takes an optional CV and lands in the same inbox as
-  the quotes.
-- **Four languages**: Croatian, English, German, Italian, switched in place
-  with a crossfade. The page loads in English.
-- Tap-to-copy phone number, scroll reveals, and a grain/static texture over the
-  whole page (both respect `prefers-reduced-motion`).
+- **Hero**: one full-screen stage. The damaged room fills the screen and, as
+  you scroll, a lime roller line rolls the finished room in over it. A short
+  opening pass paints the first strip by itself so the idea reads before
+  anyone scrolls. The headline, buttons and phone number sit over the photo.
+- **Promises**: three lines under the stage (free visit and written quote,
+  all year round, no need to be there).
+- **01 Services**: interior and exterior, each with a photograph that runs to
+  the edge of the page, a paragraph and the trades that belong to it; then
+  the stats strip (1990, 500+, 11).
+- **Colour room** (`#colours`): the finished room with eight paint chips.
+  Tap one and the walls repaint, left to right. Only the walls change: the
+  windows, trim, skirting and floor stay as photographed. It says plainly
+  that screen colours are approximate and the real shade is chosen on site.
+- **02 Works schedule**: the 11 services with where each applies (inside,
+  outside, both) and no prices: the quote follows a site visit.
+- **03 Process**: four steps, then a dark band on working while the owner is
+  away, with a sample work log (labelled as an example).
+- **04 Area**: the towns served and a facade-season calendar.
+- **05 FAQ**, **06 Contact** (quote form with photo attachments) and
+  **07 Careers** (application form with an optional CV).
+- **Four languages**: Croatian (default, at `/`), English, German, Italian
+  (`?lang=en|de|it`), switched in place with a crossfade.
+- Motion is all transform and opacity, and `prefers-reduced-motion` gets a
+  still before/after split, no parallax and fades instead of travel.
 
 ## Contact details shown on the page
 
@@ -42,47 +46,50 @@ One static page. No build step, no dependencies, no backend.
 ## Structure
 
 ```
-index.html      the entire site: markup, styles, translations, logic,
-                and the logo and photographs as embedded data URIs
-assets/         the two branch photographs (see assets/README.md)
+index.html      the built page (generated: do not edit by hand)
+src/            the sources it is built from
+  head.html       <head>: meta, hreflang, structured data
+  body.html       markup with {{key}} placeholders
+  style.css       all styles
+  i18n.js         every word on the page, in four languages
+  app.js          behaviour
+  build.mjs       fills the placeholders and checks the languages agree
+assets/fonts/   self-hosted Archivo and IBM Plex Mono, subset
+assets/img/     photographs, logos and the wall mask (see assets/README.md)
+brand/          logo files, favicon, social image
 vercel.json     cache and security headers
 ```
 
-Everything lives in `index.html`, images included, so the page has no
-same-origin requests to make. The only external resource is the Google Fonts
-stylesheet (Bricolage Grotesque + Inter).
+`src/` is in `.vercelignore`, so only the built page and its assets deploy.
 
 ## Editing
 
-- **Service names and descriptions**: the `svc` array inside each language
-  block in `I18N`. `buildMenu()` renders it into `#menuList` and relabels the
-  same nodes on a language change, so keep all four arrays the same length and
-  order.
-- **Job roles**: the `job_roles` array in each language block, each entry
-  `{n, d}`. It fills both the list and the position dropdown, so adding a role
-  to all four languages is all it takes. Same rule as the chips: keep the
-  arrays the same length across languages.
-- **Branch chips**: the `br1_tags` and `br2_tags` arrays in each language
-  block. They are rendered by `buildTags()`, which relabels existing `<li>`
-  nodes rather than rebuilding them, so the language crossfade has something
-  stable to fade. Keep the arrays the same length in all four languages or the
-  list is rebuilt and the crossfade skips.
-- **Branch photographs**: `assets/interior.jpg` and `assets/exterior.jpg`;
-  see `assets/README.md` for the crop and encoding recipe.
-- **Any other text**: find its `data-i18n` key in the markup, then edit that
-  key in all four `I18N` blocks.
-- **Company details**: the `COMPANY` object (used by the quote), plus the
-  contact section and footer in the markup.
-- **Hover and press**: all of it lives in one `INTERACTION` block in the
-  stylesheet. Hover changes colour and depth only, never position, and sits
-  inside `@media (hover:hover) and (pointer:fine)` so a tap on a phone cannot
-  leave a control stuck in its hover state. Movement belongs to `:active`
-  (`scale(.98)`). Keep new controls in that block rather than adding `:hover`
-  rules beside the component.
+1. Change the sources in `src/`.
+2. Build: `node src/build.mjs index.html`
+3. Commit both the sources and the rebuilt `index.html`.
+
+The build stops with an error if a key is missing in any language, if the
+languages have different keys, or if a list (services, FAQ, paint chips and so
+on) has a different length in one of them.
+
+- **Any text**: find its key in `src/body.html` (`{{key}}` or `data-i18n`),
+  then edit that key in all four blocks of `src/i18n.js`.
+- **Paint chips**: names and one-line descriptions are the `paints` array in
+  `i18n.js`; the colours themselves are `PAINT` in `src/build.mjs` (index 0 is
+  the room as photographed, so it has no paint).
+- **Services, steps, FAQ, towns, job roles**: the matching arrays in
+  `i18n.js`. Keep every language the same length and order.
+- **Company details**: the `COMPANY` object in `app.js` (used by the forms),
+  plus the contact section and footer in `body.html` and the structured data
+  in `head.html`.
+- **Hover and press**: hover changes colour and depth only, never position,
+  and sits inside `@media (hover:hover) and (pointer:fine)` so a tap on a phone
+  cannot leave a control stuck in its hover state.
 
 ## Running it locally
 
 ```bash
+node src/build.mjs index.html
 python3 -m http.server 8145
 ```
 

@@ -142,7 +142,7 @@
   --ease-out:cubic-bezier(.23,1,.32,1);
   --ease-io:cubic-bezier(.77,0,.175,1);
   --ease-roll:cubic-bezier(.65,0,.35,1);
-  --nav-h:72px;
+  --nav-h:72px; --cg:clamp(16px,2vw,28px);
 }
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0;padding:0}
@@ -210,15 +210,30 @@ body.intro-on{overflow:hidden}
 .nav .wrap{height:100%;display:flex;align-items:center;gap:1.6rem}
 .nav.scrolled{background:rgba(241,238,230,.88);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);box-shadow:0 1px 0 var(--rule)}
 .nav.nav-hidden{transform:translateY(-100%)}
-.brand{display:flex;align-items:center;flex:none;margin-right:auto}
+.brand{display:flex;align-items:center;flex:none;margin-right:auto;position:relative}
 .brand img{height:38px;width:auto}
+.brand picture{transition:opacity 220ms ease}
+.brand .logo-l{position:absolute;inset:0}
+.brand .logo-l,.nav.over .logo-d{opacity:0}
+.nav.over .logo-l{opacity:1}
 .nav-links{display:flex;gap:1.7rem;list-style:none}
 .nav-links a{font:500 .74rem/1 var(--m);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:.82;
-  padding:.5rem 0;transition:opacity 160ms ease}
+  padding:.5rem 0;transition:opacity 160ms ease,color 220ms ease}
 .nav-links a[aria-current="true"]{opacity:1;box-shadow:inset 0 -2px 0 var(--lime)}
 @media (hover:hover) and (pointer:fine){.nav-links a:hover{opacity:1}}
 .nav-right{display:flex;align-items:center;gap:.7rem}
 .nav .btn{min-height:42px;padding:0 1rem;font-size:.86rem}
+.nav.solid{background:var(--paper);box-shadow:0 1px 0 var(--rule)}
+.nav.over .nav-links a{color:var(--on-dark)}
+.nav.over .lang-trigger{border-color:var(--dark-rule);color:var(--on-dark)}
+.nav.over .burger{border-color:var(--dark-rule)}
+.nav.over .burger span{background:var(--on-dark)}
+.nav.over .nav-cta{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.nav.over :focus-visible{outline-color:var(--lime)}
+@media (hover:hover) and (pointer:fine){
+  .nav.over .lang-trigger:hover{border-color:var(--on-dark)}
+  .nav.over .nav-cta:hover{background:var(--on-dark);border-color:var(--on-dark);color:var(--ink)}
+}
 .progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--lime);transform:scaleX(0);transform-origin:left;opacity:0;transition:opacity 240ms ease}
 .nav.scrolled .progress{opacity:1}
 
@@ -236,7 +251,7 @@ body.intro-on{overflow:hidden}
 .lang-menu a[aria-current="true"]{background:var(--ink);color:var(--plaster)}
 @media (hover:hover) and (pointer:fine){.lang-menu a:not([aria-current="true"]):hover{background:var(--plaster-2)}}
 
-.burger{display:none;width:42px;height:42px;border:1px solid var(--rule);background:transparent;cursor:pointer;place-items:center}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--rule);background:transparent;cursor:pointer;place-content:center;justify-items:center}
 .burger span{display:block;width:18px;height:1.5px;background:var(--ink);transition:transform 220ms var(--ease-out),opacity 140ms ease}
 .burger span+span{margin-top:5px}
 .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
@@ -256,6 +271,10 @@ body.intro-on{overflow:hidden}
   .sheet a{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--rule-2);text-decoration:none;
     font-family:var(--f);font-stretch:64%;font-weight:760;font-size:1.9rem;line-height:1;text-transform:uppercase}
   .sheet a span{font:500 .72rem var(--m);letter-spacing:.06em;opacity:.6}
+  .sheet .sw{display:flex;gap:3px}
+  .sheet .sw i{width:9px;height:9px;background:#A3A88A}
+  .sheet .sw i+i{background:#3F7F88}
+  .sheet .sw i+i+i{background:#C67C5E}
   .sheet .btn{margin-top:1.1rem;width:100%;justify-content:center}
   /* on a phone this bar is the only navigation, so it stays put */
   .nav.nav-hidden{transform:none}
@@ -279,26 +298,70 @@ body.intro-on{overflow:hidden}
   .idx,.sec-head h2,.sec-head .lede{grid-column:1 / -1}
 }
 
-/* ── hero ────────────────────────────────────────────────────────────── */
-.hero{padding-top:calc(var(--nav-h) + clamp(1.6rem,4vw,3.4rem))}
-.hero-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding-bottom:1rem;border-bottom:1px solid var(--rule);margin-bottom:clamp(1.4rem,3vw,2.4rem)}
-.hero-top .mono{color:var(--ink-3)}
-.hero-top .live{display:inline-flex;align-items:center;gap:.5rem;color:var(--ink)}
-.hero-top .live i{width:7px;height:7px;border-radius:50%;background:var(--ink);display:inline-block}
-.hero h1{font-size:clamp(3.3rem,10.6vw,10.6rem);max-width:15ch;line-height:.93}
-.hero-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2vw,28px);margin-top:clamp(1.8rem,4vw,3.4rem);align-items:start}
-.hero-side{grid-column:1 / span 5;display:flex;flex-direction:column;gap:1.8rem;padding-top:.3rem}
-.hero-lede{font-size:clamp(1.08rem,1.35vw,1.24rem);line-height:1.55;color:var(--ink-2);max-width:40ch}
+/* ── hero: one stage; scrolling rolls the finished room in over the old one ── */
+.hero{position:relative;background:var(--ink);height:100vh;height:100svh}
+.js .hero{height:185vh;height:185svh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;color:var(--on-dark);--f:.5}
+.stage-media,.st-after,.st-before,.st-before-in{position:absolute;inset:0}
+.stage-media picture,.stage-media img{position:absolute;inset:0;width:100%;height:100%}
+.stage-media img{object-fit:cover;object-position:50% 58%}
+/* two opposite translations instead of a clip: the compositor moves them, nothing repaints */
+.st-before{overflow:hidden;transform:translate3d(calc(var(--f) * 100%),0,0)}
+.st-before-in{transform:translate3d(calc(var(--f) * -100%),0,0)}
+.st-roller{position:absolute;inset:0;pointer-events:none;transform:translate3d(calc(var(--f) * 100%),0,0);transition:opacity 300ms ease}
+.stage.done .st-roller{opacity:0}
+.js .st-before,.js .st-before-in,.js .st-roller{will-change:transform}
+.st-roller::before{content:"";position:absolute;top:0;bottom:0;left:-2px;width:4px;background:var(--lime);box-shadow:0 0 18px rgba(221,230,121,.45)}
+.st-roller i{position:absolute;left:-10px;top:21%;width:20px;height:clamp(96px,17vh,160px);border-radius:10px;background:var(--lime);
+  box-shadow:inset -5px 0 0 rgba(18,19,17,.14),0 14px 30px -10px rgba(0,0,0,.6)}
+.st-roller b{position:absolute;left:24px;top:calc(21% + clamp(96px,17vh,160px) / 2);transform:translateY(-50%);display:inline-flex;align-items:center;gap:.55rem;
+  white-space:nowrap;background:var(--ink);color:var(--on-dark);padding:.6rem .75rem;font-weight:500;opacity:0;transition:opacity 420ms ease}
+.st-roller b svg{width:12px;height:12px;color:var(--lime)}
+.stage.ready .st-roller b{opacity:1}
+.stage.moved .st-roller b{opacity:0}
+@media (prefers-reduced-motion:no-preference){.st-roller b svg{animation:nudge 1.6s var(--ease-io) infinite}}
+@keyframes nudge{50%{transform:translateY(3px)}}
+.st-tag{position:absolute;top:calc(var(--nav-h) + 16px);padding:.45rem .6rem;transition:opacity 320ms ease}
+.st-tag-a{left:var(--g);background:var(--lime);color:var(--ink);opacity:0}
+.st-tag-b{right:var(--g);background:var(--ink);color:var(--on-dark)}
+.stage.moved .st-tag-a{opacity:1}
+.stage.done .st-tag-b{opacity:0}
+.stage-shade{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,rgba(18,19,17,.6) 0,rgba(18,19,17,0) calc(var(--nav-h) + 110px)),
+  linear-gradient(0deg,rgba(18,19,17,.9) 0,rgba(18,19,17,.74) 30%,rgba(18,19,17,.2) 62%,rgba(18,19,17,0) 80%)}
+.hero-copy{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:clamp(1.4rem,4.5vh,3.2rem)}
+.hero-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding-bottom:.9rem;border-bottom:1px solid var(--dark-rule);margin-bottom:clamp(1rem,2.6vh,1.8rem)}
+.hero-top .mono{color:var(--on-dark-2)}
+.hero-top .live{display:inline-flex;align-items:center;gap:.5rem;color:var(--on-dark)}
+.hero-top .live i{width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block}
+.hero h1{color:var(--on-dark);font-size:clamp(2.6rem,min(9.4vw,12.6vh),9.6rem);max-width:14ch;line-height:.93}
+.hero .swipe{color:var(--ink)}
+/* on the dark stage the highlight reaches up over the háček, or an ink Č would lose it */
+.hero .swipe::before{top:-.05em}
+.hero-side{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.2rem 2.4rem;margin-top:clamp(1.1rem,3vh,2.2rem)}
+.hero-lede{font-size:clamp(1rem,1.25vw,1.2rem);line-height:1.5;color:var(--on-dark-2);max-width:46ch}
 .hero-cta{display:flex;flex-wrap:wrap;gap:.6rem}
-.facts{list-style:none;border-top:1px solid var(--rule)}
-.facts li{display:grid;grid-template-columns:2.4rem 1fr;gap:.6rem;padding:.85rem 0;border-bottom:1px solid var(--rule)}
-.facts b{font-weight:500;color:var(--ink-3)}
-.hero .ba{grid-column:6 / -1}
-@media (max-width:999px){
-  .hero-side,.hero .ba{grid-column:1 / -1}
-  .hero .ba{margin-top:2.4rem}
+.hero .btn-line{border-color:rgba(241,238,230,.42);color:var(--on-dark)}
+@media (hover:hover) and (pointer:fine){
+  .hero .btn-lime:hover{background:var(--on-dark);border-color:var(--on-dark);color:var(--ink)}
+  .hero .btn-line:hover{background:var(--on-dark);border-color:var(--on-dark);color:var(--ink)}
 }
-@media (max-width:560px){.hero-top .hide-sm{display:none}.hero-cta .btn{flex:1 1 100%;justify-content:center}}
+@media (max-width:560px){
+  .hero-top .hide-sm{display:none}
+  .hero-lede{font-size:.98rem;line-height:1.45}
+  .hero-cta{width:100%;flex-wrap:nowrap}
+  .hero-cta .btn-lime{flex:1;justify-content:center}
+  .hero-cta .btn-line{width:54px;padding:0;justify-content:center}
+  .hero-cta .btn-line span{display:none}
+}
+
+/* the promises, straight under the stage */
+.facts-band{background:var(--plaster);border-bottom:1px solid var(--rule)}
+.facts{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.facts li{display:grid;grid-template-columns:2.2rem 1fr;gap:.4rem;padding:1.35rem var(--cg) 1.35rem 0}
+.facts li+li{border-left:1px solid var(--rule);padding-left:var(--cg)}
+.facts b{font-weight:500;color:var(--ink-3)}
+@media (max-width:760px){.facts{grid-template-columns:1fr}.facts li{padding:1rem 0}.facts li+li{border-left:0;border-top:1px solid var(--rule);padding-left:0}}
 
 /* the lime paint-stroke behind one word of the headline */
 .swipe{position:relative;white-space:nowrap;z-index:0;display:inline-block}
@@ -306,25 +369,6 @@ body.intro-on{overflow:hidden}
   border-radius:.05em .16em .08em .2em / .18em .07em .2em .09em;transform:scaleX(1);transform-origin:left center}
 .js .swipe::before{transform:scaleX(0);transition:transform 780ms var(--ease-roll) 540ms}
 .js .in .swipe::before,.js .swipe.in::before{transform:scaleX(1)}
-
-/* ── before / after ──────────────────────────────────────────────────── */
-.ba-frame{position:relative;aspect-ratio:1200 / 896;overflow:hidden;background:var(--plaster-2);touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;--p:50%}
-.ba-frame picture,.ba-frame img{position:absolute;inset:0;width:100%;height:100%}
-.ba-frame img{object-fit:cover}
-.ba-before{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
-.ba-line{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:var(--plaster);pointer-events:none}
-.ba-knob{position:absolute;top:50%;left:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:var(--plaster);
-  display:grid;place-items:center;box-shadow:0 6px 18px -8px rgba(0,0,0,.45);transition:transform 160ms var(--ease-out)}
-.ba-knob svg{width:22px;height:22px}
-.ba-frame:active .ba-knob{transform:scale(.94)}
-.ba-tag{position:absolute;top:14px;padding:.45rem .6rem;background:var(--ink);color:var(--plaster);pointer-events:none}
-.ba-tag-b{left:14px}
-.ba-tag-a{right:14px;background:var(--lime);color:var(--ink)}
-.ba figcaption{display:flex;justify-content:space-between;gap:1rem;padding-top:.75rem;color:var(--ink-3)}
-.ba-frame:focus-visible{outline-offset:4px}
-/* the frame is revealed like a roller pass across a wall */
-.js .ba-frame{clip-path:inset(0 100% 0 0)}
-.js .ba.in .ba-frame{clip-path:inset(0 0 0 0);transition:clip-path 1150ms var(--ease-roll) 160ms}
 
 /* ── generic reveal states (only when scripting is on) ───────────────── */
 .js .hero-top[data-hero],.js .hero-side[data-hero]{opacity:0;transform:translateY(14px);transition:opacity 700ms ease,transform 820ms var(--ease-out)}
@@ -334,10 +378,10 @@ body.intro-on{overflow:hidden}
 .js [data-reveal].in{opacity:1;transform:none}
 .js [data-reveal="rule"]{opacity:1;transform:scaleX(0);transform-origin:left;transition:transform 1000ms var(--ease-io)}
 .js [data-reveal="rule"].in{transform:scaleX(1)}
-.js [data-reveal="clip"]{opacity:1;transform:none;clip-path:inset(0 0 100% 0);transition:clip-path 1050ms var(--ease-io)}
-.js [data-reveal="clip"] img{transform:scale(1.07);transition:transform 1500ms var(--ease-out)}
-.js [data-reveal="clip"].in{clip-path:inset(0 0 0 0)}
-.js [data-reveal="clip"].in img{transform:none}
+.js [data-reveal="cover"]{opacity:1;transform:none}
+.js [data-reveal="cover"]::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:var(--cover,var(--plaster));
+  transform-origin:var(--from,right) center;transition:transform 1100ms var(--ease-io)}
+.js [data-reveal="cover"].in::after{transform:scaleX(0)}
 .js [data-stagger]>*{opacity:0;transform:translateY(10px);transition:opacity 480ms ease,transform 560ms var(--ease-out);transition-delay:calc(var(--i,0) * 38ms)}
 .js [data-stagger].in>*{opacity:1;transform:none}
 /* words rise out of their own line, one after the other */
@@ -348,30 +392,37 @@ body.intro-on{overflow:hidden}
 .reveal-all [data-reveal],.reveal-all [data-stagger]>*{opacity:1!important;transform:none!important;clip-path:none!important}
 .reveal-all .w>span{transform:none!important}
 .reveal-all .swipe::before{transform:scaleX(1)!important}
-.reveal-all .ba-frame{clip-path:none!important}
+.reveal-all [data-reveal="cover"]::after{transform:scaleX(0)!important}
+.reveal-all .ph img{transform:none!important}
 .reveal-all .intro{display:none!important}
 .reveal-all [data-hero]{opacity:1!important;transform:none!important}
 .reveal-all .steps-line i,.reveal-all .cal .c::after,.reveal-all .step::before{transform:none!important}
 .reveal-all .log-item{opacity:1!important;transform:none!important}
 
 
-/* ── 01 services: two branches ───────────────────────────────────────── */
-.branch{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2vw,28px);align-items:end;padding:clamp(1.8rem,3vw,2.6rem) 0;border-top:1px solid var(--rule)}
-.branch+.branch{margin-top:clamp(2rem,5vw,4rem)}
-.branch figure{grid-column:1 / span 7;position:relative}
-.branch figure img{width:100%;aspect-ratio:16 / 10;object-fit:cover}
-.branch figcaption{position:absolute;left:0;bottom:0;padding:.5rem .7rem;background:var(--plaster);color:var(--ink-2)}
-.branch-txt{grid-column:9 / -1;display:flex;flex-direction:column;gap:1.1rem;padding-bottom:.4rem}
-.branch.rev figure{grid-column:6 / -1;grid-row:1}
-.branch.rev .branch-txt{grid-column:1 / span 4;grid-row:1}
+/* ── 01 services: two branches, photographs to the edge of the page ─── */
+.branch{display:grid;column-gap:var(--cg);align-items:end;margin-top:clamp(2.4rem,6vw,5rem);
+  grid-template-columns:minmax(calc(var(--g) - var(--cg)),1fr) repeat(12,minmax(0,calc((var(--max) - 11 * var(--cg)) / 12))) minmax(calc(var(--g) - var(--cg)),1fr)}
+.branch+.branch{margin-top:clamp(3.4rem,8vw,7rem)}
+.ph{position:relative;overflow:hidden;background:var(--plaster-2)}
+.branch .ph{grid-column:1 / 9;grid-row:1;aspect-ratio:3 / 2}
+.branch-txt{grid-column:10 / 14;grid-row:1;display:flex;flex-direction:column;gap:1.1rem;padding-bottom:.4rem}
+.branch.rev .ph{grid-column:7 / -1;--from:left}
+.branch.rev .branch-txt{grid-column:2 / 6}
+.ph picture{position:absolute;left:0;right:0;top:-7%;bottom:-7%;transform:translate3d(0,var(--py,0px),0)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.js .ph img{transform:scale(1.08);transition:transform 1600ms var(--ease-out)}
+.js .ph.in img{transform:none}
+.ph figcaption{position:absolute;right:0;bottom:0;z-index:2;padding:.5rem .7rem;background:var(--plaster);color:var(--ink-2)}
+.branch.rev .ph figcaption{right:auto;left:0}
 .branch-n{color:var(--ink-3)}
 .branch h3{font-family:var(--f);font-stretch:66%;font-weight:760;text-transform:uppercase;font-size:clamp(2.1rem,3.6vw,3.4rem);line-height:.9}
 .branch p{color:var(--ink-2)}
 .tags{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem .35rem;margin-top:.3rem}
 .tags li{font:500 .7rem/1 var(--m);letter-spacing:.04em;text-transform:uppercase;padding:.5rem .55rem;border:1px solid var(--rule)}
 @media (max-width:899px){
-  .branch figure,.branch.rev figure,.branch-txt,.branch.rev .branch-txt{grid-column:1 / -1;grid-row:auto}
-  .branch-txt{margin-top:1.6rem}
+  .branch .ph,.branch.rev .ph{grid-column:1 / -1;aspect-ratio:4 / 3}
+  .branch-txt,.branch.rev .branch-txt{grid-column:2 / -2;grid-row:2;margin-top:1.6rem}
 }
 
 /* stats strip */
@@ -381,6 +432,45 @@ body.intro-on{overflow:hidden}
 .stat b{font-family:var(--f);font-stretch:62%;font-weight:780;font-size:clamp(3.2rem,7vw,6.4rem);line-height:.82;letter-spacing:-.01em}
 .stat span{color:var(--ink-3)}
 @media (max-width:640px){.stats{grid-template-columns:1fr}.stat+.stat{padding-left:0;border-left:0;border-top:1px solid var(--rule)}}
+
+/* ── the colour room ─────────────────────────────────────────────────── */
+.cw{background:var(--ink);color:var(--on-dark);margin-top:clamp(5rem,11vw,10rem);padding:clamp(4.5rem,9vw,8rem) 0;--cover:var(--ink)}
+.cw-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--cg);row-gap:2.2rem;align-items:start}
+.cw-head{grid-column:1 / span 5;grid-row:1;display:flex;flex-direction:column;gap:1.3rem}
+.cw-kick{color:var(--lime)}
+.cw-head h2{font-size:clamp(2.8rem,5.6vw,5.6rem)}
+.cw-p{color:var(--on-dark-2);max-width:44ch}
+.cw-fig{grid-column:7 / -1;grid-row:1 / span 2;position:relative}
+.cw-ctrl{grid-column:1 / span 5;grid-row:2;display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start}
+.cw-fig figcaption{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-top:.8rem;color:var(--on-dark-2)}
+.cw-fig figcaption svg{width:16px;height:16px;color:var(--lime)}
+.cw-room{position:relative;aspect-ratio:1200 / 896;overflow:hidden;background:#24251F;isolation:isolate}
+.cw-room img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* each paint layer is the photo again, lifted or lowered to the paint's lightness,
+   tinted with the paint's hue, and cut to the walls by the mask */
+.cw-paint{position:absolute;inset:0;opacity:0;transition:opacity 400ms ease;
+  -webkit-mask-image:url(/assets/img/after-wall-1200.webp);mask-image:url(/assets/img/after-wall-1200.webp);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.cw-room.ready .cw-paint{opacity:1}
+.cw-paint img{filter:brightness(var(--k,1))}
+.cw-paint i{position:absolute;inset:0;background:var(--paint,transparent);mix-blend-mode:color}
+.cw-top{clip-path:inset(0 100% 0 0)}
+.cw-roller{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0}
+.cw-roller::before{content:"";position:absolute;top:0;bottom:0;left:-2px;width:4px;background:var(--lime);box-shadow:0 0 16px rgba(221,230,121,.5)}
+.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem .5rem;width:100%;max-width:31rem}
+.chip{display:flex;flex-direction:column;gap:.55rem;padding:0 0 .3rem;background:transparent;border:0;cursor:pointer;text-align:left;color:var(--on-dark-2);
+  font:500 .68rem/1.2 var(--m);letter-spacing:.04em;text-transform:uppercase;transition:color 160ms ease}
+.chip i{display:block;height:3.4rem;background:var(--c);box-shadow:inset 0 0 0 1px rgba(241,238,230,.1);outline:2px solid transparent;outline-offset:3px;transition:outline-color 160ms ease}
+.chip[aria-pressed="true"]{color:var(--on-dark)}
+.chip[aria-pressed="true"] i{outline-color:var(--lime)}
+.chip:focus-visible{outline:none}
+.chip:focus-visible i{outline-color:var(--on-dark)}
+@media (hover:hover) and (pointer:fine){.chip:hover{color:var(--on-dark)}.chip:not([aria-pressed="true"]):hover i{outline-color:rgba(241,238,230,.38)}}
+.cw-now{display:flex;flex-direction:column;gap:.3rem;min-height:4.2rem;padding-left:.9rem;border-left:2px solid var(--lime)}
+.cw-now b{font-family:var(--f);font-stretch:70%;font-weight:740;font-size:1.7rem;line-height:1;text-transform:uppercase;color:var(--on-dark)}
+.cw-now span{color:var(--on-dark-2)}
+@media (max-width:999px){.cw-head,.cw-fig,.cw-ctrl{grid-column:1 / -1;grid-row:auto}}
+@media (max-width:520px){.chips{gap:.55rem .4rem}.chip i{height:2.9rem}}
 
 /* ── 02 the works schedule ───────────────────────────────────────────── */
 .spec{border-top:1px solid var(--ink)}
@@ -580,8 +670,11 @@ body.intro-on{overflow:hidden}
 /* reduced motion keeps the fades and drops every bit of travel */
 @media (prefers-reduced-motion:reduce){
   .js [data-reveal],.js [data-stagger]>*,.js .log-item{transform:none!important;transition:opacity 200ms ease!important}
-  .js [data-reveal="clip"],.js .ba-frame{clip-path:none!important;transition:none!important}
-  .js [data-reveal="clip"] img{transform:none!important}
+  .js .hero{height:100vh;height:100svh}
+  .st-roller i,.st-roller b{display:none}
+  .js [data-reveal="cover"]::after{transform:none!important;transition:opacity 300ms ease!important}
+  .js [data-reveal="cover"].in::after{opacity:0}
+  .js .ph img{transform:none!important;transition:none!important}
   .js [data-split] .w>span{transform:none!important;transition:none!important}
   .js .swipe::before{transform:scaleX(1)!important;transition:none!important}
   .steps-line i,.cal .c::after,.step::before{transition:none!important}
@@ -608,10 +701,12 @@ body.intro-on{overflow:hidden}
 <nav class="nav" id="nav" aria-label="Glavna">
   <div class="wrap">
     <a class="brand" href="#top" data-i18n-aria="home_label" aria-label="Univers Servis Poreč, na vrh stranice">
-      <picture><source type="image/webp" srcset="/assets/img/logo-dark-360.webp"><img src="/assets/img/logo-dark-360.png" width="360" height="119" alt="Univers Servis Poreč"></picture>
+      <picture class="logo-d"><source type="image/webp" srcset="/assets/img/logo-dark-360.webp"><img src="/assets/img/logo-dark-360.png" width="360" height="119" alt="Univers Servis Poreč"></picture>
+      <picture class="logo-l" aria-hidden="true"><source type="image/webp" srcset="/assets/img/logo-light-360.webp"><img src="/assets/img/logo-light-360.png" width="360" height="119" alt=""></picture>
     </a>
     <ul class="nav-links">
       <li><a href="#branches" data-nav="branches" data-i18n="nav_services">Usluge</a></li>
+      <li><a href="#colours" data-nav="colours" data-i18n="nav_colours">Boje</a></li>
       <li><a href="#process" data-nav="process" data-i18n="nav_process">Kako radimo</a></li>
       <li><a href="#area" data-nav="area" data-i18n="nav_area">Područje</a></li>
       <li><a href="#faq" data-nav="faq" data-i18n="nav_faq">Pitanja</a></li>
@@ -640,6 +735,7 @@ body.intro-on{overflow:hidden}
 <div class="sheet" id="sheet">
   <ul>
     <li><a href="#branches"><b data-i18n="nav_services">Usluge</b><span>01</span></a></li>
+    <li><a href="#colours"><b data-i18n="nav_colours">Boje</b><i class="sw" aria-hidden="true"><i></i><i></i><i></i></i></a></li>
     <li><a href="#process"><b data-i18n="nav_process">Kako radimo</b><span>03</span></a></li>
     <li><a href="#area"><b data-i18n="nav_area">Područje</b><span>04</span></a></li>
     <li><a href="#faq"><b data-i18n="nav_faq">Pitanja</b><span>05</span></a></li>
@@ -651,56 +747,65 @@ body.intro-on{overflow:hidden}
 
 <main id="main">
 
-<header class="hero wrap" id="top">
-  <div class="hero-top" data-hero>
-    <p class="mono" data-i18n="hero_meta">Poreč · Istra — soboslikarski i fasaderski radovi</p>
-    <p class="mono live hide-sm"><i aria-hidden="true"></i><span data-i18n="hero_hours">Pon–Pet 08:00–17:00</span></p>
-  </div>
-  <h1 class="d" id="heroH1" data-i18n="hero_h1" data-split data-hero>Soboslikar i fasader u <span class="swipe">Poreču</span>.</h1>
-  <div class="hero-grid">
-    <div class="hero-side" data-hero>
-      <p class="hero-lede" data-i18n="hero_lede">Ličenje, gletanje, žbukanje i fasade za stanove, kuće, apartmane i hotele. Obiteljski posao od 1990., na Poreštini i u cijeloj Istri.</p>
-      <div class="hero-cta">
-        <a class="btn btn-lime" href="#contact"><span data-i18n="cta_visit">Besplatan obilazak</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 10h12M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
-        <a class="btn btn-line" href="tel:+38598335031" data-i18n-aria="call_label" aria-label="Nazovite +385 98 335 031"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 2.5h-3a1 1 0 0 0-1 1C2.5 11.5 8.5 17.5 16.5 17.5a1 1 0 0 0 1-1v-3l-3.5-1.5-1.8 1.8a10 10 0 0 1-4.5-4.5L9.5 7.5 8 4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>+385 98 335 031</span></a>
+<header class="hero" id="top">
+  <div class="stage" id="stage">
+    <div class="stage-media">
+      <div class="st-after">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/after-640.avif 640w, /assets/img/after-1200.avif 1200w, /assets/img/after-1800.avif 1800w" sizes="100vw">
+          <source type="image/webp" srcset="/assets/img/after-640.webp 640w, /assets/img/after-1200.webp 1200w, /assets/img/after-1800.webp 1800w" sizes="100vw">
+          <img src="/assets/img/after-1200.jpg" srcset="/assets/img/after-640.jpg 640w, /assets/img/after-1200.jpg 1200w, /assets/img/after-1800.jpg 1800w" sizes="100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_after" alt="Ista soba nakon gletanja i ličenja: ravni, svijetli zidovi i obnovljene lajsne">
+        </picture>
       </div>
-      <ul class="facts mono" id="facts"><li><b>01</b><span>Besplatan obilazak i pisana ponuda</span></li><li><b>02</b><span>Radimo cijele godine, i izvan sezone</span></li><li><b>03</b><span>Ne morate biti prisutni dok radimo</span></li></ul>
+      <div class="st-before"><div class="st-before-in">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/before-640.avif 640w, /assets/img/before-1200.avif 1200w, /assets/img/before-1800.avif 1800w" sizes="100vw">
+          <source type="image/webp" srcset="/assets/img/before-640.webp 640w, /assets/img/before-1200.webp 1200w, /assets/img/before-1800.webp 1800w" sizes="100vw">
+          <img src="/assets/img/before-1200.jpg" srcset="/assets/img/before-640.jpg 640w, /assets/img/before-1200.jpg 1200w, /assets/img/before-1800.jpg 1800w" sizes="100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_before" alt="Soba prije radova: oštećena žbuka, vlaga i pukotine na zidovima, pod pokriven zaštitnim papirom">
+        </picture>
+      </div></div>
+      <span class="st-roller" aria-hidden="true"><i></i><b class="mono"><span data-i18n="hint_paint">Skrolajte i obojite sobu</span><svg viewBox="0 0 12 12"><path d="M6 1.5v8M2.5 6.5L6 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></b></span>
+      <span class="st-tag st-tag-a mono" data-i18n="lbl_after">Poslije</span>
+      <span class="st-tag st-tag-b mono" data-i18n="lbl_before">Prije</span>
     </div>
-    <figure class="ba" id="ba" data-hero>
-      <div class="ba-frame" id="baFrame" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-i18n-aria="ba_aria" aria-label="Usporedba prostora prije i poslije radova">
-        <picture class="ba-after">
-          <source type="image/avif" srcset="/assets/img/after-640.avif 640w, /assets/img/after-1200.avif 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <source type="image/webp" srcset="/assets/img/after-640.webp 640w, /assets/img/after-1200.webp 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <img src="/assets/img/after-1200.jpg" srcset="/assets/img/after-640.jpg 640w, /assets/img/after-1200.jpg 1200w" sizes="(min-width:1000px) 58vw, 100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_after" alt="Ista soba nakon gletanja i ličenja: ravni, svijetli zidovi i obnovljene lajsne">
-        </picture>
-        <picture class="ba-before">
-          <source type="image/avif" srcset="/assets/img/before-640.avif 640w, /assets/img/before-1200.avif 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <source type="image/webp" srcset="/assets/img/before-640.webp 640w, /assets/img/before-1200.webp 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <img src="/assets/img/before-1200.jpg" srcset="/assets/img/before-640.jpg 640w, /assets/img/before-1200.jpg 1200w" sizes="(min-width:1000px) 58vw, 100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_before" alt="Soba prije radova: oštećena žbuka, vlaga i pukotine na zidovima, pod pokriven zaštitnim papirom">
-        </picture>
-        <div class="ba-line"><span class="ba-knob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span></div>
-        <span class="ba-tag ba-tag-b mono" data-i18n="lbl_before">Prije</span>
-        <span class="ba-tag ba-tag-a mono" data-i18n="lbl_after">Poslije</span>
+    <div class="stage-shade" aria-hidden="true"></div>
+    <div class="hero-copy wrap">
+      <div class="hero-top" data-hero>
+        <p class="mono" data-i18n="hero_meta">Poreč · Istra · soboslikarski i fasaderski radovi</p>
+        <p class="mono live hide-sm"><i aria-hidden="true"></i><span data-i18n="hero_hours">Pon–Pet 08:00–17:00</span></p>
       </div>
-      <figcaption class="mono"><span data-i18n="ba_cap">Povucite za usporedbu</span><span>Poreč, Istra</span></figcaption>
-    </figure>
+      <h1 class="d" id="heroH1" data-i18n="hero_h1" data-split data-hero>Soboslikar i fasader u <span class="swipe">Poreču</span>.</h1>
+      <div class="hero-side" data-hero>
+        <p class="hero-lede" data-i18n="hero_lede">Ličenje, gletanje, žbukanje i fasade za stanove, kuće, apartmane i hotele. Obiteljski posao od 1990., na Poreštini i u cijeloj Istri.</p>
+        <div class="hero-cta">
+          <a class="btn btn-lime" href="#contact"><span data-i18n="cta_visit">Besplatan obilazak</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 10h12M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+          <a class="btn btn-line" href="tel:+38598335031" data-i18n-aria="call_label" aria-label="Nazovite +385 98 335 031"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 2.5h-3a1 1 0 0 0-1 1C2.5 11.5 8.5 17.5 16.5 17.5a1 1 0 0 0 1-1v-3l-3.5-1.5-1.8 1.8a10 10 0 0 1-4.5-4.5L9.5 7.5 8 4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>+385 98 335 031</span></a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
+<div class="facts-band">
+  <ul class="facts wrap mono" id="facts" data-stagger><li><b>01</b><span>Besplatan obilazak i pisana ponuda</span></li><li><b>02</b><span>Radimo cijele godine, i izvan sezone</span></li><li><b>03</b><span>Ne morate biti prisutni dok radimo</span></li></ul>
+</div>
+
 <!-- 01 SERVICES -->
-<section class="sec wrap" id="branches" aria-labelledby="h-branches">
-  <header class="sec-head">
-    <span class="rule" data-reveal="rule"></span>
-    <p class="idx mono" data-reveal><b>01</b><span data-i18n="br_idx">Usluge</span></p>
-    <h2 class="d" id="h-branches" data-i18n="br_h2" data-split>Iznutra i izvana.</h2>
-    <p class="lede" data-i18n="br_p" data-reveal>Isti tim i ista priprema, bilo da je riječ o jednoj sobi ili o cijelom pročelju.</p>
-  </header>
+<section class="sec" id="branches" aria-labelledby="h-branches">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="rule" data-reveal="rule"></span>
+      <p class="idx mono" data-reveal><b>01</b><span data-i18n="br_idx">Usluge</span></p>
+      <h2 class="d" id="h-branches" data-i18n="br_h2" data-split>Iznutra i izvana.</h2>
+      <p class="lede" data-i18n="br_p" data-reveal>Isti tim i ista priprema, bilo da je riječ o jednoj sobi ili o cijelom pročelju.</p>
+    </header>
+  </div>
   <article class="branch">
-    <figure data-reveal="clip">
+    <figure class="ph" data-reveal="cover" data-px>
       <picture>
-        <source type="image/avif" srcset="/assets/img/interior-640.avif 640w, /assets/img/interior-1200.avif 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <source type="image/webp" srcset="/assets/img/interior-640.webp 640w, /assets/img/interior-1200.webp 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <img src="/assets/img/interior-1200.jpg" srcset="/assets/img/interior-640.jpg 640w, /assets/img/interior-1200.jpg 1200w" sizes="(min-width:900px) 56vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_int" alt="Dnevni boravak pripremljen za ličenje: namještaj pod folijom, pod pokriven papirom, prozori olijepljeni trakom">
+        <source type="image/avif" srcset="/assets/img/interior-640.avif 640w, /assets/img/interior-1200.avif 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <source type="image/webp" srcset="/assets/img/interior-640.webp 640w, /assets/img/interior-1200.webp 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <img src="/assets/img/interior-1200.jpg" srcset="/assets/img/interior-640.jpg 640w, /assets/img/interior-1200.jpg 1200w" sizes="(min-width:900px) 62vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_int" alt="Dnevni boravak pripremljen za ličenje: namještaj pod folijom, pod pokriven papirom, prozori olijepljeni trakom">
       </picture>
       <figcaption class="mono" data-i18n="br1_cap">Namještaj i podovi pokriveni prije ličenja</figcaption>
     </figure>
@@ -712,11 +817,11 @@ body.intro-on{overflow:hidden}
     </div>
   </article>
   <article class="branch rev">
-    <figure data-reveal="clip">
+    <figure class="ph" data-reveal="cover" data-px>
       <picture>
-        <source type="image/avif" srcset="/assets/img/exterior-640.avif 640w, /assets/img/exterior-1200.avif 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <source type="image/webp" srcset="/assets/img/exterior-640.webp 640w, /assets/img/exterior-1200.webp 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <img src="/assets/img/exterior-1200.jpg" srcset="/assets/img/exterior-640.jpg 640w, /assets/img/exterior-1200.jpg 1200w" sizes="(min-width:900px) 56vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_ext" alt="Dvokatna kuća pod fasadnom skelom tijekom fasaderskih radova, tlo oko kuće pokriveno zaštitnom folijom">
+        <source type="image/avif" srcset="/assets/img/exterior-640.avif 640w, /assets/img/exterior-1200.avif 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <source type="image/webp" srcset="/assets/img/exterior-640.webp 640w, /assets/img/exterior-1200.webp 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <img src="/assets/img/exterior-1200.jpg" srcset="/assets/img/exterior-640.jpg 640w, /assets/img/exterior-1200.jpg 1200w" sizes="(min-width:900px) 62vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_ext" alt="Dvokatna kuća pod fasadnom skelom tijekom fasaderskih radova, tlo oko kuće pokriveno zaštitnom folijom">
       </picture>
       <figcaption class="mono" data-i18n="br2_cap">Fasada pod skelom, okoliš zaštićen</figcaption>
     </figure>
@@ -727,10 +832,41 @@ body.intro-on{overflow:hidden}
       <ul class="tags" id="br2Tags"><li>Fasade</li><li>Vanjska žbuka</li><li>Zaštita od vremenskih uvjeta</li><li>Skele</li><li>Temeljenje vanjskih površina</li><li>Popravak fasade</li></ul>
     </div>
   </article>
-  <div class="stats" data-stagger>
-    <div class="stat" style="--i:0"><b>1990</b><span class="mono" data-i18n="stat_a">Obiteljski posao</span></div>
-    <div class="stat" style="--i:2"><b>500+</b><span class="mono" data-i18n="stat_b">Objekata pod brigom</span></div>
-    <div class="stat" style="--i:4"><b>11</b><span class="mono" data-i18n="stat_c">Vrsta radova</span></div>
+  <div class="wrap">
+    <div class="stats" data-stagger>
+      <div class="stat" style="--i:0"><b>1990</b><span class="mono" data-i18n="stat_a">Obiteljski posao</span></div>
+      <div class="stat" style="--i:2"><b>500+</b><span class="mono" data-i18n="stat_b">Objekata pod brigom</span></div>
+      <div class="stat" style="--i:4"><b>11</b><span class="mono" data-i18n="stat_c">Vrsta radova</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOUR ROOM -->
+<section class="cw dark" id="colours" aria-labelledby="h-colours">
+  <div class="wrap cw-grid">
+    <div class="cw-head">
+      <p class="mono cw-kick" data-i18n="cw_kicker" data-reveal>Isprobajte boju</p>
+      <h2 class="d" id="h-colours" data-i18n="cw_h2" data-split>Koja boja za vaš zid?</h2>
+      <p class="cw-p" data-i18n="cw_p" data-reveal>Dodirnite nijansu i soba se sama preboja. Samo za ideju: točnu boju biramo zajedno, s uzorkom na vašem zidu i pri vašem svjetlu.</p>
+    </div>
+    <figure class="cw-fig" data-reveal="cover">
+      <div class="cw-room" id="cwRoom">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/after-640.avif 640w, /assets/img/after-1200.avif 1200w" sizes="(min-width:1000px) 56vw, 100vw">
+          <source type="image/webp" srcset="/assets/img/after-640.webp 640w, /assets/img/after-1200.webp 1200w" sizes="(min-width:1000px) 56vw, 100vw">
+          <img id="cwBase" src="/assets/img/after-1200.jpg" srcset="/assets/img/after-640.jpg 640w, /assets/img/after-1200.jpg 1200w" sizes="(min-width:1000px) 56vw, 100vw" width="1200" height="896" loading="lazy" decoding="async" data-i18n-alt="cw_alt" alt="Soba nakon gletanja i ličenja, zidovi prikazani u odabranoj boji">
+        </picture>
+        <div class="cw-paint"><img alt="" aria-hidden="true"><i></i></div>
+        <div class="cw-paint cw-top"><img alt="" aria-hidden="true"><i></i></div>
+        <span class="cw-roller" aria-hidden="true"></span>
+      </div>
+      <figcaption class="mono"><span data-i18n="cw_note">Boje na ekranu su približne</span><span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5C7 6.6 5 9.3 5 12.1a5 5 0 0 0 10 0c0-2.8-2-5.5-5-9.6z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span></figcaption>
+    </figure>
+    <div class="cw-ctrl">
+      <div class="chips" id="chips" role="group" data-i18n-aria="cw_aria" aria-label="Odaberite boju zida" data-stagger><button class="chip" type="button" aria-pressed="true" data-paint="" style="--c:#D6C3A5"><i aria-hidden="true"></i><span>Pijesak</span></button><button class="chip" type="button" aria-pressed="false" data-paint="#F2EFE8" style="--c:#F2EFE8"><i aria-hidden="true"></i><span>Vapno</span></button><button class="chip" type="button" aria-pressed="false" data-paint="#D6CFC2" style="--c:#D6CFC2"><i aria-hidden="true"></i><span>Kamen</span></button><button class="chip" type="button" aria-pressed="false" data-paint="#A3A88A" style="--c:#A3A88A"><i aria-hidden="true"></i><span>Maslina</span></button><button class="chip" type="button" aria-pressed="false" data-paint="#93A6B0" style="--c:#93A6B0"><i aria-hidden="true"></i><span>Bura</span></button><button class="chip" type="button" aria-pressed="false" data-paint="#3F7F88" style="--c:#3F7F88"><i aria-hidden="true"></i><span>More</span></button><button class="chip" type="button" aria-pressed="false" data-paint="#C67C5E" style="--c:#C67C5E"><i aria-hidden="true"></i><span>Terakota</span></button><button class="chip" type="button" aria-pressed="false" data-paint="#2E3A4E" style="--c:#2E3A4E"><i aria-hidden="true"></i><span>Ponoć</span></button></div>
+      <p class="cw-now" id="cwNow" aria-live="polite"><b>Pijesak</b><span>Topla bež. Ovu boju soba je stvarno dobila.</span></p>
+      <a class="btn btn-lime" href="#contact" data-reveal><span data-i18n="cw_cta">Razgovarajmo o boji</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 10h12M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+    </div>
   </div>
 </section>
 
@@ -893,7 +1029,7 @@ body.intro-on{overflow:hidden}
     <p class="lede" data-i18n="job_p" data-reveal>Radimo cijelu godinu na području Poreča i Istre: stanovi, kuće, hoteli i fasade. Ako ste dobri u svom poslu i za sobom ostavljate uredno gradilište, javite se.</p>
   </header>
   <div class="jobs-grid">
-    <ul class="roles" id="jobRoles" data-stagger><li><b>Soboslikar – ličilac</b><span>Priprema podloge, glet i završni premazi u stanovima, kućama i hotelima.</span></li><li><b>Fasader</b><span>Vanjska žbuka, termofasade i završni slojevi, rad na skelama.</span></li><li><b>Žbukar / gipsar</b><span>Strojna i ručna žbuka, Knauf pregrade i stropovi.</span></li><li><b>Pomoćni radnik</b><span>Priprema i zaštita prostora, skele, transport materijala i čišćenje.</span></li></ul>
+    <ul class="roles" id="jobRoles" data-stagger><li><b>Soboslikar-ličilac</b><span>Priprema podloge, glet i završni premazi u stanovima, kućama i hotelima.</span></li><li><b>Fasader</b><span>Vanjska žbuka, termofasade i završni slojevi, rad na skelama.</span></li><li><b>Žbukar / gipsar</b><span>Strojna i ručna žbuka, Knauf pregrade i stropovi.</span></li><li><b>Pomoćni radnik</b><span>Priprema i zaštita prostora, skele, transport materijala i čišćenje.</span></li></ul>
     <p class="roles-open" data-i18n="job_open" data-reveal>Nemate iskustva, ali želite naučiti zanat? Svejedno se javite, napišite to u poruci.</p>
     <form class="form" id="jobForm" novalidate data-reveal>
       <div class="field"><label class="mono" for="jName" data-i18n="form_name_l">Ime i prezime</label><input id="jName" name="name" type="text" autocomplete="name"></div>
@@ -901,7 +1037,7 @@ body.intro-on{overflow:hidden}
         <div class="field"><label class="mono" for="jPhone" data-i18n="form_phone_l">Telefon</label><input id="jPhone" name="phone" type="tel" autocomplete="tel"></div>
         <div class="field"><label class="mono" for="jEmail" data-i18n="form_email_l">E-pošta</label><input id="jEmail" name="email" type="email" autocomplete="email"></div>
       </div>
-      <div class="field"><label class="mono" for="jobRole" data-i18n="job_role_l">Pozicija</label><select id="jobRole" name="position"><option value="Soboslikar – ličilac">Soboslikar – ličilac</option><option value="Fasader">Fasader</option><option value="Žbukar / gipsar">Žbukar / gipsar</option><option value="Pomoćni radnik">Pomoćni radnik</option><option value="Nešto drugo">Nešto drugo</option></select></div>
+      <div class="field"><label class="mono" for="jobRole" data-i18n="job_role_l">Pozicija</label><select id="jobRole" name="position"><option value="Soboslikar-ličilac">Soboslikar-ličilac</option><option value="Fasader">Fasader</option><option value="Žbukar / gipsar">Žbukar / gipsar</option><option value="Pomoćni radnik">Pomoćni radnik</option><option value="Nešto drugo">Nešto drugo</option></select></div>
       <div class="field"><label class="mono" for="jMsg" data-i18n="job_msg_l">Nekoliko riječi o sebi</label><textarea id="jMsg" name="message"></textarea></div>
       <div class="field">
         <span class="mono" data-i18n="job_cv_l">Životopis (nije obavezno)</span>
@@ -931,6 +1067,7 @@ body.intro-on{overflow:hidden}
       <div class="foot-col">
         <p class="mono" data-i18n="foot_nav">Stranica</p>
         <a href="#branches" data-i18n="nav_services">Usluge</a>
+        <a href="#colours" data-i18n="nav_colours">Boje</a>
         <a href="#process" data-i18n="nav_process">Kako radimo</a>
         <a href="#area" data-i18n="nav_area">Područje</a>
         <a href="#faq" data-i18n="nav_faq">Pitanja</a>
@@ -967,15 +1104,20 @@ const I18N={
   seo_title:`Soboslikar i fasade Poreč | Univers Servis od 1990.`,
   seo_desc:`Ličenje, gletanje, žbukanje i fasade u Poreču i Istri. Obiteljski posao od 1990. Besplatan obilazak i pisana ponuda. Radimo cijele godine.`,
   skip:`Preskoči na sadržaj`,menu_label:`Izbornik`,lang_label:`Jezik`,home_label:`Univers Servis Poreč, na vrh stranice`,
-  nav_services:`Usluge`,nav_process:`Kako radimo`,nav_area:`Područje`,nav_faq:`Pitanja`,nav_careers:`Posao`,nav_contact:`Kontakt`,nav_cta:`Zatražite ponudu`,
-  hero_meta:`Poreč · Istra — soboslikarski i fasaderski radovi`,hero_hours:`Pon–Pet 08:00–17:00`,
+  nav_services:`Usluge`,nav_colours:`Boje`,nav_process:`Kako radimo`,nav_area:`Područje`,nav_faq:`Pitanja`,nav_careers:`Posao`,nav_contact:`Kontakt`,nav_cta:`Zatražite ponudu`,
+  hero_meta:`Poreč · Istra · soboslikarski i fasaderski radovi`,hero_hours:`Pon–Pet 08:00–17:00`,
   hero_h1:`Soboslikar i fasader u <span class="swipe">Poreču</span>.`,
   hero_lede:`Ličenje, gletanje, žbukanje i fasade za stanove, kuće, apartmane i hotele. Obiteljski posao od 1990., na Poreštini i u cijeloj Istri.`,
   cta_visit:`Besplatan obilazak`,call_label:`Nazovite +385 98 335 031`,
   facts:[`Besplatan obilazak i pisana ponuda`,`Radimo cijele godine, i izvan sezone`,`Ne morate biti prisutni dok radimo`],
-  lbl_before:`Prije`,lbl_after:`Poslije`,ba_cap:`Povucite za usporedbu`,ba_aria:`Usporedba prostora prije i poslije radova`,
+  lbl_before:`Prije`,lbl_after:`Poslije`,hint_paint:`Skrolajte i obojite sobu`,
   alt_before:`Soba prije radova: oštećena žbuka, vlaga i pukotine na zidovima, pod pokriven zaštitnim papirom`,
   alt_after:`Ista soba nakon gletanja i ličenja: ravni, svijetli zidovi i obnovljene lajsne`,
+  cw_kicker:`Isprobajte boju`,cw_h2:`Koja boja za vaš zid?`,
+  cw_p:`Dodirnite nijansu i soba se sama preboja. Samo za ideju: točnu boju biramo zajedno, s uzorkom na vašem zidu i pri vašem svjetlu.`,
+  cw_note:`Boje na ekranu su približne`,cw_aria:`Odaberite boju zida`,cw_cta:`Razgovarajmo o boji`,
+  cw_alt:`Soba nakon gletanja i ličenja, zidovi prikazani u odabranoj boji`,
+  paints:[{n:`Pijesak`,d:`Topla bež. Ovu boju soba je stvarno dobila.`},{n:`Vapno`,d:`Mekana bijela koja ne bliješti.`},{n:`Kamen`,d:`Svijetla siva s toplinom istarskog kamena.`},{n:`Maslina`,d:`Prigušena zelena, lijepa uz drvene podove.`},{n:`Bura`,d:`Hladna plavosiva, kao nebo nakon bure.`},{n:`More`,d:`Duboka tirkizna za jedan naglašeni zid.`},{n:`Terakota`,d:`Toplina crijepa i crvene istarske zemlje.`},{n:`Ponoć`,d:`Tamna i mirna, za spavaće sobe.`}],
   br_idx:`Usluge`,br_h2:`Iznutra i izvana.`,br_p:`Isti tim i ista priprema, bilo da je riječ o jednoj sobi ili o cijelom pročelju.`,
   br1_h:`Unutarnji radovi`,
   br1_p:`Od praznog stana do useljenja: pripremamo podlogu, zatvaramo pukotine, gletamo i ličimo. Podovi i namještaj ostaju pokriveni, a prašina ne izlazi iz prostorije u kojoj radimo.`,
@@ -1050,7 +1192,7 @@ const I18N={
   job_idx:`Posao`,job_h2:`Tražimo majstore koji rade uredno.`,
   job_p:`Radimo cijelu godinu na području Poreča i Istre: stanovi, kuće, hoteli i fasade. Ako ste dobri u svom poslu i za sobom ostavljate uredno gradilište, javite se.`,
   job_roles:[
-   {n:`Soboslikar – ličilac`,d:`Priprema podloge, glet i završni premazi u stanovima, kućama i hotelima.`},
+   {n:`Soboslikar-ličilac`,d:`Priprema podloge, glet i završni premazi u stanovima, kućama i hotelima.`},
    {n:`Fasader`,d:`Vanjska žbuka, termofasade i završni slojevi, rad na skelama.`},
    {n:`Žbukar / gipsar`,d:`Strojna i ručna žbuka, Knauf pregrade i stropovi.`},
    {n:`Pomoćni radnik`,d:`Priprema i zaštita prostora, skele, transport materijala i čišćenje.`}],
@@ -1073,15 +1215,20 @@ const I18N={
   seo_title:`Painters & Facade Contractors, Poreč | Univers Servis`,
   seo_desc:`Painting, skimming, plastering and facades in Poreč and across Istria. A family business since 1990. Free site visit, written quote, all year round.`,
   skip:`Skip to content`,menu_label:`Menu`,lang_label:`Language`,home_label:`Univers Servis Poreč, back to top`,
-  nav_services:`Services`,nav_process:`How we work`,nav_area:`Area`,nav_faq:`FAQ`,nav_careers:`Careers`,nav_contact:`Contact`,nav_cta:`Request a quote`,
-  hero_meta:`Poreč · Istria — painting and facade contractors`,hero_hours:`Mon–Fri 08:00–17:00`,
+  nav_services:`Services`,nav_colours:`Colours`,nav_process:`How we work`,nav_area:`Area`,nav_faq:`FAQ`,nav_careers:`Careers`,nav_contact:`Contact`,nav_cta:`Request a quote`,
+  hero_meta:`Poreč · Istria · painting and facade contractors`,hero_hours:`Mon–Fri 08:00–17:00`,
   hero_h1:`Painters and facade contractors in <span class="swipe">Poreč</span>.`,
   hero_lede:`Painting, skimming, plastering and facades for flats, houses, holiday apartments and hotels. A family business since 1990, across Poreč and all of Istria.`,
   cta_visit:`Free site visit`,call_label:`Call +385 98 335 031`,
   facts:[`Free site visit and a written quote`,`We work all year, off-season included`,`You don't need to be there while we work`],
-  lbl_before:`Before`,lbl_after:`After`,ba_cap:`Drag to compare`,ba_aria:`Before and after comparison of a room`,
+  lbl_before:`Before`,lbl_after:`After`,hint_paint:`Scroll to paint the room`,
   alt_before:`Room before the work: damaged plaster, damp and cracked walls, floor covered with protective paper`,
   alt_after:`The same room after skimming and painting: smooth, light walls and renewed skirting`,
+  cw_kicker:`Try a colour`,cw_h2:`What colour for your walls?`,
+  cw_p:`Tap a shade and the room repaints itself. It's only for ideas: we choose the exact colour together, with a sample on your own wall, in your own light.`,
+  cw_note:`Colours on screen are approximate`,cw_aria:`Choose a wall colour`,cw_cta:`Let's talk colour`,
+  cw_alt:`The room after skimming and painting, walls shown in the chosen colour`,
+  paints:[{n:`Sand`,d:`Warm beige. The colour this room actually got.`},{n:`Limewash`,d:`A soft white that does not glare.`},{n:`Stone`,d:`Light grey with the warmth of Istrian stone.`},{n:`Olive`,d:`A muted green that suits wooden floors.`},{n:`Bura`,d:`Cool blue-grey, like the sky after the bura wind.`},{n:`Adriatic`,d:`Deep teal for a single statement wall.`},{n:`Terracotta`,d:`The warmth of roof tiles and Istria's red earth.`},{n:`Midnight`,d:`Dark and calm, for bedrooms.`}],
   br_idx:`Services`,br_h2:`Inside and out.`,br_p:`The same team and the same preparation, whether it is one room or an entire facade.`,
   br1_h:`Interior work`,
   br1_p:`From an empty flat to moving-in day: we prepare the surface, close the cracks, skim and paint. Floors and furniture stay covered, and the dust stays in the room we are working in.`,
@@ -1179,15 +1326,20 @@ const I18N={
   seo_title:`Maler & Fassaden in Poreč, Istrien | Univers Servis`,
   seo_desc:`Maler-, Spachtel-, Putz- und Fassadenarbeiten in Poreč und ganz Istrien. Familienbetrieb seit 1990. Kostenlose Besichtigung, schriftliches Angebot.`,
   skip:`Zum Inhalt springen`,menu_label:`Menü`,lang_label:`Sprache`,home_label:`Univers Servis Poreč, zum Seitenanfang`,
-  nav_services:`Leistungen`,nav_process:`Ablauf`,nav_area:`Gebiet`,nav_faq:`Fragen`,nav_careers:`Karriere`,nav_contact:`Kontakt`,nav_cta:`Angebot anfordern`,
-  hero_meta:`Poreč · Istrien — Maler- und Fassadenarbeiten`,hero_hours:`Mo–Fr 08:00–17:00`,
+  nav_services:`Leistungen`,nav_colours:`Farben`,nav_process:`Ablauf`,nav_area:`Gebiet`,nav_faq:`Fragen`,nav_careers:`Karriere`,nav_contact:`Kontakt`,nav_cta:`Angebot anfordern`,
+  hero_meta:`Poreč · Istrien · Maler- und Fassadenarbeiten`,hero_hours:`Mo–Fr 08:00–17:00`,
   hero_h1:`Maler und Fassaden in <span class="swipe">Poreč</span>, Istrien.`,
   hero_lede:`Malerarbeiten, Spachteln, Verputz und Fassaden für Wohnungen, Häuser, Ferienwohnungen und Hotels. Familienbetrieb seit 1990, in Poreč und ganz Istrien.`,
   cta_visit:`Kostenlose Besichtigung`,call_label:`Anrufen: +385 98 335 031`,
   facts:[`Kostenlose Besichtigung, schriftliches Angebot`,`Ganzjährig, auch in der Nebensaison`,`Sie müssen nicht vor Ort sein`],
-  lbl_before:`Vorher`,lbl_after:`Nachher`,ba_cap:`Zum Vergleichen ziehen`,ba_aria:`Vorher-Nachher-Vergleich eines Raumes`,
+  lbl_before:`Vorher`,lbl_after:`Nachher`,hint_paint:`Scrollen und den Raum streichen`,
   alt_before:`Raum vor den Arbeiten: beschädigter Putz, Feuchtigkeit und Risse an den Wänden, Boden mit Schutzpapier abgedeckt`,
   alt_after:`Derselbe Raum nach Spachteln und Streichen: glatte, helle Wände und erneuerte Sockelleisten`,
+  cw_kicker:`Farbe ausprobieren`,cw_h2:`Welche Farbe für Ihre Wände?`,
+  cw_p:`Tippen Sie auf einen Farbton, und der Raum streicht sich neu. Nur als Anregung: Den genauen Ton wählen wir gemeinsam, mit einem Muster an Ihrer Wand und in Ihrem Licht.`,
+  cw_note:`Farben am Bildschirm sind Näherungswerte`,cw_aria:`Wandfarbe wählen`,cw_cta:`Farbe besprechen`,
+  cw_alt:`Der Raum nach Spachteln und Streichen, die Wände in der gewählten Farbe`,
+  paints:[{n:`Sand`,d:`Warmes Beige. Diese Farbe hat der Raum wirklich bekommen.`},{n:`Kalkweiß`,d:`Ein weiches Weiß, das nicht blendet.`},{n:`Stein`,d:`Helles Grau mit der Wärme istrischen Steins.`},{n:`Olive`,d:`Gedämpftes Grün, schön zu Holzböden.`},{n:`Bora`,d:`Kühles Blaugrau, wie der Himmel nach der Bora.`},{n:`Adria`,d:`Tiefes Petrol für eine einzelne Akzentwand.`},{n:`Terrakotta`,d:`Die Wärme von Dachziegeln und roter istrischer Erde.`},{n:`Mitternacht`,d:`Dunkel und ruhig, fürs Schlafzimmer.`}],
   br_idx:`Leistungen`,br_h2:`Innen und außen.`,br_p:`Dasselbe Team und dieselbe Vorbereitung, ob ein einzelnes Zimmer oder eine ganze Fassade.`,
   br1_h:`Innenarbeiten`,
   br1_p:`Von der leeren Wohnung bis zum Einzugstag: Wir bereiten den Untergrund vor, schließen Risse, spachteln und streichen. Böden und Möbel bleiben abgedeckt, und der Staub bleibt im Raum, in dem wir arbeiten.`,
@@ -1282,18 +1434,23 @@ const I18N={
   legal_line:`UNIVERS SERVIS POREČ d.o.o. · Familienbetrieb seit 1990`
  },
  it:{
-  seo_title:`Imbianchino a Parenzo (Poreč) – Facciate e Pitture Istria`,
+  seo_title:`Imbianchino a Parenzo (Poreč) | Facciate e Pitture Istria`,
   seo_desc:`Imbiancatura, rasatura, intonaci e facciate a Parenzo (Poreč) e in tutta l'Istria. Impresa familiare dal 1990. Sopralluogo gratuito, preventivo scritto.`,
   skip:`Vai al contenuto`,menu_label:`Menu`,lang_label:`Lingua`,home_label:`Univers Servis Poreč, torna su`,
-  nav_services:`Servizi`,nav_process:`Come lavoriamo`,nav_area:`Zona`,nav_faq:`Domande`,nav_careers:`Lavora con noi`,nav_contact:`Contatti`,nav_cta:`Richiedi un preventivo`,
-  hero_meta:`Parenzo · Istria — imbiancatura e facciate`,hero_hours:`Lun–Ven 08:00–17:00`,
+  nav_services:`Servizi`,nav_colours:`Colori`,nav_process:`Come lavoriamo`,nav_area:`Zona`,nav_faq:`Domande`,nav_careers:`Lavora con noi`,nav_contact:`Contatti`,nav_cta:`Richiedi un preventivo`,
+  hero_meta:`Parenzo · Istria · imbiancatura e facciate`,hero_hours:`Lun–Ven 08:00–17:00`,
   hero_h1:`Imbianchino e facciate a <span class="swipe">Parenzo</span>.`,
   hero_lede:`Imbiancatura, rasatura, intonaci e facciate per appartamenti, case, case vacanza e hotel. Impresa familiare dal 1990, a Parenzo (Poreč) e in tutta l'Istria.`,
   cta_visit:`Sopralluogo gratuito`,call_label:`Chiama il +385 98 335 031`,
   facts:[`Sopralluogo gratuito e preventivo scritto`,`Lavoriamo tutto l'anno, anche fuori stagione`,`Non devi essere presente durante i lavori`],
-  lbl_before:`Prima`,lbl_after:`Dopo`,ba_cap:`Trascina per confrontare`,ba_aria:`Confronto prima e dopo di una stanza`,
+  lbl_before:`Prima`,lbl_after:`Dopo`,hint_paint:`Scorri per dipingere la stanza`,
   alt_before:`Stanza prima dei lavori: intonaco danneggiato, umidità e crepe sulle pareti, pavimento coperto da carta protettiva`,
   alt_after:`La stessa stanza dopo rasatura e pittura: pareti lisce e luminose, battiscopa rinnovati`,
+  cw_kicker:`Prova un colore`,cw_h2:`Che colore per le tue pareti?`,
+  cw_p:`Tocca una tinta e la stanza si ridipinge da sola. È solo un'idea: il colore esatto lo scegliamo insieme, con un campione sulla tua parete e con la tua luce.`,
+  cw_note:`I colori sullo schermo sono indicativi`,cw_aria:`Scegli il colore della parete`,cw_cta:`Parliamo di colore`,
+  cw_alt:`La stanza dopo rasatura e pittura, pareti nel colore scelto`,
+  paints:[{n:`Sabbia`,d:`Beige caldo. Il colore che questa stanza ha avuto davvero.`},{n:`Calce`,d:`Un bianco morbido che non abbaglia.`},{n:`Pietra`,d:`Grigio chiaro con il calore della pietra d'Istria.`},{n:`Oliva`,d:`Verde smorzato, bello con i pavimenti in legno.`},{n:`Bora`,d:`Grigio azzurro freddo, come il cielo dopo la bora.`},{n:`Adriatico`,d:`Verde petrolio profondo, per una sola parete d'accento.`},{n:`Terracotta`,d:`Il calore delle tegole e della terra rossa d'Istria.`},{n:`Mezzanotte`,d:`Scuro e calmo, per le camere da letto.`}],
   br_idx:`Servizi`,br_h2:`Dentro e fuori.`,br_p:`La stessa squadra e la stessa preparazione, che si tratti di una stanza o di un'intera facciata.`,
   br1_h:`Lavori interni`,
   br1_p:`Dall'appartamento vuoto al giorno del trasloco: prepariamo il supporto, chiudiamo le crepe, rasiamo e dipingiamo. Pavimenti e mobili restano coperti e la polvere resta nella stanza in cui lavoriamo.`,
@@ -1408,8 +1565,9 @@ let current='hr';
 let readyDone=false;
 function ready(){
   if(readyDone)return; readyDone=true; window.__ready=true;
-  ['.hero-top','#heroH1','.hero-side','#ba'].forEach((s,i)=>{const el=$(s);if(el)setTimeout(()=>el.classList.add('in'),REDUCE?0:i*90);});
-  if(window.__baStart)setTimeout(window.__baStart,REDUCE?0:1300);
+  ['.hero-top','#heroH1','.hero-side'].forEach((s,i)=>{const el=$(s);if(el)setTimeout(()=>el.classList.add('in'),REDUCE?0:i*90);});
+  /* looked up when it fires: on a repeat visit this runs before the stage code below has loaded */
+  setTimeout(()=>{if(window.__stage)window.__stage();},REDUCE?0:260);
 }
 (function(){
   const intro=$('#intro'),body=document.body;
@@ -1431,15 +1589,32 @@ function ready(){
 })();
 
 /* ── nav: hide on the way down (desktop only), progress, current section ─ */
-const nav=$('#nav'),progress=$('.progress');
+const nav=$('#nav'),progress=$('.progress'),hero=$('#top'),stage=$('#stage');
 const cssProgress=window.CSS&&CSS.supports&&CSS.supports('animation-timeline: scroll()');
 let lastY=0,ticking=false;
+/* over the hero photograph the bar is clear with light type; past it, plaster */
+function navState(){
+  /* only while the stage is pinned: once it starts to leave, the bar turns solid so the hero's own buttons never slide under clear type */
+  const y=scrollY,over=!!stage&&!nav.classList.contains('solid')&&y<hero.offsetTop+hero.offsetHeight-stage.offsetHeight+2;
+  nav.classList.toggle('over',over);
+  nav.classList.toggle('scrolled',y>24&&!over);
+}
 function onScroll(){
   const y=scrollY;
-  nav.classList.toggle('scrolled',y>24);
+  navState();
   if(y>160&&y>lastY){nav.classList.add('nav-hidden');closeAll();} else nav.classList.remove('nav-hidden');
   lastY=y; ticking=false;
   if(!cssProgress&&progress){const h=document.documentElement.scrollHeight-innerHeight;progress.style.transform='scaleX('+(h>0?y/h:0)+')';}
+  parallax();
+}
+/* photographs drift a little slower than the page */
+const PX=$$('[data-px]');
+function parallax(){
+  if(REDUCE)return;
+  const vh=innerHeight,rs=PX.map(f=>f.getBoundingClientRect());
+  PX.forEach((f,i)=>{const r=rs[i];if(r.bottom<-80||r.top>vh+80)return;
+    const c=Math.max(-1,Math.min(1,(r.top+r.height/2-vh/2)/(vh/2+r.height/2)));
+    f.style.setProperty('--py',(-c*r.height*.06).toFixed(1)+'px');});
 }
 addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(onScroll);ticking=true;}},{passive:true});
 const navLinks=$$('.nav-links a[data-nav]');
@@ -1447,7 +1622,7 @@ const secIO=new IntersectionObserver(es=>es.forEach(e=>{
   if(!e.isIntersecting)return;
   navLinks.forEach(a=>a.setAttribute('aria-current',a.dataset.nav===e.target.id?'true':'false'));
 }),{rootMargin:'-45% 0px -50% 0px'});
-['top','branches','services','process','area','faq','contact','careers'].forEach(id=>{const s=document.getElementById(id);if(s)secIO.observe(s);});
+['top','branches','colours','services','process','area','faq','contact','careers'].forEach(id=>{const s=document.getElementById(id);if(s)secIO.observe(s);});
 
 /* ── words rise out of their own line ──────────────────────────────── */
 function splitWords(root){
@@ -1488,25 +1663,81 @@ function playLog(){
   $$('#log .log-item').forEach((li,i)=>setTimeout(()=>li.classList.add('on'),REDUCE?0:350+i*650));
 }
 
-/* ── before / after ────────────────────────────────────────────────── */
+/* ── hero stage: the scroll rolls the finished room in over the old one ──
+   An opening pass paints the first strip on its own, so the idea reads before
+   anyone scrolls; from there the scroll position drives it, eased so a wheel's
+   steps arrive as one smooth stroke. */
+const P0=.16;
+let stF=REDUCE?.5:0,stIntro=REDUCE?1:0,stT0=0,stRaf=0,stLast=0;
+function stTick(now){
+  stRaf=0;
+  const span=Math.max(1,hero.offsetHeight-stage.offsetHeight),t=Math.min(1,Math.max(0,-hero.getBoundingClientRect().top/span));
+  if(stT0){const k=Math.min(1,(now-stT0)/1100);stIntro=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;}
+  const start=P0*stIntro,target=start+(1-start)*t;
+  const dt=stLast?Math.min(64,now-stLast):16.7; stLast=now;
+  stF+=(target-stF)*(1-Math.pow(.82,dt/16.7));
+  if(Math.abs(target-stF)<.0004)stF=target;
+  stage.style.setProperty('--f',stF.toFixed(4));
+  stage.classList.toggle('moved',stF>P0+.05);
+  stage.classList.toggle('done',stF>.97);
+  if(stF!==target||(stT0&&stIntro<1))stRaf=requestAnimationFrame(stTick); else stLast=0;
+}
+function stKick(){if(stage&&!REDUCE&&!stRaf)stRaf=requestAnimationFrame(stTick);}
+if(stage){
+  stage.style.setProperty('--f',String(stF));
+  if(REDUCE)stage.classList.add('moved');
+  addEventListener('scroll',stKick,{passive:true});
+  addEventListener('resize',stKick);
+}
+window.__stage=()=>{
+  if(!stage||REDUCE||stT0)return;
+  stT0=performance.now();stKick();
+  setTimeout(()=>stage.classList.add('ready'),700);
+};
+
+/* ── the colour room ──────────────────────────────────────────────────
+   Each paint layer is the photograph again: brightened or darkened to the
+   paint's lightness (so shadows and window light stay where they are), given
+   the paint's hue by a colour blend, and cut to the walls by a mask. A new
+   colour rolls in over the old one, left to right. */
+const cwRoom=$('#cwRoom'),chips=$$('#chips .chip'),cwNow=$('#cwNow');
+const WALL_LUM=.5775; /* median luminosity of the painted walls in the photograph */
+let cwCur=0;
+function cwLabel(){
+  const p=I18N[current].paints[cwCur];if(!cwNow||!p)return;
+  const b=document.createElement('b'),sp=document.createElement('span');b.textContent=p.n;sp.textContent=p.d;cwNow.replaceChildren(b,sp);
+}
 (function(){
-  const fr=$('#baFrame'); if(!fr)return;
-  let p=50,auto=!REDUCE,t=0,drag=false,started=false;
-  const set=v=>{p=Math.max(0,Math.min(100,v));fr.style.setProperty('--p',p+'%');fr.setAttribute('aria-valuenow',String(Math.round(p)));};
-  const fromX=x=>{const r=fr.getBoundingClientRect();set((x-r.left)/r.width*100);};
-  fr.addEventListener('pointerdown',e=>{auto=false;drag=true;try{fr.setPointerCapture(e.pointerId);}catch(_){}fromX(e.clientX);});
-  fr.addEventListener('pointermove',e=>{if(drag)fromX(e.clientX);});
-  ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>fr.addEventListener(ev,()=>{drag=false;}));
-  fr.addEventListener('keydown',e=>{
-    const m={ArrowLeft:-5,ArrowDown:-5,ArrowRight:5,ArrowUp:5,PageDown:-20,PageUp:20};
-    if(e.key in m){auto=false;set(p+m[e.key]);e.preventDefault();}
-    else if(e.key==='Home'){auto=false;set(0);e.preventDefault();}
-    else if(e.key==='End'){auto=false;set(100);e.preventDefault();}
-  });
-  function ease(to){const s=p,d=to-s,t0=performance.now();(function st(n){const k=Math.min(1,(n-t0)/560),q=1-Math.pow(1-k,3);set(s+d*q);if(k<1)requestAnimationFrame(st);})(t0);}
-  function sweep(){if(!auto)return;t+=.03;set(50+Math.sin(t)*36);if(t>Math.PI*2){auto=false;ease(50);return;}requestAnimationFrame(sweep);}
-  window.__baStart=()=>{if(started)return;started=true;if(auto)requestAnimationFrame(sweep);};
-  set(50);
+  if(!cwRoom)return;
+  const base=$('#cwBase'),[under,over]=$$('.cw-paint',cwRoom),roller=$('.cw-roller',cwRoom);
+  const lum=h=>{const n=parseInt(h.slice(1),16);return (.3*(n>>16)+.59*(n>>8&255)+.11*(n&255))/255;};
+  const coat=(layer,hex)=>{layer.dataset.hex=hex||'';layer.style.setProperty('--paint',hex||'transparent');
+    layer.style.setProperty('--k',hex?Math.min(1.45,lum(hex)/WALL_LUM).toFixed(3):'1');};
+  coat(under,'');coat(over,'');
+  /* the paint layers reuse whichever file the browser picked for the photo */
+  const arm=()=>{const src=base.currentSrc||base.src;$$('.cw-paint img',cwRoom).forEach(im=>{if(im.src!==src)im.src=src;});cwRoom.classList.add('ready');};
+  if(base.complete&&base.naturalWidth)arm();else base.addEventListener('load',arm,{once:true});
+  let anim=null,touched=false;
+  function select(k){
+    if(k===cwCur)return;
+    cwCur=k;chips.forEach((c,i)=>c.setAttribute('aria-pressed',String(i===k)));cwLabel();
+    const hex=chips[k].dataset.paint;
+    if(REDUCE||!over.animate){coat(under,hex);return;}
+    if(anim){coat(under,over.dataset.hex);anim.cancel();anim=null;}
+    coat(over,hex);
+    const opt={duration:950,easing:'cubic-bezier(.65,0,.35,1)'};
+    const me=anim=over.animate([{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)'}],Object.assign({fill:'forwards'},opt));
+    roller.getAnimations().forEach(x=>x.cancel());
+    roller.animate([{transform:'translateX(0)',opacity:1},{opacity:1,offset:.88},{transform:'translateX(100%)',opacity:0}],opt);
+    me.onfinish=()=>{if(anim!==me)return;coat(under,hex);me.cancel();anim=null;};
+  }
+  chips.forEach((c,i)=>c.addEventListener('click',()=>{touched=true;select(i);}));
+  /* the first time the room comes into view it repaints once by itself, to show what it does */
+  if(!REDUCE&&'IntersectionObserver' in window){
+    const demo=new IntersectionObserver(es=>{if(!es.some(e=>e.isIntersecting))return;demo.disconnect();
+      setTimeout(()=>{if(!touched&&cwRoom.classList.contains('ready'))select(3);},900);},{threshold:.6});
+    demo.observe(cwRoom);
+  }
 })();
 
 /* ── lists: built in Croatian by the build, relabelled in place ────── */
@@ -1521,6 +1752,7 @@ function relabel(t){
   $$('#towns li').forEach((li,i)=>{$('.tn',li).textContent=t.towns[i];const b=$('.mono',li);if(b)b.textContent=t.base_tag;});
   $$('#cal .lbl').forEach((l,i)=>{l.textContent=t.season_rows[i];});
   $$('#faqList details').forEach((d,i)=>{const s=t.faq[i];if(!s)return;$('.faq-q',d).textContent=s.q;$('.faq-a',d).textContent=s.a;});
+  $$('#chips .chip span').forEach((sp,i)=>{if(t.paints[i])sp.textContent=t.paints[i].n;}); cwLabel();
   $$('#jobRoles li').forEach((li,i)=>{const r=t.job_roles[i];if(!r)return;$('b',li).textContent=r.n;$('span',li).textContent=r.d;});
   const sel=$('#jobRole'),keep=sel.selectedIndex;
   t.job_roles.forEach((r,i)=>{sel.options[i].textContent=r.n;sel.options[i].value=r.n;});
@@ -1575,7 +1807,7 @@ function setLang(lang,instant){
 
 /* ── menus ─────────────────────────────────────────────────────────── */
 const langWrap=$('#lang'),langTrigger=$('#langTrigger'),burger=$('#burger'),sheet=$('#sheet');
-function setSheet(open){sheet.classList.toggle('open',open);burger.classList.toggle('open',open);burger.setAttribute('aria-expanded',String(open));}
+function setSheet(open){sheet.classList.toggle('open',open);burger.classList.toggle('open',open);burger.setAttribute('aria-expanded',String(open));nav.classList.toggle('solid',open);navState();}
 function setLangMenu(open){langWrap.classList.toggle('open',open);langTrigger.setAttribute('aria-expanded',String(open));}
 function closeAll(){setSheet(false);setLangMenu(false);}
 langTrigger.addEventListener('click',e=>{e.stopPropagation();setSheet(false);setLangMenu(!langWrap.classList.contains('open'));});

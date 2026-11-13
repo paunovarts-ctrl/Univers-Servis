@@ -13,8 +13,13 @@ const ICON={
  copy:'<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 4H4v9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>',
  camera:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v11H3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>',
  file:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v4h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
- check:'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'
+ check:'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+ drop:'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5C7 6.6 5 9.3 5 12.1a5 5 0 0 0 10 0c0-2.8-2-5.5-5-9.6z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>'
 };
+/* the colour room: what each chip puts on the wall. Index 0 is the room as it
+   really is, so it carries no paint; its chip shows the beige it was painted. */
+const PAINT=[null,'#F2EFE8','#D6CFC2','#A3A88A','#93A6B0','#3F7F88','#C67C5E','#2E3A4E'];
+const CHIP=['#D6C3A5',...PAINT.slice(1)];
 const thumb=n=>`<picture><source type="image/avif" srcset="/assets/img/${n}-640.avif"><source type="image/webp" srcset="/assets/img/${n}-640.webp"><img src="/assets/img/${n}-640.jpg" width="640" height="478" alt="" loading="lazy" decoding="async"></picture>`;
 const WHERE=['in','in','both','both','in','in','out','both','both','both','out'];
 const SEASON=[['no','ok','best','best','best','best','ok','ok','best','best','ok','no'],Array(12).fill('best')];
@@ -30,6 +35,8 @@ const LISTS={
  towns:()=>hr.towns.map((n,i)=>`<li><span class="tn">${n}</span>${i===0?`<span class="mono">${hr.base_tag}</span>`:''}</li>`).join(''),
  cal:()=>'<span></span>'+ROMAN.map(r=>`<span class="mo">${r}</span>`).join('')+SEASON.map((row,ri)=>`<span class="lbl">${hr.season_rows[ri]}</span>`+row.map((s,k)=>`<span class="c ${s}" style="--i:${k+ri*3}"></span>`).join('')).join(''),
  faq:()=>hr.faq.map((f,i)=>`<details><summary><span class="pos mono">${pad(i+1)}</span><span class="faq-q">${f.q}</span><span class="pm" aria-hidden="true"></span></summary><div class="faq-body"><p class="faq-a">${f.a}</p></div></details>`).join('\n  '),
+ chips:()=>hr.paints.map((c,i)=>`<button class="chip" type="button" aria-pressed="${i===0}" data-paint="${PAINT[i]||''}" style="--c:${CHIP[i]}"><i aria-hidden="true"></i><span>${c.n}</span></button>`).join(''),
+ cw_now:()=>`<b>${hr.paints[0].n}</b><span>${hr.paints[0].d}</span>`,
  roles:()=>hr.job_roles.map(r=>`<li><b>${r.n}</b><span>${r.d}</span></li>`).join(''),
  role_opts:()=>hr.job_roles.map(r=>`<option value="${esc(r.n)}">${r.n}</option>`).join('')+`<option value="${esc(hr.job_other)}">${hr.job_other}</option>`,
 };
@@ -50,6 +57,7 @@ const keys=new Set([...out.matchAll(/data-i18n(?:-alt|-aria)?="(\w+)"/g)].map(m=
 for(const l of Object.keys(I18N))for(const k of keys)if(I18N[l][k]==null)throw new Error(`missing ${l}.${k}`);
 const shape=o=>Object.keys(o).sort().join(',');
 for(const l of Object.keys(I18N))if(shape(I18N[l])!==shape(hr))throw new Error('key set differs in '+l+': '+Object.keys(hr).filter(k=>!(k in I18N[l])).concat(Object.keys(I18N[l]).filter(k=>!(k in hr))).join(','));
-for(const l of Object.keys(I18N))for(const k of ['facts','br1_tags','br2_tags','svc','steps','aw_list','log','towns','season_rows','faq','job_roles'])if(I18N[l][k].length!==hr[k].length)throw new Error(`length ${l}.${k}`);
+for(const l of Object.keys(I18N))for(const k of ['facts','br1_tags','br2_tags','svc','steps','aw_list','log','towns','season_rows','faq','job_roles','paints'])if(I18N[l][k].length!==hr[k].length)throw new Error(`length ${l}.${k}`);
+if(PAINT.length!==hr.paints.length)throw new Error('paints and PAINT differ in length');
 fs.writeFileSync(process.argv[2],out);
 console.log('built',process.argv[2],out.length,'bytes;',keys.size,'i18n keys used, all present in',Object.keys(I18N).join('/'));

@@ -1,54 +1,60 @@
 # assets
 
-Photographs used by the site. Everything else on the page is embedded directly
-in `index.html`; these are the only files kept separately, because they are the
-ones that get replaced.
+Files the page loads besides itself: fonts and images.
 
-## The two branch photos
+## fonts/
 
-Both are in place and wired into `index.html`:
+Archivo (variable: weight 400–800, width 62–100) and IBM Plex Mono 500, each
+split in two by `unicode-range`: basic Latin, and a small file with only the
+Croatian letters (Č Ć Đ Š Ž), which a page in English never downloads.
 
-| File | Shows | Size |
+## img/
+
+Every photograph comes in AVIF, WebP and JPEG, and the page lets the browser
+pick the smallest format it supports and the right width for the screen.
+
+| Files | Shows | Widths |
 |---|---|---|
-| `interior.jpg` | a room masked off, furniture sheeted, floor papered | 1200x675, 96 KB |
-| `exterior.jpg` | a house in fresh render, scaffolding still standing | 1200x675, 157 KB |
+| `before-*` | the room before the work: damaged plaster, damp, cracks | 640, 1200, 1800 |
+| `after-*` | the same room after skimming and painting | 640, 1200, 1800 |
+| `interior-*` | a room masked off, furniture sheeted, floor papered | 640, 1200 |
+| `exterior-*` | a house under facade scaffolding | 640, 1200 |
+| `after-wall-1200.webp` | the colour room's mask (below) | 1200 |
+| `logo-dark-360`, `logo-light-360` | the logo for light and dark backgrounds | 360 |
+| `wordmark-1180` | the name alone, for the intro | 1180 |
 
-They are cropped to **16:9**, which is the frame's own ratio, so the card
-never has to crop them again. 1200px wide is about double the ~620px the
-frame occupies on a desktop, which covers a retina screen and stops there:
-the originals were 1200px, so going wider would have added file size without
-adding detail.
+The originals were 1200px wide. The 1800px hero versions are upscaled with
+Lanczos and a light unsharp mask, which holds up better full-screen than
+letting the browser stretch the 1200. Real job photos at full camera
+resolution would beat all of this, and are the single biggest improvement
+left for the page.
 
-## Replacing one
+### The before and after pair must stay aligned
 
-Drop the new file in over the old name and match the recipe: crop to 16:9,
-1200px wide, JPEG at quality 0.80, and keep it under about 200 KB. Nothing in
-the markup needs touching, though the `alt` text in `index.html` describes
-what is in the current photo, so rewrite it to match the new one, since it is what
-a screen reader and a search engine read.
+The hero rolls one over the other, so both photos must have the same framing
+and size (1200x896 at the base width). Replacing one means replacing both
+with a matched pair taken from the same spot.
 
-The images carry `width`, `height` and `loading="lazy"`, so the card reserves
-its space before the photo arrives and the page does not shift as you scroll
-to it. Keep those attributes, and update the numbers if the dimensions change.
+### The wall mask
 
-`vercel.json` serves everything in this folder with a one-year immutable
-cache, so a changed photo needs a changed filename to reach anyone who has
-already visited, or accept that they keep the old one until the cache lapses.
+`after-wall-1200.webp` is an alpha-only image the size of `after-1200.jpg`:
+opaque where there is painted wall, transparent everywhere else (windows,
+trim, sills, ceiling, skirting, floor). The colour room paints through it. It
+was traced against this exact photo, so **a new "after" photo needs a new
+mask**; without one, keep the old photo or the paint lands in the wrong
+places.
 
-## The intro
+The colour room also uses the wall's median luminosity in this photo
+(`WALL_LUM` in `src/app.js`, 0.5775) to set how far each paint lightens or
+darkens the walls. Re-measure it if the photo changes.
 
-There isn't one here any more. The loading overlay used to be a 338 KB H.264
-clip plus a 7.5 KB backdrop plate, rebuilt from a master in `scripts/`. It is
-now four SVG paths drawn with `stroke-dashoffset`, inline in `index.html`, so
-there is nothing to download, nothing to decode, and nothing to rebuild when
-the logo changes.
+## Replacing a photo
 
-The paths are the logo's own geometry, measured off
-`brand/univers-servis-logo-master-2096x695-transparent.png`: stroke width 24,
-colour `#dde679`, on the logo's own 2096x695 canvas. The wordmark sits over
-them as a transparent PNG on that same canvas, so the frame wraps the name
-exactly as it does in the logo.
+Keep the aspect ratio (16:9 for interior and exterior, 1200x896 for the
+before/after pair), export every width and format listed above, and update
+the `alt` text for that photo in all four languages in `src/i18n.js`, since it
+is what a screen reader and a search engine read.
 
-If the logo ever changes shape, re-measure the stroke endpoints against the
-master and update the four `d` attributes; the wordmark PNG is the master with
-the green line art masked out and dilated away, scaled to 1180px wide.
+`vercel.json` serves everything in `/assets/` with a one-year immutable cache,
+so a changed photo needs a **new filename** to reach anyone who has already
+visited.

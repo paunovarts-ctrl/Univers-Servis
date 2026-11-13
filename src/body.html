@@ -16,10 +16,12 @@
 <nav class="nav" id="nav" aria-label="Glavna">
   <div class="wrap">
     <a class="brand" href="#top" data-i18n-aria="home_label" aria-label="{{home_label}}">
-      <picture><source type="image/webp" srcset="/assets/img/logo-dark-360.webp"><img src="/assets/img/logo-dark-360.png" width="360" height="119" alt="Univers Servis Poreč"></picture>
+      <picture class="logo-d"><source type="image/webp" srcset="/assets/img/logo-dark-360.webp"><img src="/assets/img/logo-dark-360.png" width="360" height="119" alt="Univers Servis Poreč"></picture>
+      <picture class="logo-l" aria-hidden="true"><source type="image/webp" srcset="/assets/img/logo-light-360.webp"><img src="/assets/img/logo-light-360.png" width="360" height="119" alt=""></picture>
     </a>
     <ul class="nav-links">
       <li><a href="#branches" data-nav="branches" data-i18n="nav_services">{{nav_services}}</a></li>
+      <li><a href="#colours" data-nav="colours" data-i18n="nav_colours">{{nav_colours}}</a></li>
       <li><a href="#process" data-nav="process" data-i18n="nav_process">{{nav_process}}</a></li>
       <li><a href="#area" data-nav="area" data-i18n="nav_area">{{nav_area}}</a></li>
       <li><a href="#faq" data-nav="faq" data-i18n="nav_faq">{{nav_faq}}</a></li>
@@ -48,6 +50,7 @@
 <div class="sheet" id="sheet">
   <ul>
     <li><a href="#branches"><b data-i18n="nav_services">{{nav_services}}</b><span>01</span></a></li>
+    <li><a href="#colours"><b data-i18n="nav_colours">{{nav_colours}}</b><i class="sw" aria-hidden="true"><i></i><i></i><i></i></i></a></li>
     <li><a href="#process"><b data-i18n="nav_process">{{nav_process}}</b><span>03</span></a></li>
     <li><a href="#area"><b data-i18n="nav_area">{{nav_area}}</b><span>04</span></a></li>
     <li><a href="#faq"><b data-i18n="nav_faq">{{nav_faq}}</b><span>05</span></a></li>
@@ -59,56 +62,65 @@
 
 <main id="main">
 
-<header class="hero wrap" id="top">
-  <div class="hero-top" data-hero>
-    <p class="mono" data-i18n="hero_meta">{{hero_meta}}</p>
-    <p class="mono live hide-sm"><i aria-hidden="true"></i><span data-i18n="hero_hours">{{hero_hours}}</span></p>
-  </div>
-  <h1 class="d" id="heroH1" data-i18n="hero_h1" data-split data-hero>{{hero_h1}}</h1>
-  <div class="hero-grid">
-    <div class="hero-side" data-hero>
-      <p class="hero-lede" data-i18n="hero_lede">{{hero_lede}}</p>
-      <div class="hero-cta">
-        <a class="btn btn-lime" href="#contact"><span data-i18n="cta_visit">{{cta_visit}}</span>{{icon_arrow}}</a>
-        <a class="btn btn-line" href="tel:+38598335031" data-i18n-aria="call_label" aria-label="{{call_label}}">{{icon_phone}}<span>+385 98 335 031</span></a>
+<header class="hero" id="top">
+  <div class="stage" id="stage">
+    <div class="stage-media">
+      <div class="st-after">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/after-640.avif 640w, /assets/img/after-1200.avif 1200w, /assets/img/after-1800.avif 1800w" sizes="100vw">
+          <source type="image/webp" srcset="/assets/img/after-640.webp 640w, /assets/img/after-1200.webp 1200w, /assets/img/after-1800.webp 1800w" sizes="100vw">
+          <img src="/assets/img/after-1200.jpg" srcset="/assets/img/after-640.jpg 640w, /assets/img/after-1200.jpg 1200w, /assets/img/after-1800.jpg 1800w" sizes="100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_after" alt="{{alt_after}}">
+        </picture>
       </div>
-      <ul class="facts mono" id="facts">{{@facts}}</ul>
+      <div class="st-before"><div class="st-before-in">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/before-640.avif 640w, /assets/img/before-1200.avif 1200w, /assets/img/before-1800.avif 1800w" sizes="100vw">
+          <source type="image/webp" srcset="/assets/img/before-640.webp 640w, /assets/img/before-1200.webp 1200w, /assets/img/before-1800.webp 1800w" sizes="100vw">
+          <img src="/assets/img/before-1200.jpg" srcset="/assets/img/before-640.jpg 640w, /assets/img/before-1200.jpg 1200w, /assets/img/before-1800.jpg 1800w" sizes="100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_before" alt="{{alt_before}}">
+        </picture>
+      </div></div>
+      <span class="st-roller" aria-hidden="true"><i></i><b class="mono"><span data-i18n="hint_paint">{{hint_paint}}</span><svg viewBox="0 0 12 12"><path d="M6 1.5v8M2.5 6.5L6 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></b></span>
+      <span class="st-tag st-tag-a mono" data-i18n="lbl_after">{{lbl_after}}</span>
+      <span class="st-tag st-tag-b mono" data-i18n="lbl_before">{{lbl_before}}</span>
     </div>
-    <figure class="ba" id="ba" data-hero>
-      <div class="ba-frame" id="baFrame" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-i18n-aria="ba_aria" aria-label="{{ba_aria}}">
-        <picture class="ba-after">
-          <source type="image/avif" srcset="/assets/img/after-640.avif 640w, /assets/img/after-1200.avif 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <source type="image/webp" srcset="/assets/img/after-640.webp 640w, /assets/img/after-1200.webp 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <img src="/assets/img/after-1200.jpg" srcset="/assets/img/after-640.jpg 640w, /assets/img/after-1200.jpg 1200w" sizes="(min-width:1000px) 58vw, 100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_after" alt="{{alt_after}}">
-        </picture>
-        <picture class="ba-before">
-          <source type="image/avif" srcset="/assets/img/before-640.avif 640w, /assets/img/before-1200.avif 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <source type="image/webp" srcset="/assets/img/before-640.webp 640w, /assets/img/before-1200.webp 1200w" sizes="(min-width:1000px) 58vw, 100vw">
-          <img src="/assets/img/before-1200.jpg" srcset="/assets/img/before-640.jpg 640w, /assets/img/before-1200.jpg 1200w" sizes="(min-width:1000px) 58vw, 100vw" width="1200" height="896" fetchpriority="high" decoding="async" data-i18n-alt="alt_before" alt="{{alt_before}}">
-        </picture>
-        <div class="ba-line"><span class="ba-knob">{{icon_swap}}</span></div>
-        <span class="ba-tag ba-tag-b mono" data-i18n="lbl_before">{{lbl_before}}</span>
-        <span class="ba-tag ba-tag-a mono" data-i18n="lbl_after">{{lbl_after}}</span>
+    <div class="stage-shade" aria-hidden="true"></div>
+    <div class="hero-copy wrap">
+      <div class="hero-top" data-hero>
+        <p class="mono" data-i18n="hero_meta">{{hero_meta}}</p>
+        <p class="mono live hide-sm"><i aria-hidden="true"></i><span data-i18n="hero_hours">{{hero_hours}}</span></p>
       </div>
-      <figcaption class="mono"><span data-i18n="ba_cap">{{ba_cap}}</span><span>Poreč, Istra</span></figcaption>
-    </figure>
+      <h1 class="d" id="heroH1" data-i18n="hero_h1" data-split data-hero>{{hero_h1}}</h1>
+      <div class="hero-side" data-hero>
+        <p class="hero-lede" data-i18n="hero_lede">{{hero_lede}}</p>
+        <div class="hero-cta">
+          <a class="btn btn-lime" href="#contact"><span data-i18n="cta_visit">{{cta_visit}}</span>{{icon_arrow}}</a>
+          <a class="btn btn-line" href="tel:+38598335031" data-i18n-aria="call_label" aria-label="{{call_label}}">{{icon_phone}}<span>+385 98 335 031</span></a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
+<div class="facts-band">
+  <ul class="facts wrap mono" id="facts" data-stagger>{{@facts}}</ul>
+</div>
+
 <!-- 01 SERVICES -->
-<section class="sec wrap" id="branches" aria-labelledby="h-branches">
-  <header class="sec-head">
-    <span class="rule" data-reveal="rule"></span>
-    <p class="idx mono" data-reveal><b>01</b><span data-i18n="br_idx">{{br_idx}}</span></p>
-    <h2 class="d" id="h-branches" data-i18n="br_h2" data-split>{{br_h2}}</h2>
-    <p class="lede" data-i18n="br_p" data-reveal>{{br_p}}</p>
-  </header>
+<section class="sec" id="branches" aria-labelledby="h-branches">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="rule" data-reveal="rule"></span>
+      <p class="idx mono" data-reveal><b>01</b><span data-i18n="br_idx">{{br_idx}}</span></p>
+      <h2 class="d" id="h-branches" data-i18n="br_h2" data-split>{{br_h2}}</h2>
+      <p class="lede" data-i18n="br_p" data-reveal>{{br_p}}</p>
+    </header>
+  </div>
   <article class="branch">
-    <figure data-reveal="clip">
+    <figure class="ph" data-reveal="cover" data-px>
       <picture>
-        <source type="image/avif" srcset="/assets/img/interior-640.avif 640w, /assets/img/interior-1200.avif 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <source type="image/webp" srcset="/assets/img/interior-640.webp 640w, /assets/img/interior-1200.webp 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <img src="/assets/img/interior-1200.jpg" srcset="/assets/img/interior-640.jpg 640w, /assets/img/interior-1200.jpg 1200w" sizes="(min-width:900px) 56vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_int" alt="{{alt_int}}">
+        <source type="image/avif" srcset="/assets/img/interior-640.avif 640w, /assets/img/interior-1200.avif 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <source type="image/webp" srcset="/assets/img/interior-640.webp 640w, /assets/img/interior-1200.webp 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <img src="/assets/img/interior-1200.jpg" srcset="/assets/img/interior-640.jpg 640w, /assets/img/interior-1200.jpg 1200w" sizes="(min-width:900px) 62vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_int" alt="{{alt_int}}">
       </picture>
       <figcaption class="mono" data-i18n="br1_cap">{{br1_cap}}</figcaption>
     </figure>
@@ -120,11 +132,11 @@
     </div>
   </article>
   <article class="branch rev">
-    <figure data-reveal="clip">
+    <figure class="ph" data-reveal="cover" data-px>
       <picture>
-        <source type="image/avif" srcset="/assets/img/exterior-640.avif 640w, /assets/img/exterior-1200.avif 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <source type="image/webp" srcset="/assets/img/exterior-640.webp 640w, /assets/img/exterior-1200.webp 1200w" sizes="(min-width:900px) 56vw, 100vw">
-        <img src="/assets/img/exterior-1200.jpg" srcset="/assets/img/exterior-640.jpg 640w, /assets/img/exterior-1200.jpg 1200w" sizes="(min-width:900px) 56vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_ext" alt="{{alt_ext}}">
+        <source type="image/avif" srcset="/assets/img/exterior-640.avif 640w, /assets/img/exterior-1200.avif 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <source type="image/webp" srcset="/assets/img/exterior-640.webp 640w, /assets/img/exterior-1200.webp 1200w" sizes="(min-width:900px) 62vw, 100vw">
+        <img src="/assets/img/exterior-1200.jpg" srcset="/assets/img/exterior-640.jpg 640w, /assets/img/exterior-1200.jpg 1200w" sizes="(min-width:900px) 62vw, 100vw" width="1200" height="675" loading="lazy" decoding="async" data-i18n-alt="alt_ext" alt="{{alt_ext}}">
       </picture>
       <figcaption class="mono" data-i18n="br2_cap">{{br2_cap}}</figcaption>
     </figure>
@@ -135,10 +147,41 @@
       <ul class="tags" id="br2Tags">{{@br2_tags}}</ul>
     </div>
   </article>
-  <div class="stats" data-stagger>
-    <div class="stat" style="--i:0"><b>1990</b><span class="mono" data-i18n="stat_a">{{stat_a}}</span></div>
-    <div class="stat" style="--i:2"><b>500+</b><span class="mono" data-i18n="stat_b">{{stat_b}}</span></div>
-    <div class="stat" style="--i:4"><b>11</b><span class="mono" data-i18n="stat_c">{{stat_c}}</span></div>
+  <div class="wrap">
+    <div class="stats" data-stagger>
+      <div class="stat" style="--i:0"><b>1990</b><span class="mono" data-i18n="stat_a">{{stat_a}}</span></div>
+      <div class="stat" style="--i:2"><b>500+</b><span class="mono" data-i18n="stat_b">{{stat_b}}</span></div>
+      <div class="stat" style="--i:4"><b>11</b><span class="mono" data-i18n="stat_c">{{stat_c}}</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOUR ROOM -->
+<section class="cw dark" id="colours" aria-labelledby="h-colours">
+  <div class="wrap cw-grid">
+    <div class="cw-head">
+      <p class="mono cw-kick" data-i18n="cw_kicker" data-reveal>{{cw_kicker}}</p>
+      <h2 class="d" id="h-colours" data-i18n="cw_h2" data-split>{{cw_h2}}</h2>
+      <p class="cw-p" data-i18n="cw_p" data-reveal>{{cw_p}}</p>
+    </div>
+    <figure class="cw-fig" data-reveal="cover">
+      <div class="cw-room" id="cwRoom">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/after-640.avif 640w, /assets/img/after-1200.avif 1200w" sizes="(min-width:1000px) 56vw, 100vw">
+          <source type="image/webp" srcset="/assets/img/after-640.webp 640w, /assets/img/after-1200.webp 1200w" sizes="(min-width:1000px) 56vw, 100vw">
+          <img id="cwBase" src="/assets/img/after-1200.jpg" srcset="/assets/img/after-640.jpg 640w, /assets/img/after-1200.jpg 1200w" sizes="(min-width:1000px) 56vw, 100vw" width="1200" height="896" loading="lazy" decoding="async" data-i18n-alt="cw_alt" alt="{{cw_alt}}">
+        </picture>
+        <div class="cw-paint"><img alt="" aria-hidden="true"><i></i></div>
+        <div class="cw-paint cw-top"><img alt="" aria-hidden="true"><i></i></div>
+        <span class="cw-roller" aria-hidden="true"></span>
+      </div>
+      <figcaption class="mono"><span data-i18n="cw_note">{{cw_note}}</span><span>{{icon_drop}}</span></figcaption>
+    </figure>
+    <div class="cw-ctrl">
+      <div class="chips" id="chips" role="group" data-i18n-aria="cw_aria" aria-label="{{cw_aria}}" data-stagger>{{@chips}}</div>
+      <p class="cw-now" id="cwNow" aria-live="polite">{{@cw_now}}</p>
+      <a class="btn btn-lime" href="#contact" data-reveal><span data-i18n="cw_cta">{{cw_cta}}</span>{{icon_arrow}}</a>
+    </div>
   </div>
 </section>
 
@@ -324,6 +367,7 @@
       <div class="foot-col">
         <p class="mono" data-i18n="foot_nav">{{foot_nav}}</p>
         <a href="#branches" data-i18n="nav_services">{{nav_services}}</a>
+        <a href="#colours" data-i18n="nav_colours">{{nav_colours}}</a>
         <a href="#process" data-i18n="nav_process">{{nav_process}}</a>
         <a href="#area" data-i18n="nav_area">{{nav_area}}</a>
         <a href="#faq" data-i18n="nav_faq">{{nav_faq}}</a>
