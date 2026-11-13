@@ -18,10 +18,6 @@ as is, with no build step and no backend.
 - **01 Services**: interior and exterior, each with a photograph that runs to
   the edge of the page, a paragraph and the trades that belong to it; then
   the stats strip (1990, 500+, 11).
-- **Colour room** (`#colours`): the finished room with eight paint chips.
-  Tap one and the walls repaint, left to right. Only the walls change: the
-  windows, trim, skirting and floor stay as photographed. It says plainly
-  that screen colours are approximate and the real shade is chosen on site.
 - **02 Works schedule**: the 11 services with where each applies (inside,
   outside, both) and no prices: the quote follows a site visit.
 - **03 Process**: four steps, then a dark band on working while the owner is
@@ -55,7 +51,7 @@ src/            the sources it is built from
   app.js          behaviour
   build.mjs       fills the placeholders and checks the languages agree
 assets/fonts/   self-hosted Archivo and IBM Plex Mono, subset
-assets/img/     photographs, logos and the wall mask (see assets/README.md)
+assets/img/     photographs and logos (see assets/README.md)
 brand/          logo files, favicon, social image
 vercel.json     cache and security headers
 ```
@@ -69,14 +65,11 @@ vercel.json     cache and security headers
 3. Commit both the sources and the rebuilt `index.html`.
 
 The build stops with an error if a key is missing in any language, if the
-languages have different keys, or if a list (services, FAQ, paint chips and so
+languages have different keys, or if a list (services, FAQ and so
 on) has a different length in one of them.
 
 - **Any text**: find its key in `src/body.html` (`{{key}}` or `data-i18n`),
   then edit that key in all four blocks of `src/i18n.js`.
-- **Paint chips**: names and one-line descriptions are the `paints` array in
-  `i18n.js`; the colours themselves are `PAINT` in `src/build.mjs` (index 0 is
-  the room as photographed, so it has no paint).
 - **Services, steps, FAQ, towns, job roles**: the matching arrays in
   `i18n.js`. Keep every language the same length and order.
 - **Company details**: the `COMPANY` object in `app.js` (used by the forms),

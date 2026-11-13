@@ -19,7 +19,6 @@ pick the smallest format it supports and the right width for the screen.
 | `after-*` | the same room after skimming and painting | 640, 1200, 1800 |
 | `interior-*` | a room masked off, furniture sheeted, floor papered | 640, 1200 |
 | `exterior-*` | a house under facade scaffolding | 640, 1200 |
-| `after-wall-1200.webp` | the colour room's mask (below) | 1200 |
 | `logo-dark-360`, `logo-light-360` | the logo for light and dark backgrounds | 360 |
 | `wordmark-1180` | the name alone, for the intro | 1180 |
 
@@ -34,19 +33,6 @@ left for the page.
 The hero rolls one over the other, so both photos must have the same framing
 and size (1200x896 at the base width). Replacing one means replacing both
 with a matched pair taken from the same spot.
-
-### The wall mask
-
-`after-wall-1200.webp` is an alpha-only image the size of `after-1200.jpg`:
-opaque where there is painted wall, transparent everywhere else (windows,
-trim, sills, ceiling, skirting, floor). The colour room paints through it. It
-was traced against this exact photo, so **a new "after" photo needs a new
-mask**; without one, keep the old photo or the paint lands in the wrong
-places.
-
-The colour room also uses the wall's median luminosity in this photo
-(`WALL_LUM` in `src/app.js`, 0.5775) to set how far each paint lightens or
-darkens the walls. Re-measure it if the photo changes.
 
 ## Replacing a photo
 

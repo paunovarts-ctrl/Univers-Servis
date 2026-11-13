@@ -74,7 +74,7 @@ const secIO=new IntersectionObserver(es=>es.forEach(e=>{
   if(!e.isIntersecting)return;
   navLinks.forEach(a=>a.setAttribute('aria-current',a.dataset.nav===e.target.id?'true':'false'));
 }),{rootMargin:'-45% 0px -50% 0px'});
-['top','branches','colours','services','process','area','faq','contact','careers'].forEach(id=>{const s=document.getElementById(id);if(s)secIO.observe(s);});
+['top','branches','services','process','area','faq','contact','careers'].forEach(id=>{const s=document.getElementById(id);if(s)secIO.observe(s);});
 
 /* ── words rise out of their own line ──────────────────────────────── */
 function splitWords(root){
@@ -147,51 +147,6 @@ window.__stage=()=>{
   setTimeout(()=>stage.classList.add('ready'),700);
 };
 
-/* ── the colour room ──────────────────────────────────────────────────
-   Each paint layer is the photograph again: brightened or darkened to the
-   paint's lightness (so shadows and window light stay where they are), given
-   the paint's hue by a colour blend, and cut to the walls by a mask. A new
-   colour rolls in over the old one, left to right. */
-const cwRoom=$('#cwRoom'),chips=$$('#chips .chip'),cwNow=$('#cwNow');
-const WALL_LUM=.5775; /* median luminosity of the painted walls in the photograph */
-let cwCur=0;
-function cwLabel(){
-  const p=I18N[current].paints[cwCur];if(!cwNow||!p)return;
-  const b=document.createElement('b'),sp=document.createElement('span');b.textContent=p.n;sp.textContent=p.d;cwNow.replaceChildren(b,sp);
-}
-(function(){
-  if(!cwRoom)return;
-  const base=$('#cwBase'),[under,over]=$$('.cw-paint',cwRoom),roller=$('.cw-roller',cwRoom);
-  const lum=h=>{const n=parseInt(h.slice(1),16);return (.3*(n>>16)+.59*(n>>8&255)+.11*(n&255))/255;};
-  const coat=(layer,hex)=>{layer.dataset.hex=hex||'';layer.style.setProperty('--paint',hex||'transparent');
-    layer.style.setProperty('--k',hex?Math.min(1.45,lum(hex)/WALL_LUM).toFixed(3):'1');};
-  coat(under,'');coat(over,'');
-  /* the paint layers reuse whichever file the browser picked for the photo */
-  const arm=()=>{const src=base.currentSrc||base.src;$$('.cw-paint img',cwRoom).forEach(im=>{if(im.src!==src)im.src=src;});cwRoom.classList.add('ready');};
-  if(base.complete&&base.naturalWidth)arm();else base.addEventListener('load',arm,{once:true});
-  let anim=null,touched=false;
-  function select(k){
-    if(k===cwCur)return;
-    cwCur=k;chips.forEach((c,i)=>c.setAttribute('aria-pressed',String(i===k)));cwLabel();
-    const hex=chips[k].dataset.paint;
-    if(REDUCE||!over.animate){coat(under,hex);return;}
-    if(anim){coat(under,over.dataset.hex);anim.cancel();anim=null;}
-    coat(over,hex);
-    const opt={duration:950,easing:'cubic-bezier(.65,0,.35,1)'};
-    const me=anim=over.animate([{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)'}],Object.assign({fill:'forwards'},opt));
-    roller.getAnimations().forEach(x=>x.cancel());
-    roller.animate([{transform:'translateX(0)',opacity:1},{opacity:1,offset:.88},{transform:'translateX(100%)',opacity:0}],opt);
-    me.onfinish=()=>{if(anim!==me)return;coat(under,hex);me.cancel();anim=null;};
-  }
-  chips.forEach((c,i)=>c.addEventListener('click',()=>{touched=true;select(i);}));
-  /* the first time the room comes into view it repaints once by itself, to show what it does */
-  if(!REDUCE&&'IntersectionObserver' in window){
-    const demo=new IntersectionObserver(es=>{if(!es.some(e=>e.isIntersecting))return;demo.disconnect();
-      setTimeout(()=>{if(!touched&&cwRoom.classList.contains('ready'))select(3);},900);},{threshold:.6});
-    demo.observe(cwRoom);
-  }
-})();
-
 /* ── lists: built in Croatian by the build, relabelled in place ────── */
 function relabel(t){
   $$('#facts li span').forEach((s,i)=>{if(t.facts[i]!=null)s.textContent=t.facts[i];});
@@ -204,7 +159,6 @@ function relabel(t){
   $$('#towns li').forEach((li,i)=>{$('.tn',li).textContent=t.towns[i];const b=$('.mono',li);if(b)b.textContent=t.base_tag;});
   $$('#cal .lbl').forEach((l,i)=>{l.textContent=t.season_rows[i];});
   $$('#faqList details').forEach((d,i)=>{const s=t.faq[i];if(!s)return;$('.faq-q',d).textContent=s.q;$('.faq-a',d).textContent=s.a;});
-  $$('#chips .chip span').forEach((sp,i)=>{if(t.paints[i])sp.textContent=t.paints[i].n;}); cwLabel();
   $$('#jobRoles li').forEach((li,i)=>{const r=t.job_roles[i];if(!r)return;$('b',li).textContent=r.n;$('span',li).textContent=r.d;});
   const sel=$('#jobRole'),keep=sel.selectedIndex;
   t.job_roles.forEach((r,i)=>{sel.options[i].textContent=r.n;sel.options[i].value=r.n;});

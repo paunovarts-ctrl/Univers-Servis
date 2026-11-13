@@ -155,10 +155,6 @@ body.intro-on{overflow:hidden}
   .sheet a{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--rule-2);text-decoration:none;
     font-family:var(--f);font-stretch:64%;font-weight:760;font-size:1.9rem;line-height:1;text-transform:uppercase}
   .sheet a span{font:500 .72rem var(--m);letter-spacing:.06em;opacity:.6}
-  .sheet .sw{display:flex;gap:3px}
-  .sheet .sw i{width:9px;height:9px;background:#A3A88A}
-  .sheet .sw i+i{background:#3F7F88}
-  .sheet .sw i+i+i{background:#C67C5E}
   .sheet .btn{margin-top:1.1rem;width:100%;justify-content:center}
   /* on a phone this bar is the only navigation, so it stays put */
   .nav.nav-hidden{transform:none}
@@ -316,45 +312,6 @@ body.intro-on{overflow:hidden}
 .stat b{font-family:var(--f);font-stretch:62%;font-weight:780;font-size:clamp(3.2rem,7vw,6.4rem);line-height:.82;letter-spacing:-.01em}
 .stat span{color:var(--ink-3)}
 @media (max-width:640px){.stats{grid-template-columns:1fr}.stat+.stat{padding-left:0;border-left:0;border-top:1px solid var(--rule)}}
-
-/* ── the colour room ─────────────────────────────────────────────────── */
-.cw{background:var(--ink);color:var(--on-dark);margin-top:clamp(5rem,11vw,10rem);padding:clamp(4.5rem,9vw,8rem) 0;--cover:var(--ink)}
-.cw-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--cg);row-gap:2.2rem;align-items:start}
-.cw-head{grid-column:1 / span 5;grid-row:1;display:flex;flex-direction:column;gap:1.3rem}
-.cw-kick{color:var(--lime)}
-.cw-head h2{font-size:clamp(2.8rem,5.6vw,5.6rem)}
-.cw-p{color:var(--on-dark-2);max-width:44ch}
-.cw-fig{grid-column:7 / -1;grid-row:1 / span 2;position:relative}
-.cw-ctrl{grid-column:1 / span 5;grid-row:2;display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start}
-.cw-fig figcaption{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-top:.8rem;color:var(--on-dark-2)}
-.cw-fig figcaption svg{width:16px;height:16px;color:var(--lime)}
-.cw-room{position:relative;aspect-ratio:1200 / 896;overflow:hidden;background:#24251F;isolation:isolate}
-.cw-room img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-/* each paint layer is the photo again, lifted or lowered to the paint's lightness,
-   tinted with the paint's hue, and cut to the walls by the mask */
-.cw-paint{position:absolute;inset:0;opacity:0;transition:opacity 400ms ease;
-  -webkit-mask-image:url(/assets/img/after-wall-1200.webp);mask-image:url(/assets/img/after-wall-1200.webp);
-  -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
-.cw-room.ready .cw-paint{opacity:1}
-.cw-paint img{filter:brightness(var(--k,1))}
-.cw-paint i{position:absolute;inset:0;background:var(--paint,transparent);mix-blend-mode:color}
-.cw-top{clip-path:inset(0 100% 0 0)}
-.cw-roller{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0}
-.cw-roller::before{content:"";position:absolute;top:0;bottom:0;left:-2px;width:4px;background:var(--lime);box-shadow:0 0 16px rgba(221,230,121,.5)}
-.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem .5rem;width:100%;max-width:31rem}
-.chip{display:flex;flex-direction:column;gap:.55rem;padding:0 0 .3rem;background:transparent;border:0;cursor:pointer;text-align:left;color:var(--on-dark-2);
-  font:500 .68rem/1.2 var(--m);letter-spacing:.04em;text-transform:uppercase;transition:color 160ms ease}
-.chip i{display:block;height:3.4rem;background:var(--c);box-shadow:inset 0 0 0 1px rgba(241,238,230,.1);outline:2px solid transparent;outline-offset:3px;transition:outline-color 160ms ease}
-.chip[aria-pressed="true"]{color:var(--on-dark)}
-.chip[aria-pressed="true"] i{outline-color:var(--lime)}
-.chip:focus-visible{outline:none}
-.chip:focus-visible i{outline-color:var(--on-dark)}
-@media (hover:hover) and (pointer:fine){.chip:hover{color:var(--on-dark)}.chip:not([aria-pressed="true"]):hover i{outline-color:rgba(241,238,230,.38)}}
-.cw-now{display:flex;flex-direction:column;gap:.3rem;min-height:4.2rem;padding-left:.9rem;border-left:2px solid var(--lime)}
-.cw-now b{font-family:var(--f);font-stretch:70%;font-weight:740;font-size:1.7rem;line-height:1;text-transform:uppercase;color:var(--on-dark)}
-.cw-now span{color:var(--on-dark-2)}
-@media (max-width:999px){.cw-head,.cw-fig,.cw-ctrl{grid-column:1 / -1;grid-row:auto}}
-@media (max-width:520px){.chips{gap:.55rem .4rem}.chip i{height:2.9rem}}
 
 /* ── 02 the works schedule ───────────────────────────────────────────── */
 .spec{border-top:1px solid var(--ink)}
